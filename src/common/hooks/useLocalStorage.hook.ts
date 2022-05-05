@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-import { useEventListener } from 'common/hooks/hooks'
+import { useMount } from 'common/hooks/hooks'
 
 type ResolveableItem<TItem> = TItem | ((value: TItem) => TItem)
 
@@ -29,12 +29,18 @@ export const useLocalStorage = <TItem>(key: string, defaultValue: TItem) => {
     }
   })
 
-  useEventListener('Window', 'storage', (event) => {
-    if (event.key === key && event.newValue) {
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- safty assertion
-      const item = event.newValue as unknown as TItem
+  useMount(() => {
+    const listener = (event: StorageEvent) => {
+      if (event.key === key && event.newValue) {
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- safty assertion
+        const item = event.newValue as unknown as TItem
 
-      setItemInner(item)
+        setItemInner(item)
+      }
+    }
+
+    return () => {
+      window.removeEventListener('storage', listener)
     }
   })
 

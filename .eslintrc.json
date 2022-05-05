@@ -1,0 +1,19 @@
+{
+  "root": true,
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "plugins": ["@typeofweb"],
+  "extends": ["plugin:@typeofweb/recommended", "next/core-web-vitals"],
+  "rules": {
+    "unicorn/prefer-module": 0
+  },
+  "overrides": [
+    {
+      "files": ["src/pages/**/*.tsx", "src/pages/**/*.ts"],
+      "rules": {
+        "import/no-default-export": 0
+      }
+    }
+  ]
+}

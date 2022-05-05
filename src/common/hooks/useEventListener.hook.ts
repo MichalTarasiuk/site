@@ -2,7 +2,7 @@ import { useRef } from 'react'
 
 import { useUpdate, useMount } from 'common/hooks/hooks'
 
-type TargetName = 'Window' | 'Document'
+type TargetName = 'Window'
 
 type EventMap = {
   readonly window: WindowEventMap
@@ -34,7 +34,6 @@ export const useEventListener = <
     if (isBrowser) {
       const targetMap = {
         Window: window,
-        Document: document,
       }
       const target = targetMap[targetName]
       const listener = (event: Event) => {

@@ -1,13 +1,13 @@
-const fallbackMessgae = 'Something went wrong. Please try again later.'
+const FALLBACK_MESSAGE = 'Something went wrong. Please try again later.'
 
 const setRequestInit = (requestInit: RequestInit) => {
-  const { body, method, ...restOfRequestInit } = requestInit
+  const { body, headers, ...restOfRequestInit } = requestInit
 
   return {
     ...restOfRequestInit,
     ...(body && { body: JSON.stringify(body) }),
     headers: {
-      ...restOfRequestInit.headers,
+      ...headers,
       'Content-Type': 'application/json',
     },
   }
@@ -27,7 +27,7 @@ export const fetcher = async (input: RequestInfo, init?: RequestInit) => {
       throw error
     }
 
-    throw new ResponseError(fallbackMessgae)
+    throw new ResponseError(FALLBACK_MESSAGE)
   }
 }
 

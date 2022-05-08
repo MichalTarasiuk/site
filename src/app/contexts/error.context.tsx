@@ -84,7 +84,7 @@ const ErrorProvider = ({ children }: Props) => {
 
   useTimeout(() => {
     setError(null)
-  }, ERROR_TIMEOUT)
+  }, error && ERROR_TIMEOUT)
 
   useUpdate(() => {
     if (error) {

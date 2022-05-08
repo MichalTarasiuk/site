@@ -2,11 +2,9 @@ import { useEffect, useRef } from 'react'
 
 import { useUpdate } from 'common/hooks/hooks'
 
-const defaultTimeout = 1000
-
 export const useTimeout = (
   handler: Exclude<TimerHandler, string>,
-  timeout: number = defaultTimeout
+  timeout: number | null = null
 ) => {
   const savedHandler = useRef(handler)
 
@@ -15,12 +13,14 @@ export const useTimeout = (
   }, [handler])
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      savedHandler.current()
-    }, timeout)
+    if (timeout) {
+      const timeoutId = setTimeout(() => {
+        savedHandler.current()
+      }, timeout)
 
-    return () => {
-      clearTimeout(timeoutId)
+      return () => {
+        clearTimeout(timeoutId)
+      }
     }
   }, [timeout])
 }

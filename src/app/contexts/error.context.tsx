@@ -8,7 +8,7 @@ import {
 
 import type { ReactNode } from 'react'
 
-import { useUpdate, useUnMount, useTimeout } from 'common/hooks/hooks'
+import { useUpdate, useMount, useTimeout } from 'common/hooks/hooks'
 import { ResponseError } from 'common/utils/fetcher.utility'
 
 type Props = {
@@ -32,7 +32,7 @@ type ErrorContextValue = {
 
 const ErrorContext = createContext<ErrorContextValue | undefined>(undefined)
 
-const errorTimeout = 3000
+const ERROR_TIMEOUT = 3000
 
 const isError = (value: unknown): value is Error => value instanceof Error
 const isResponseError = (value: unknown): value is ResponseError =>
@@ -84,7 +84,7 @@ const ErrorProvider = ({ children }: Props) => {
 
   useTimeout(() => {
     setError(null)
-  }, errorTimeout)
+  }, ERROR_TIMEOUT)
 
   useUpdate(() => {
     if (error) {
@@ -114,10 +114,13 @@ const useError = (
   }
 
   const { setErrorCallback, ...restOfContext } = context
-  const removeErrorCallback = setErrorCallback(errorCallback)
 
-  useUnMount(() => {
-    removeErrorCallback()
+  useMount(() => {
+    const removeErrorCallback = setErrorCallback(errorCallback)
+
+    return () => {
+      removeErrorCallback()
+    }
   })
 
   return restOfContext

@@ -16,25 +16,25 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 
-const localStorageName = 'theme'
-const defaultTheme = 'light'
+const LOCAL_STORAGE_NAME = 'theme'
+const DEFAULT_THEME = 'light'
 
 const isBrowser = typeof window !== 'undefined'
-const query = `(prefers-color-scheme: ${defaultTheme})`
+const query = `(prefers-color-scheme: ${DEFAULT_THEME})`
 const mediaQueryList = isBrowser ? window.matchMedia(query) : undefined
 
 const inverntion = (theme: Theme) => (theme === 'light' ? 'dark' : 'light')
 
 const ThemeProvider = ({ children }: Props) => {
   const [theme, setTheme] = useLocalStorage<Theme>(
-    localStorageName,
-    defaultTheme
+    LOCAL_STORAGE_NAME,
+    DEFAULT_THEME
   )
 
   useMount(() => {
     if (mediaQueryList) {
       const listener = (event: MediaQueryListEvent) => {
-        setTheme(event.matches ? defaultTheme : inverntion(defaultTheme))
+        setTheme(event.matches ? DEFAULT_THEME : inverntion(DEFAULT_THEME))
       }
 
       mediaQueryList.addEventListener('change', listener)

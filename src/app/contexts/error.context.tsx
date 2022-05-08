@@ -9,13 +9,6 @@ type Props = {
   readonly children: ReactNode
 }
 
-type RecognizedError =
-  | {
-      readonly name: 'ResponseError'
-      readonly message: string
-      readonly status: number | undefined
-    }
-  | { readonly name: 'Error'; readonly message: string }
 type Subscriber = (error: ReturnType<typeof readError>) => void
 type ErrorContextValue = {
   readonly subscribe: (subscriber: Subscriber) => Noop
@@ -24,19 +17,20 @@ type ErrorContextValue = {
 
 const ErrorContext = createContext<ErrorContextValue | undefined>(undefined)
 
-const readError = (error: Error): RecognizedError => {
+const isError = (value: unknown): value is Error => value instanceof Error
+const readError = (error: Error) => {
   if (error instanceof ResponseError) {
     return {
       name: 'ResponseError',
       message: error.message,
       status: error.status,
-    }
+    } as const
   }
 
   return {
     name: 'Error',
     message: error.message,
-  }
+  } as const
 }
 
 const ErrorProvider = ({ children }: Props) => {
@@ -44,7 +38,7 @@ const ErrorProvider = ({ children }: Props) => {
 
   const catchError = useCallback(
     (possibleError: unknown) => {
-      if (possibleError instanceof Error) {
+      if (isError(possibleError)) {
         const error = readError(possibleError)
 
         subscribers.forEach((subscriber) => subscriber(error))

@@ -27,12 +27,12 @@ export const fetcher = async (input: RequestInfo, init?: RequestInit) => {
       throw error
     }
 
-    throw new ResponseError(FALLBACK_MESSAGE)
+    throw new ResponseError(FALLBACK_MESSAGE, 500)
   }
 }
 
 export class ResponseError extends Error {
-  constructor(message: string, public readonly status?: number) {
+  constructor(message: string, public readonly status: number) {
     super(message)
     // eslint-disable-next-line functional/no-this-expression -- required for extending error
     this.name = 'ResponseError'

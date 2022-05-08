@@ -14,13 +14,12 @@ type ThemeContextValue = {
   readonly toggleTheme: (theme: Theme) => void
 }
 
-const isBrowser = typeof window !== 'undefined'
-
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 
 const localStorageName = 'theme'
 const defaultTheme = 'light'
 
+const isBrowser = typeof window !== 'undefined'
 const query = `(prefers-color-scheme: ${defaultTheme})`
 const mediaQueryList = isBrowser ? window.matchMedia(query) : undefined
 
@@ -56,7 +55,7 @@ const ThemeProvider = ({ children }: Props) => {
 const useTheme = () => {
   const context = useContext(ThemeContext)
 
-  if (!context) {
+  if (context === undefined) {
     throw new Error('useTheme must be used within a ThemeProvider')
   }
 

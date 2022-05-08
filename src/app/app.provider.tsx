@@ -1,4 +1,4 @@
-import { ThemeProvider } from './contexts/contexts'
+import { ThemeProvider, ErrorProvider } from './contexts/contexts'
 
 import type { ReactNode } from 'react'
 
@@ -7,5 +7,9 @@ type Props = {
 }
 
 export const AppProvider = ({ children }: Props) => {
-  return <ThemeProvider>{children}</ThemeProvider>
+  return (
+    <ErrorProvider>
+      <ThemeProvider>{children}</ThemeProvider>
+    </ErrorProvider>
+  )
 }

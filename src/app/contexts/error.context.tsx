@@ -16,16 +16,16 @@ type Props = {
 }
 
 type Noop = () => void
-type MyError =
+type ErrorUnion =
   | {
       readonly name: 'ResponseError'
       readonly message: string
       readonly status: number | undefined
     }
   | { readonly name: 'Error'; readonly message: string }
-type ErrorCallback = (error: MyError) => void
+type ErrorCallback = (error: ErrorUnion) => void
 type ErrorContextValue = {
-  readonly error: MyError | null
+  readonly error: ErrorUnion | null
   readonly catchError: (possibleError: unknown) => void
   readonly setErrorCallback: (errorCallback: ErrorCallback) => Noop
 }
@@ -38,7 +38,7 @@ const isError = (value: unknown): value is Error => value instanceof Error
 const isResponseError = (value: unknown): value is ResponseError =>
   value instanceof ResponseError
 
-const unpackError = (error: Error): MyError => {
+const unpackError = (error: Error): ErrorUnion => {
   if (isResponseError(error)) {
     return {
       name: 'ResponseError',
@@ -51,7 +51,7 @@ const unpackError = (error: Error): MyError => {
 }
 
 const ErrorProvider = ({ children }: Props) => {
-  const [error, setError] = useState<MyError | null>(null)
+  const [error, setError] = useState<ErrorUnion | null>(null)
   const errorsCallbacks = useMemo(() => new Set<ErrorCallback>(), [])
 
   const catchError = useCallback((possibleError: unknown) => {
@@ -63,7 +63,7 @@ const ErrorProvider = ({ children }: Props) => {
   }, [])
 
   const reportError = useCallback(
-    (error: MyError) => {
+    (error: ErrorUnion) => {
       errorsCallbacks.forEach((errorCallback) => {
         errorCallback(error)
       })
@@ -82,11 +82,9 @@ const ErrorProvider = ({ children }: Props) => {
     [errorsCallbacks]
   )
 
-  const resetError = useCallback(() => {
+  useTimeout(() => {
     setError(null)
-  }, [setError])
-
-  useTimeout(resetError, errorTimeout)
+  }, errorTimeout)
 
   useUpdate(() => {
     if (error) {

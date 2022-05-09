@@ -1,11 +1,11 @@
 /* eslint-disable functional/prefer-readonly-type -- required functionality */
-import { useMemo, useCallback, useRef } from 'react'
+import { useMemo, useCallback } from 'react'
 
 import { createObserver } from './useObserver.helpers'
 
 import type { ObserverInit, ObserverCallback } from './useObserver.helpers'
 
-import { useUnMount, useUpdate } from 'common/hooks/hooks'
+import { useUnMount } from 'common/hooks/hooks'
 import { noop } from 'common/utils/utils'
 
 const isServer = typeof window === 'undefined'
@@ -19,15 +19,6 @@ export const useObserver = (
   type Subscriber = ReturnType<typeof observe>
 
   const subscribers = useMemo<Map<Element, Subscriber>>(() => new Map(), [])
-  const savedObserverCallback = useRef(observerCallback)
-
-  useUpdate(() => {
-    savedObserverCallback.current = observerCallback
-  }, [observerCallback])
-
-  useUnMount(() => {
-    cleanup()
-  })
 
   const cleanup = useCallback(() => {
     subscribers.forEach((subscriber) => subscriber.unobserve())
@@ -43,16 +34,14 @@ export const useObserver = (
       if (subscribers.has(element)) {
         subscribers.get(element)?.unobserve()
       }
-      const subscriber = observe(
-        element,
-        (entry) => savedObserverCallback.current(entry),
-        observerInit
-      )
+      const subscriber = observe(element, observerCallback, observerInit)
 
       subscribers.set(element, subscriber)
     },
-    [observerInit, subscribers]
+    [observerCallback, observerInit, subscribers]
   )
+
+  useUnMount(cleanup)
 
   if (isServer) {
     return { observeElement: noop, cleanup: noop }

@@ -3,20 +3,18 @@ import { useEffect, useRef } from 'react'
 import { useUpdate } from 'common/hooks/hooks'
 
 export const useTimeout = (
-  handler: ArrowFunction,
+  fn: ArrowFunction,
   timeout: number | null = null
 ) => {
-  const savedHandler = useRef(handler)
+  const savedFn = useRef(fn)
 
   useUpdate(() => {
-    savedHandler.current = handler
-  }, [handler])
+    savedFn.current = fn
+  }, [fn])
 
   useEffect(() => {
     if (timeout) {
-      const timeoutId = setTimeout(() => {
-        savedHandler.current()
-      }, timeout)
+      const timeoutId = setTimeout(() => savedFn.current(), timeout)
 
       return () => {
         clearTimeout(timeoutId)

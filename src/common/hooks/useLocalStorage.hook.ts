@@ -3,14 +3,14 @@ import { useState, useCallback } from 'react'
 import { useMount } from 'common/hooks/hooks'
 import { isFunction } from 'common/utils/utils'
 
-type ResolveableItem<TItem> = TItem | ((value: TItem) => TItem)
+type ResolveableItem<TItem> = TItem | ((item: TItem) => TItem)
 
 const resolveItem = <TItem>(
   resolveableItem: ResolveableItem<TItem>,
   item: TItem
 ) => (isFunction(resolveableItem) ? resolveableItem(item) : resolveableItem)
 
-export const useLocalStorage = <TItem>(key: string, defaultValue: TItem) => {
+export const useLocalStorage = <TItem>(key: string, defaultItem: TItem) => {
   const [item, setItemInner] = useState<TItem>(() => {
     try {
       const item = window.localStorage.getItem(key)
@@ -19,9 +19,9 @@ export const useLocalStorage = <TItem>(key: string, defaultValue: TItem) => {
         return JSON.parse(item)
       }
 
-      window.localStorage.setItem(key, JSON.stringify(defaultValue))
+      window.localStorage.setItem(key, JSON.stringify(defaultItem))
 
-      return defaultValue
+      return defaultItem
     } catch (error) {
       console.error(error)
     }

@@ -31,6 +31,11 @@ const ThemeProvider = ({ children }: Props) => {
     DEFAULT_THEME
   )
 
+  const toggleTheme: ThemeContextValue['toggleTheme'] = useCallback(
+    () => setTheme(inverntion),
+    [setTheme]
+  )
+
   useMount(() => {
     if (mediaQueryList) {
       const listener = (event: MediaQueryListEvent) => {
@@ -48,11 +53,6 @@ const ThemeProvider = ({ children }: Props) => {
   useUpdate(() => {
     // logic of toggling theme
   }, [theme])
-
-  const toggleTheme: ThemeContextValue['toggleTheme'] = useCallback(
-    () => setTheme(inverntion),
-    [setTheme]
-  )
 
   const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme])
 

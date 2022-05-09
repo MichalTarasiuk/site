@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 import { useUpdate } from 'common/hooks/hooks'
 
 export const useTimeout = (
-  handler: Exclude<TimerHandler, string>,
+  handler: ArrowFunction,
   timeout: number | null = null
 ) => {
   const savedHandler = useRef(handler)

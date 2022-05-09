@@ -15,41 +15,41 @@ type Props = {
   readonly children: ReactNode
 }
 
-type ErrorContextSubscriber = Exclude<Parameters<typeof useError>[0], undefined>
+type ErrorSubscriber = Exclude<Parameters<typeof useError>[0], undefined>
+type ErrorData = Parameters<ErrorSubscriber>[0]
+
 type AlertType = 'success' | 'error' | 'warning'
 type AlertState =
-  | { readonly type: 'success'; readonly data: string }
   | {
-      readonly type: 'error'
-      readonly data: Parameters<ErrorContextSubscriber>[0]
+      readonly type: 'success'
+      readonly data: string
     }
+  | { readonly type: 'error'; readonly data: ErrorData }
   | { readonly type: 'warning'; readonly data: string }
+
 type AlertContextValue = {
+  readonly alertState: AlertState | null
+  readonly hideAlert: Noop
   readonly showAlert: <TType extends AlertType>(
     type: TType,
     data: LookUp<AlertState, TType>['data']
   ) => void
-  readonly alertState: AlertState | null
-  readonly hideAlert: Noop
 }
 
-const TIMEOUT = 3000
-
 const AlertContext = createContext<AlertContextValue | undefined>(undefined)
+
+const ALERT_TIMEOUT = 3000
 
 const AlertProvider = ({ children }: Props) => {
   const [alertState, setAlertState] = useState<AlertState | null>(null)
 
-  const hideAlert = useCallback(() => {
+  const hideAlert: AlertContextValue['hideAlert'] = useCallback(() => {
     setAlertState(null)
   }, [])
 
-  const showAlert = useCallback(
-    <TType extends AlertType>(
-      type: TType,
-      data: LookUp<AlertState, TType>['data']
-    ) => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- no idea...
+  // @ts-ignore
+  const showAlert: AlertContextValue['showAlert'] = useCallback(
+    (type, data) => {
       // @ts-ignore
       setAlertState({ type, data })
     },
@@ -60,7 +60,7 @@ const AlertProvider = ({ children }: Props) => {
     showAlert('error', error)
   })
 
-  useTimeout(hideAlert, alertState && TIMEOUT)
+  useTimeout(hideAlert, ALERT_TIMEOUT)
 
   const value = useMemo(
     () => ({
@@ -71,8 +71,6 @@ const AlertProvider = ({ children }: Props) => {
     [alertState, hideAlert, showAlert]
   )
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- no idea...
-  // @ts-ignore
   return <AlertContext.Provider value={value}>{children}</AlertContext.Provider>
 }
 

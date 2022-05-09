@@ -1,10 +1,10 @@
 const FALLBACK_MESSAGE = 'Something went wrong. Please try again later.'
 
 const setRequestInit = (requestInit: RequestInit) => {
-  const { body, headers, ...restOfRequestInit } = requestInit
+  const { body, headers, ...restRequestInit } = requestInit
 
   return {
-    ...restOfRequestInit,
+    ...restRequestInit,
     ...(body && { body: JSON.stringify(body) }),
     headers: {
       ...headers,
@@ -27,7 +27,7 @@ export const fetcher = async (input: RequestInfo, init?: RequestInit) => {
       throw error
     }
 
-    throw new ResponseError(FALLBACK_MESSAGE, 500)
+    throw new ResponseError(FALLBACK_MESSAGE, 400)
   }
 }
 

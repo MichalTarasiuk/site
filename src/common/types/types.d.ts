@@ -10,3 +10,5 @@ type LookUp<
 }
   ? TElement
   : never
+
+type ArrowFunction = (...args: readonly unknown[]) => unknown

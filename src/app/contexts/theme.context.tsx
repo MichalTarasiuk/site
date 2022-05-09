@@ -2,7 +2,7 @@ import { createContext, useContext, useMemo, useCallback } from 'react'
 
 import type { ReactNode } from 'react'
 
-import { useLocalStorage, useMount } from 'common/hooks/hooks'
+import { useLocalStorage, useMount, useUpdate } from 'common/hooks/hooks'
 
 type Props = {
   readonly children: ReactNode
@@ -11,7 +11,7 @@ type Props = {
 type Theme = 'light' | 'dark'
 type ThemeContextValue = {
   readonly theme: Theme
-  readonly toggleTheme: (theme: Theme) => void
+  readonly toggleTheme: () => void
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
@@ -45,7 +45,14 @@ const ThemeProvider = ({ children }: Props) => {
     }
   })
 
-  const toggleTheme = useCallback(() => setTheme(inverntion), [setTheme])
+  useUpdate(() => {
+    // logic of toggling theme
+  }, [theme])
+
+  const toggleTheme: ThemeContextValue['toggleTheme'] = useCallback(
+    () => setTheme(inverntion),
+    [setTheme]
+  )
 
   const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme])
 

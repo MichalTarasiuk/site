@@ -8,7 +8,8 @@
   "rules": {
     "unicorn/prefer-module": 0,
     "import/no-cycle": 0,
-    "functional/no-loop-statement": 0
+    "functional/no-loop-statement": 0,
+    "@typescript-eslint/consistent-type-assertions": 0
   },
   "overrides": [
     {

@@ -1,11 +1,9 @@
 import { useState, useCallback } from 'react'
 
 import { useMount } from 'common/hooks/hooks'
+import { isFunction } from 'common/utils/utils'
 
 type ResolveableItem<TItem> = TItem | ((value: TItem) => TItem)
-
-const isFunction = (value: unknown): value is Function =>
-  typeof value === 'function'
 
 const resolveItem = <TItem>(
   resolveableItem: ResolveableItem<TItem>,
@@ -32,7 +30,6 @@ export const useLocalStorage = <TItem>(key: string, defaultValue: TItem) => {
   useMount(() => {
     const listener = (event: StorageEvent) => {
       if (event.key === key && event.newValue) {
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- safty assertion
         const item = event.newValue as unknown as TItem
 
         setItemInner(item)

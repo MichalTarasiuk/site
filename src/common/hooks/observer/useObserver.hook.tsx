@@ -1,26 +1,38 @@
 /* eslint-disable functional/prefer-readonly-type -- required functionality */
-import { useState, useMemo, useCallback } from 'react'
+import { useMemo, useCallback, useRef } from 'react'
 
 import { createObserver } from './useObserver.helpers'
 
-import type { ObserverInit } from './useObserver.helpers'
+import type { ObserverInit, ObserverCallback } from './useObserver.helpers'
 
-import { useUnMount } from 'common/hooks/hooks'
+import { useUnMount, useUpdate } from 'common/hooks/hooks'
 import { noop } from 'common/utils/utils'
 
 const isServer = typeof window === 'undefined'
 
 const { observe } = createObserver()
 
-export const useObserver = (observerInit: ObserverInit) => {
-  const unobserve = useMemo<Map<Element, Noop>>(() => new Map(), [])
+export const useObserver = (
+  observerInit: ObserverInit,
+  observerCallback: ObserverCallback
+) => {
+  type Subscriber = ReturnType<typeof observe>
 
-  const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null)
+  const subscribers = useMemo<Map<Element, Subscriber>>(() => new Map(), [])
+  const savedObserverCallback = useRef(observerCallback)
+
+  useUpdate(() => {
+    savedObserverCallback.current = observerCallback
+  }, [observerCallback])
+
+  useUnMount(() => {
+    cleanup()
+  })
 
   const cleanup = useCallback(() => {
-    unobserve.forEach((callback) => callback())
-    unobserve.clear()
-  }, [unobserve])
+    subscribers.forEach((subscriber) => subscriber.unobserve())
+    subscribers.clear()
+  }, [subscribers])
 
   const observeElement = useCallback(
     (element: Element | null) => {
@@ -28,22 +40,23 @@ export const useObserver = (observerInit: ObserverInit) => {
         return
       }
 
-      if (unobserve.has(element)) {
-        unobserve.get(element)?.()
+      if (subscribers.has(element)) {
+        subscribers.get(element)?.unobserve()
       }
+      const subscriber = observe(
+        element,
+        (entry) => savedObserverCallback.current(entry),
+        observerInit
+      )
 
-      unobserve.set(element, observe(element, setEntry, observerInit))
+      subscribers.set(element, subscriber)
     },
-    [observerInit, unobserve]
+    [observerInit, subscribers]
   )
 
-  useUnMount(() => {
-    cleanup()
-  })
-
   if (isServer) {
-    return { entry: null, observeElement: noop, cleanup: noop }
+    return { observeElement: noop, cleanup: noop }
   }
 
-  return { entry, observeElement, cleanup }
+  return { observeElement, cleanup }
 }

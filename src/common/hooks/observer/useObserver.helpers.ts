@@ -4,7 +4,7 @@ export type ObserverInit = Pick<
   'rootMargin' | 'threshold'
 >
 
-type ObserverCallback = (entry: IntersectionObserverEntry) => void
+export type ObserverCallback = (entry: IntersectionObserverEntry) => void
 
 type ObserverData = {
   readonly name: string
@@ -54,14 +54,16 @@ export const createObserver = () => {
     elementToCallback.set(element, observerCallback)
     observer.observe(element)
 
-    return () => {
-      observer.unobserve(element)
-      elementToCallback.delete(element)
+    return {
+      unobserve() {
+        observer.unobserve(element)
+        elementToCallback.delete(element)
 
-      if (elementToCallback.size === 0) {
-        observer.disconnect()
-        observers.delete(name)
-      }
+        if (elementToCallback.size === 0) {
+          observer.disconnect()
+          observers.delete(name)
+        }
+      },
     }
   }
 

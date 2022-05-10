@@ -15,25 +15,12 @@ type Props = {
   readonly children: ReactNode
 }
 
-type ErrorSubscriber = Exclude<Parameters<typeof useError>[0], undefined>
-type ErrorData = Parameters<ErrorSubscriber>[0]
-
 type AlertType = 'success' | 'error' | 'warning'
-type AlertState =
-  | {
-      readonly type: 'success'
-      readonly data: string
-    }
-  | { readonly type: 'error'; readonly data: ErrorData }
-  | { readonly type: 'warning'; readonly data: string }
-
+type AlertState = { readonly type: AlertType; readonly message: string }
 type AlertContextValue = {
   readonly alertState: AlertState | null
   readonly hideAlert: Noop
-  readonly showAlert: <TType extends AlertType>(
-    type: TType,
-    data: LookUp<AlertState, TType>['data']
-  ) => void
+  readonly showAlert: (type: AlertType, message: string) => void
 }
 
 const AlertContext = createContext<AlertContextValue | undefined>(undefined)
@@ -47,17 +34,15 @@ const AlertProvider = ({ children }: Props) => {
     setAlertState(null)
   }, [])
 
-  // @ts-ignore
   const showAlert: AlertContextValue['showAlert'] = useCallback(
-    (type, data) => {
-      // @ts-ignore
-      setAlertState({ type, data })
+    (type, message) => {
+      setAlertState({ type, message })
     },
     []
   )
 
   useError((error) => {
-    showAlert('error', error)
+    showAlert('error', error.message)
   })
 
   useTimeout(hideAlert, ALERT_TIMEOUT)

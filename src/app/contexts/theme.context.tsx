@@ -51,7 +51,7 @@ const ThemeProvider = ({ children }: Props) => {
   })
 
   useUpdate(() => {
-    // logic of toggling theme
+    document.documentElement.setAttribute('data-theme', theme)
   }, [theme])
 
   const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme])

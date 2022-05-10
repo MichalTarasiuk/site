@@ -3,13 +3,12 @@ import { createContext, useContext, useCallback, useMemo } from 'react'
 import type { ReactNode } from 'react'
 
 import { useMount } from 'common/hooks/hooks'
-import { ResponseError } from 'common/utils/fetcher.utility'
 
 type Props = {
   readonly children: ReactNode
 }
 
-type Subscriber = (error: ReturnType<typeof readError>) => void
+type Subscriber = (error: Error) => void
 
 type ErrorContextValue = {
   readonly subscribe: (subscriber: Subscriber) => Noop
@@ -19,23 +18,6 @@ type ErrorContextValue = {
 const ErrorContext = createContext<ErrorContextValue | undefined>(undefined)
 
 const isError = (value: unknown): value is Error => value instanceof Error
-const isResponseError = (value: unknown): value is ResponseError =>
-  value instanceof ResponseError
-
-const readError = (error: Error) => {
-  if (isResponseError(error)) {
-    return {
-      name: 'ResponseError',
-      message: error.message,
-      status: error.status,
-    } as const
-  }
-
-  return {
-    name: 'Error',
-    message: error.message,
-  } as const
-}
 
 const ErrorProvider = ({ children }: Props) => {
   const subscribers = useMemo(() => new Set<Subscriber>(), [])
@@ -43,9 +25,7 @@ const ErrorProvider = ({ children }: Props) => {
   const catchError: ErrorContextValue['catchError'] = useCallback(
     (possibleError) => {
       if (isError(possibleError)) {
-        const error = readError(possibleError)
-
-        subscribers.forEach((subscriber) => subscriber(error))
+        subscribers.forEach((subscriber) => subscriber(possibleError))
       }
     },
     [subscribers]

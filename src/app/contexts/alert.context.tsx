@@ -16,7 +16,9 @@ type Props = {
 }
 
 type AlertType = 'success' | 'error' | 'warning'
+
 type AlertState = { readonly type: AlertType; readonly message: string }
+
 type AlertContextValue = {
   readonly alertState: AlertState | null
   readonly hideAlert: Noop

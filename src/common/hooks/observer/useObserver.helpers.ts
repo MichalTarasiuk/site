@@ -12,7 +12,7 @@ type ObserverData = {
   readonly elementToCallback: Map<Element, ObserverCallback>
 }
 
-export const createObserver = () => {
+export const createObservers = () => {
   const observers = new Map<string, ObserverData>()
 
   const createObserver = (observerInit?: ObserverInit) => {

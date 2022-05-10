@@ -1,7 +1,7 @@
 /* eslint-disable functional/prefer-readonly-type -- required functionality */
 import { useMemo, useCallback } from 'react'
 
-import { createObserver } from './useObserver.helpers'
+import { createObservers } from './useObserver.helpers'
 
 import type { ObserverInit, ObserverCallback } from './useObserver.helpers'
 
@@ -10,7 +10,7 @@ import { noop } from 'common/utils/utils'
 
 const isServer = typeof window === 'undefined'
 
-const { observe } = createObserver()
+const { observe } = createObservers()
 
 export const useObserver = (
   observerInit: ObserverInit,

@@ -3,7 +3,15 @@ import { Html, Head, Main, NextScript } from 'next/document'
 export default function Document() {
   return (
     <Html>
-      <Head />
+      <Head>
+        <link
+          rel="preload"
+          href="/fonts/Menlo-Regular.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin=""
+        />
+      </Head>
       <body>
         <script
           dangerouslySetInnerHTML={{

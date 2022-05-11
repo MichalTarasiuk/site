@@ -1,0 +1,14 @@
+.nav {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+}
+
+.link {
+  color: var(--fc-banner);
+  text-decoration: none;
+}
+
+.link.bold {
+  font-weight: bold;
+}

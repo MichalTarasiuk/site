@@ -1,0 +1,31 @@
+:root {
+  --grey: hsl(219, 11%, 65%);
+}
+
+[data-theme='light'] {
+  :root {
+    --bg-banner: hsl(220, 14%, 96%);
+    --fc-banner: hsl(0, 0%, 0%);
+  }
+}
+
+[data-theme='dark'] {
+  :root {
+    --bg-banner: hsl(221, 39%, 11%);
+    --fc-banner: hsl(0, 0%, 100%);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-banner: hsl(220, 14%, 96%);
+    --fc-banner: hsl(0, 0%, 0%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-banner: hsl(221, 39%, 11%);
+    --fc-banner: hsl(0, 0%, 100%);
+  }
+}

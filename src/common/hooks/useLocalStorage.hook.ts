@@ -57,7 +57,7 @@ export const useLocalStorage = <TItem>(
 
   const storageListener = useEvent(
     (event: StorageEvent) => {
-      if (event.key !== key) {
+      if (sync && event.key !== key) {
         return
       }
 
@@ -71,7 +71,7 @@ export const useLocalStorage = <TItem>(
         console.error(error)
       }
     },
-    [key]
+    [key, sync]
   )
 
   useMount(() => {

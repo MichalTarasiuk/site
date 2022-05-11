@@ -1,1 +1,6 @@
 @use 'reset.styles.scss';
+@use 'variables.styles.scss';
+
+body {
+  font-family: 'Menlo-Regular';
+}

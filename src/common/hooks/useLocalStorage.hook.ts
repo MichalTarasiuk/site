@@ -75,12 +75,10 @@ export const useLocalStorage = <TItem>(
   )
 
   useMount(() => {
-    if (sync) {
-      window.addEventListener('storage', storageListener)
+    window.addEventListener('storage', storageListener)
 
-      return () => {
-        window.removeEventListener('storage', storageListener)
-      }
+    return () => {
+      window.removeEventListener('storage', storageListener)
     }
   })
 

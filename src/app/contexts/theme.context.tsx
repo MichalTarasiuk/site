@@ -28,7 +28,8 @@ const inverntion = (theme: Theme) => (theme === 'light' ? 'dark' : 'light')
 const ThemeProvider = ({ children }: Props) => {
   const [theme, setTheme] = useLocalStorage<Theme>(
     LOCAL_STORAGE_NAME,
-    DEFAULT_THEME
+    DEFAULT_THEME,
+    { sync: true }
   )
 
   const toggleTheme: ThemeContextValue['toggleTheme'] = useCallback(

@@ -1,17 +1,27 @@
 import { useState, useCallback } from 'react'
 
-import { useMount } from 'common/hooks/hooks'
+import { useEvent, useMount } from 'common/hooks/hooks'
 import { isFunction } from 'common/utils/utils'
 
 type ResolveableItem<TItem> = TItem | ((item: TItem) => TItem)
+
+type LocalStorageInit = {
+  readonly sync?: boolean
+}
 
 const resolveItem = <TItem>(
   resolveableItem: ResolveableItem<TItem>,
   item: TItem
 ) => (isFunction(resolveableItem) ? resolveableItem(item) : resolveableItem)
 
-export const useLocalStorage = <TItem>(key: string, defaultItem: TItem) => {
-  const [item, setItemInner] = useState<TItem>(() => {
+export const useLocalStorage = <TItem>(
+  key: string,
+  defaultItem: TItem,
+  localStorageInit?: LocalStorageInit
+) => {
+  const { sync } = localStorageInit || {}
+
+  const [item, setItem] = useState<TItem>(() => {
     try {
       const item = window.localStorage.getItem(key)
 
@@ -27,25 +37,13 @@ export const useLocalStorage = <TItem>(key: string, defaultItem: TItem) => {
     }
   })
 
-  useMount(() => {
-    const listener = (event: StorageEvent) => {
-      if (event.key === key && event.newValue) {
-        const item = event.newValue as unknown as TItem
-
-        setItemInner(item)
-      }
-    }
-
-    return () => {
-      window.removeEventListener('storage', listener)
-    }
-  })
-
-  const setItem = useCallback(
+  const setStoredItem = useCallback(
     (resolveableItem: ResolveableItem<TItem>) => {
       try {
         const resolvedItem = resolveItem(resolveableItem, item)
         const stringifyItem = JSON.stringify(resolvedItem)
+
+        setItem(resolvedItem)
 
         window.localStorage.setItem(key, stringifyItem)
 
@@ -57,5 +55,34 @@ export const useLocalStorage = <TItem>(key: string, defaultItem: TItem) => {
     [key, item]
   )
 
-  return [item, setItem] as const
+  const storageListener = useEvent(
+    (event: StorageEvent) => {
+      if (event.key !== key) {
+        return
+      }
+
+      try {
+        const newItem = event.newValue
+
+        if (newItem) {
+          setItem(JSON.parse(newItem) as TItem)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    [key]
+  )
+
+  useMount(() => {
+    if (sync) {
+      window.addEventListener('storage', storageListener)
+
+      return () => {
+        window.removeEventListener('storage', storageListener)
+      }
+    }
+  })
+
+  return [item, setStoredItem] as const
 }

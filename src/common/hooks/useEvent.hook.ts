@@ -4,22 +4,7 @@ import { useMount } from './useMount.hook'
 
 import type { DependencyList } from 'react'
 
-const dependencyListIsEqual = (
-  dependencyList: DependencyList,
-  nextDependencyList: DependencyList
-) => {
-  if (dependencyList.length !== nextDependencyList.length) {
-    return false
-  }
-
-  for (const [key, value] of nextDependencyList.entries()) {
-    if (dependencyList[key] !== value) {
-      return false
-    }
-  }
-
-  return true
-}
+import { shallowEqual } from 'common/utils/utils'
 
 export const useEvent = <TFn extends (...args: readonly any[]) => unknown>(
   fn: TFn,
@@ -31,7 +16,7 @@ export const useEvent = <TFn extends (...args: readonly any[]) => unknown>(
 
   if (
     isMounted.current &&
-    !dependencyListIsEqual(savedDependencyList.current, dependencyList)
+    !shallowEqual(savedDependencyList.current, dependencyList)
   ) {
     savedFn.current = fn
     savedDependencyList.current = dependencyList

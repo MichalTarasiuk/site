@@ -3,22 +3,7 @@ import NProgress, { start, done } from 'nprogress'
 import { useRef } from 'react'
 
 import { useMount } from 'common/hooks/hooks'
-
-const shallowEqual = (a: PlainObject, b: PlainObject) => {
-  const keys = Object.keys(a)
-
-  if (keys.length !== Object.keys(b).length) {
-    return false
-  }
-
-  for (const key in a) {
-    if (a[key] !== b[key]) {
-      return false
-    }
-  }
-
-  return true
-}
+import { shallowEqual } from 'common/utils/utils'
 
 export const useProgress = (options: Partial<NProgress.NProgressOptions>) => {
   const router = useRouter()

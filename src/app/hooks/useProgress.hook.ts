@@ -10,7 +10,7 @@ export const useProgress = (options: Partial<NProgress.NProgressOptions>) => {
   const savedOptions = useRef(options)
   const isMounted = useRef(false)
 
-  if (isMounted && !shallowEqual(savedOptions.current, options)) {
+  if (isMounted.current && !shallowEqual(savedOptions.current, options)) {
     NProgress.configure(options)
 
     savedOptions.current = options

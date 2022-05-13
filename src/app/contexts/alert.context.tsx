@@ -1,15 +1,10 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useMemo,
-} from 'react'
+import { useState, useCallback, useMemo } from 'react'
 
 import type { ReactNode } from 'react'
 
 import { useError } from 'app/contexts/contexts'
 import { useTimeout } from 'common/hooks/hooks'
+import { createSafeContext } from 'common/utils/utils'
 
 type Props = {
   readonly children: ReactNode
@@ -25,7 +20,8 @@ type AlertContextValue = {
   readonly showAlert: (type: AlertType, message: string) => void
 }
 
-const AlertContext = createContext<AlertContextValue | undefined>(undefined)
+const [AlertInnerProvider, useAlert] =
+  createSafeContext<AlertContextValue>('alert')
 
 const ALERT_TIMEOUT = 3000
 
@@ -58,17 +54,7 @@ const AlertProvider = ({ children }: Props) => {
     [alertState, hideAlert, showAlert]
   )
 
-  return <AlertContext.Provider value={value}>{children}</AlertContext.Provider>
-}
-
-const useAlert = () => {
-  const context = useContext(AlertContext)
-
-  if (context === undefined) {
-    throw new Error('useAlert must be used within a AlertProvider')
-  }
-
-  return context
+  return <AlertInnerProvider value={value}>{children}</AlertInnerProvider>
 }
 
 export { AlertProvider, useAlert }

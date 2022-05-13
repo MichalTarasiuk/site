@@ -1,8 +1,9 @@
-import { createContext, useContext, useMemo, useCallback } from 'react'
+import { useMemo, useCallback } from 'react'
 
 import type { ReactNode } from 'react'
 
 import { useLocalStorage, useMount, useUpdate } from 'common/hooks/hooks'
+import { createSafeContext } from 'common/utils/utils'
 
 type Props = {
   readonly children: ReactNode
@@ -14,7 +15,8 @@ type ThemeContextValue = {
   readonly toggleTheme: () => void
 }
 
-const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
+const [ThemeInnerProvider, useTheme] =
+  createSafeContext<ThemeContextValue>('theme')
 
 const LOCAL_STORAGE_NAME = 'theme'
 const DEFAULT_THEME = 'light'
@@ -57,17 +59,7 @@ const ThemeProvider = ({ children }: Props) => {
 
   const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme])
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
-}
-
-const useTheme = () => {
-  const context = useContext(ThemeContext)
-
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider')
-  }
-
-  return context
+  return <ThemeInnerProvider value={value}>{children}</ThemeInnerProvider>
 }
 
 export { ThemeProvider, useTheme }

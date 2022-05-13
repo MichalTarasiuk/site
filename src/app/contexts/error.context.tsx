@@ -1,8 +1,9 @@
-import { createContext, useContext, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import type { ReactNode } from 'react'
 
 import { useMount } from 'common/hooks/hooks'
+import { createSafeContext } from 'common/utils/utils'
 
 type Props = {
   readonly children: ReactNode
@@ -15,7 +16,8 @@ type ErrorContextValue = {
   readonly catchError: (possibleError: unknown) => void
 }
 
-const ErrorContext = createContext<ErrorContextValue | undefined>(undefined)
+const [ErrorInnerProvider, useInnerError] =
+  createSafeContext<ErrorContextValue>('error')
 
 const isError = (value: unknown): value is Error => value instanceof Error
 
@@ -50,15 +52,11 @@ const ErrorProvider = ({ children }: Props) => {
     [catchError, subscribe]
   )
 
-  return <ErrorContext.Provider value={value}>{children}</ErrorContext.Provider>
+  return <ErrorInnerProvider value={value}>{children}</ErrorInnerProvider>
 }
 
 const useError = (subscriber?: Subscriber) => {
-  const context = useContext(ErrorContext)
-
-  if (context === undefined) {
-    throw new Error('useError must be used within a ErrorProvider')
-  }
+  const context = useInnerError()
 
   const { subscribe, ...restContext } = context
 

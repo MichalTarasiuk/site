@@ -15,7 +15,7 @@ type Props = {
 const fistname = author.fullname.split(' ')[0]
 
 const pathToTile: Record<string, string> = {
-  '/': `hey, i'm ${fistname}! 🔥`,
+  '/': `hey, i'm ${fistname}!`,
   '/snippets': 'snippets',
   '404': '404',
 }

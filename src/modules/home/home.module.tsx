@@ -3,7 +3,7 @@ import Styles from './homeModule.module.scss'
 export const HomePage = () => {
   return (
     <div className={Styles.content}>
-      <p>Welcome to my digital garden! 👋🏻</p>
+      <p>Welcome to my digital garden!</p>
       <br />
       <p>
         I am a frontend from Lublin. In the future I plan to develop towards

@@ -1,25 +1,23 @@
+import { useIntl } from 'react-intl'
+
 import Styles from './homeModule.module.scss'
 
+import { messages } from 'locales/translations'
+
 export const HomePage = () => {
+  const intl = useIntl()
+
   return (
     <div className={Styles.content}>
-      <p>Welcome to my digital garden!</p>
+      <p>{intl.formatMessage(messages.homeDescriptionWelcome)}</p>
       <br />
-      <p>
-        I am a frontend from Lublin. In the future I plan to develop towards
-        backend, mainly working with React, Next.js and TypeScript.
-      </p>
+      <p>{intl.formatMessage(messages.homeDescriptionPlans)}</p>
       <br />
-      <p>
-        This space is my personal corner of the Internet. I consider it more of
-        a digital garden than a blog. This means that sometimes I write things
-        that are underdeveloped as I learn and develop. I think doing it
-        publicly is more important than collecting drafts of your posts.
-      </p>
+      <p>{intl.formatMessage(messages.homeDescriptionIdea)}</p>
       <br />
-      <p>If you want to contact me please contact me on Discord.</p>
+      <p>{intl.formatMessage(messages.homeDescriptionContact)}</p>
       <br />
-      <p>Thanks for stopping by!</p>
+      <p>{intl.formatMessage(messages.homeDescriptionEnd)}</p>
     </div>
   )
 }

@@ -1,6 +1,5 @@
 import Cn from 'classnames'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import { Nav } from '../components'
 
@@ -11,8 +10,7 @@ import { author } from 'data/author.data'
 import { routes } from 'data/routes.data'
 
 export const Header = () => {
-  const paths = usePaths()
-  const { pathname } = useRouter()
+  const { paths, pathname } = usePaths()
 
   return (
     <header className={Styles.header}>
@@ -20,7 +18,7 @@ export const Header = () => {
         <Link href={paths.url()}>
           <a
             className={Cn(Styles.link, {
-              [Styles.bold]: false,
+              [Styles.bold]: pathname === routes.home,
             })}>
             {author.fullname.toLowerCase()}
           </a>

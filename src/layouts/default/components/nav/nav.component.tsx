@@ -12,7 +12,7 @@ import { messages } from 'locales/translations'
 
 export const Nav = () => {
   const intl = useIntl()
-  const paths = usePaths()
+  const { paths } = usePaths()
   const { pathname } = useRouter()
 
   return (
@@ -22,7 +22,7 @@ export const Nav = () => {
           <Link href={paths.snippets.url()}>
             <a
               className={Cn(Styles.link, {
-                [Styles.bold]: false,
+                [Styles.bold]: pathname.startsWith(routes.snippets.index),
               })}>
               {intl.formatMessage(messages.snippets)}
             </a>

@@ -15,6 +15,7 @@ type Props = {
 }
 
 const DEFAULT_PAGE_NAME = 'home'
+const FALLBACK_PAGE_NAME = 'not-found'
 
 const DefaultLayout = ({ children }: Props) => {
   const intl = useIntl()
@@ -28,7 +29,7 @@ const DefaultLayout = ({ children }: Props) => {
   const pageNameToTitle: Record<string, string> = useMemo(
     () => ({
       home: intl.formatMessage(messages.homeTitle),
-      fallback: '404',
+      fallback: FALLBACK_PAGE_NAME,
     }),
     [intl]
   )

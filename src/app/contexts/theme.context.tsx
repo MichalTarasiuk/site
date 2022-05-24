@@ -2,6 +2,7 @@ import { useMemo, useCallback } from 'react'
 
 import type { ReactNode } from 'react'
 
+import { isClientEnvironment } from 'common/constants/constants'
 import { useLocalStorage, useMount, useUpdate } from 'common/hooks/hooks'
 import { createSafeContext } from 'common/utils/utils'
 
@@ -21,9 +22,10 @@ const [ThemeInnerProvider, useTheme] =
 const LOCAL_STORAGE_NAME = 'theme'
 const DEFAULT_THEME = 'light'
 
-const isBrowser = typeof window !== 'undefined'
 const query = `(prefers-color-scheme: ${DEFAULT_THEME})`
-const mediaQueryList = isBrowser ? window.matchMedia(query) : undefined
+const mediaQueryList = isClientEnvironment
+  ? window.matchMedia(query)
+  : undefined
 
 const inverntion = (theme: Theme) => (theme === 'light' ? 'dark' : 'light')
 

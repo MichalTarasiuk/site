@@ -5,10 +5,9 @@ import { createObservers } from './useObserver.helpers'
 
 import type { ObserverInit, ObserverCallback } from './useObserver.helpers'
 
+import { isServerEnvironment } from 'common/constants/constants'
 import { useUnMount } from 'common/hooks/hooks'
 import { noop } from 'common/utils/utils'
-
-const isServer = typeof window === 'undefined'
 
 const { observe } = createObservers()
 
@@ -43,7 +42,7 @@ export const useObserver = (
 
   useUnMount(cleanup)
 
-  if (isServer) {
+  if (isServerEnvironment) {
     return { observeElement: noop, cleanup: noop }
   }
 

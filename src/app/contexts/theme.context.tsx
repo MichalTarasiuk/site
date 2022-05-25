@@ -16,7 +16,7 @@ type ThemeContextValue = {
   readonly toggleTheme: () => void
 }
 
-const [ThemeInnerProvider, useTheme] =
+const [ThemeProviderImpl, useTheme] =
   createSafeContext<ThemeContextValue>('theme')
 
 const LOCAL_STORAGE_NAME = 'theme'
@@ -61,7 +61,7 @@ const ThemeProvider = ({ children }: Props) => {
 
   const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme])
 
-  return <ThemeInnerProvider value={value}>{children}</ThemeInnerProvider>
+  return <ThemeProviderImpl value={value}>{children}</ThemeProviderImpl>
 }
 
 export { ThemeProvider, useTheme }

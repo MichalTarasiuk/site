@@ -18,7 +18,7 @@ type RegionContextValue = {
   readonly locale: string
 }
 
-const [RegionProviderInner, useRegion] =
+const [RegionProviderImpl, useRegion] =
   createSafeContext<RegionContextValue>('region')
 
 const nameToLocale: Record<string, Locale> = {
@@ -41,14 +41,14 @@ const RegionProvider = ({ children }: Props) => {
   const value = useMemo(() => ({ locale }), [locale])
 
   return (
-    <RegionProviderInner value={value}>
+    <RegionProviderImpl value={value}>
       <IntlProvider
         locale={locale}
         messages={messages}
         defaultLocale={DEFAULT_LOCALE}>
         {children}
       </IntlProvider>
-    </RegionProviderInner>
+    </RegionProviderImpl>
   )
 }
 

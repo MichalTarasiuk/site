@@ -18,7 +18,7 @@ type TagContextValue = {
 const [TagProviderImpl, useTag] = createSafeContext<TagContextValue>('tag')
 
 const TagProvider = ({ children }: Props) => {
-  const tags = useMemo(() => new Map(), [])
+  const tags = useMemo(() => new Map<string, boolean>(), [])
 
   const force = useForce()
 

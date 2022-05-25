@@ -2,7 +2,7 @@ import { useIntl } from 'react-intl'
 
 import Styles from './home.module.scss'
 
-import { messages } from 'locales/translations'
+import { messages } from 'src/locales/translations'
 
 export const HomePage = () => {
   const intl = useIntl()

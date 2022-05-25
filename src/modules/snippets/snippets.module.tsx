@@ -2,16 +2,16 @@ import Styles from './snippets.module.scss'
 
 import type { InferGetStaticPropsType } from 'next'
 
-import { useMount } from 'common/hooks/hooks'
-import { TagProvider, useTag } from 'modules/snippets/contexts/contexts'
+import { useMount } from 'src/common/hooks/hooks'
+import { TagProvider, useTag } from 'src/modules/snippets/contexts/contexts'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 const SnippetsPageImpl = (props: Props) => {
-  const { setInitialTags } = useTag()
+  const { setTags } = useTag()
 
   useMount(() => {
-    setInitialTags([])
+    setTags([])
   })
 
   return <div className={Styles.view}></div>

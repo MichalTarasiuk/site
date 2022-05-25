@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-import { useUpdate } from 'common/hooks/hooks'
+import { useUpdate } from 'src/common/hooks/hooks'
 
 export const useTimeout = (
   fn: ArrowFunction,

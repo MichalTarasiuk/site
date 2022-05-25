@@ -1,10 +1,10 @@
 import { useMemo, useCallback } from 'react'
 
-import type { Snippet } from 'modules/snippets/snippets.types'
 import type { ReactNode } from 'react'
+import type { Snippet } from 'scripts/resources/resources.types'
 
-import { useForce } from 'common/hooks/hooks'
-import { createSafeContext } from 'common/utils/utils'
+import { useForce } from 'src/common/hooks/hooks'
+import { createSafeContext } from 'src/common/utils/utils'
 
 type Props = {
   readonly children: ReactNode
@@ -12,7 +12,7 @@ type Props = {
 
 type TagContextValue = {
   readonly toggleTag: (name: string) => void
-  readonly setInitialTags: (snippets: readonly Snippet[]) => void
+  readonly setTags: (snippets: readonly Snippet[]) => void
 }
 
 const fileExtenstionToTag = {
@@ -28,7 +28,7 @@ const TagProvider = ({ children }: Props) => {
 
   const force = useForce()
 
-  const setInitialTags: TagContextValue['setInitialTags'] = useCallback(
+  const setTags: TagContextValue['setTags'] = useCallback(
     (snippets) => {
       snippets.forEach(({ fileEextension }) => {
         const tag = fileExtenstionToTag[fileEextension]
@@ -59,10 +59,10 @@ const TagProvider = ({ children }: Props) => {
 
   const value = useMemo(
     () => ({
-      setInitialTags,
+      setTags,
       toggleTag,
     }),
-    [setInitialTags, toggleTag]
+    [setTags, toggleTag]
   )
 
   return <TagProviderImpl value={value}>{children}</TagProviderImpl>

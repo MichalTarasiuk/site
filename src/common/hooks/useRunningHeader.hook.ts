@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react'
 
-import { useObserver } from 'common/hooks/hooks'
+import { useObserver } from 'src/common/hooks/hooks'
 
 const observerInit = {
   threshold: 1,

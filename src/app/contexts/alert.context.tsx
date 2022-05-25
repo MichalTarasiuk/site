@@ -2,9 +2,9 @@ import { useState, useCallback, useMemo } from 'react'
 
 import type { ReactNode } from 'react'
 
-import { useError } from 'app/contexts/contexts'
-import { useTimeout } from 'common/hooks/hooks'
-import { createSafeContext } from 'common/utils/utils'
+import { useError } from 'src/app/contexts/contexts'
+import { useTimeout } from 'src/common/hooks/hooks'
+import { createSafeContext } from 'src/common/utils/utils'
 
 type Props = {
   readonly children: ReactNode

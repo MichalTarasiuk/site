@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 
-import { useRegion } from 'app/contexts/contexts'
-import { compact } from 'common/utils/utils'
+import { useRegion } from 'src/app/contexts/contexts'
+import { compact } from 'src/common/utils/utils'
 
 export const usePaths = () => {
   const { locale } = useRegion()

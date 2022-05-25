@@ -2,9 +2,9 @@ import { useMemo, useCallback } from 'react'
 
 import type { ReactNode } from 'react'
 
-import { isClientEnvironment } from 'common/constants/constants'
-import { useLocalStorage, useMount, useUpdate } from 'common/hooks/hooks'
-import { createSafeContext } from 'common/utils/utils'
+import { isClientEnvironment } from 'src/common/constants/constants'
+import { useLocalStorage, useMount, useUpdate } from 'src/common/hooks/hooks'
+import { createSafeContext } from 'src/common/utils/utils'
 
 type Props = {
   readonly children: ReactNode

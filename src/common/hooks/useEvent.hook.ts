@@ -4,7 +4,7 @@ import { useMount } from './useMount.hook'
 
 import type { DependencyList } from 'react'
 
-import { shallowEqual } from 'common/utils/utils'
+import { shallowEqual } from 'src/common/utils/utils'
 
 export const useEvent = <TFn extends (...args: readonly any[]) => unknown>(
   fn: TFn,

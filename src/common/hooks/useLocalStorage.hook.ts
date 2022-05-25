@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 
-import { useEvent, useMount } from 'common/hooks/hooks'
-import { isFunction } from 'common/utils/utils'
+import { useEvent, useMount } from 'src/common/hooks/hooks'
+import { isFunction } from 'src/common/utils/utils'
 
 type ResolveableItem<TItem> = TItem | ((item: TItem) => TItem)
 

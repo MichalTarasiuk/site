@@ -5,9 +5,9 @@ import { createObservers } from './useObserver.helpers'
 
 import type { ObserverInit, ObserverCallback } from './useObserver.helpers'
 
-import { isServerEnvironment } from 'common/constants/constants'
-import { useUnMount } from 'common/hooks/hooks'
-import { noop } from 'common/utils/utils'
+import { isServerEnvironment } from 'src/common/constants/constants'
+import { useUnMount } from 'src/common/hooks/hooks'
+import { noop } from 'src/common/utils/utils'
 
 const { observe } = createObservers()
 

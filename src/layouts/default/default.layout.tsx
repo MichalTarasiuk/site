@@ -7,8 +7,8 @@ import Styles from './defaultLayout.module.scss'
 
 import type { ReactNode } from 'react'
 
-import { compact } from 'common/utils/utils'
-import { messages } from 'locales/translations'
+import { compact } from 'src/common/utils/utils'
+import { messages } from 'src/locales/translations'
 
 type Props = {
   readonly children: ReactNode

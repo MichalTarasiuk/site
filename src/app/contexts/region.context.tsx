@@ -4,9 +4,9 @@ import { IntlProvider } from 'react-intl'
 
 import type { ReactNode } from 'react'
 
-import { createSafeContext } from 'common/utils/utils'
-import * as EnUSLocale from 'locales/en-US.locale.json'
-import * as PlLocale from 'locales/pl-PL.locale.json'
+import { createSafeContext } from 'src/common/utils/utils'
+import * as EnUSLocale from 'src/locales/en-US.locale.json'
+import * as PlLocale from 'src/locales/pl-PL.locale.json'
 
 type Props = {
   readonly children: ReactNode

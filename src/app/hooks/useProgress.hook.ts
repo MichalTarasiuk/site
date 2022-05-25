@@ -2,8 +2,8 @@ import { useRouter } from 'next/router'
 import NProgress, { start, done } from 'nprogress'
 import { useRef } from 'react'
 
-import { useMount } from 'common/hooks/hooks'
-import { shallowEqual } from 'common/utils/utils'
+import { useMount } from 'src/common/hooks/hooks'
+import { shallowEqual } from 'src/common/utils/utils'
 
 export const useProgress = (options: Partial<NProgress.NProgressOptions>) => {
   const router = useRouter()

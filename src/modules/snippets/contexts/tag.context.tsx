@@ -15,6 +15,12 @@ type TagContextValue = {
   readonly setInitialTags: (snippets: readonly Snippet[]) => void
 }
 
+const fileExtenstionToTag = {
+  js: 'javascript',
+  ts: 'typescript',
+  css: 'css',
+}
+
 const [TagProviderImpl, useTag] = createSafeContext<TagContextValue>('tag')
 
 const TagProvider = ({ children }: Props) => {
@@ -24,11 +30,12 @@ const TagProvider = ({ children }: Props) => {
 
   const setInitialTags: TagContextValue['setInitialTags'] = useCallback(
     (snippets) => {
-      snippets.forEach((snippet) => {
-        const has = tags.has(snippet.tag)
+      snippets.forEach(({ fileEextension }) => {
+        const tag = fileExtenstionToTag[fileEextension]
+        const has = tags.has(tag)
 
         if (!has) {
-          tags.set(snippet.tag, false)
+          tags.set(tag, false)
         }
       })
     },

@@ -9,7 +9,9 @@ const rootPath = process.cwd()
 
 const MDX_PATTERN = /\.mdx?$/
 
-export const createResourceReader = (resourceName: ResourceName) => {
+export const createResourceReader = <TType extends PlainObject>(
+  resourceName: ResourceName
+) => {
   const resourcePath = Path.join(rootPath, `resources`, resourceName)
 
   const readDir = (path: string) => {
@@ -28,7 +30,7 @@ export const createResourceReader = (resourceName: ResourceName) => {
       return { content, meta }
     })
 
-    return resources
+    return resources as unknown as readonly TType[]
   }
 
   const getResource = (name: string) => {
@@ -37,7 +39,7 @@ export const createResourceReader = (resourceName: ResourceName) => {
 
     const { content, data: meta } = Matter(fileContent)
 
-    return { content, meta }
+    return { content, meta } as unknown as TType
   }
 
   return { getAllResources, getResource }

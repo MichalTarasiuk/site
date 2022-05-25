@@ -1,3 +1,5 @@
 import { createResourceReader } from './createResourceReader.script'
 
-export const snippetsReader = createResourceReader('snippets')
+import type { Snippet } from './resources.types'
+
+export const snippetsReader = createResourceReader<Snippet>('snippets')

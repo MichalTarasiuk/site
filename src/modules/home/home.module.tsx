@@ -1,6 +1,6 @@
 import { useIntl } from 'react-intl'
 
-import Styles from './homeModule.module.scss'
+import Styles from './home.module.scss'
 
 import { messages } from 'locales/translations'
 

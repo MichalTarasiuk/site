@@ -30,6 +30,7 @@ const DefaultLayout = ({ children }: Props) => {
   const pageNameToTitle: Record<string, string> = useMemo(
     () => ({
       home: intl.formatMessage(messages.homeTitle),
+      snippets: intl.formatMessage(messages.snippetsTitle),
       [NOT_FOUND_CODE]: FALLBACK_PAGE_NAME,
     }),
     [intl]

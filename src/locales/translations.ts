@@ -46,4 +46,9 @@ export const messages = defineMessages({
     description: 'Home page description',
     defaultMessage: 'Thanks for visiting!',
   },
+  snippetsTitle: {
+    id: 'app.snippets.banner.title',
+    description: 'Snippets page title',
+    defaultMessage: 'Snippets',
+  },
 })

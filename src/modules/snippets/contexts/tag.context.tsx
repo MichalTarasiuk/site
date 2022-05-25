@@ -25,7 +25,8 @@ const fileExtenstionToTag = {
 const [TagProviderImpl, useTag] = createSafeContext<TagContextValue>('tag')
 
 const TagProvider = ({ children }: Props) => {
-  const tags = useMemo(() => new Map<string, boolean>(), [])
+  const tagsMap = useMemo(() => new Map<string, boolean>(), [])
+  const tags = useMemo(() => fromEntries([...tagsMap.entries()]), [tagsMap])
 
   const force = useForce()
 
@@ -33,34 +34,34 @@ const TagProvider = ({ children }: Props) => {
     (snippets) => {
       snippets.forEach(({ fileEextension }) => {
         const tag = fileExtenstionToTag[fileEextension]
-        const has = tags.has(tag)
+        const has = tagsMap.has(tag)
 
         if (!has) {
-          tags.set(tag, false)
+          tagsMap.set(tag, false)
         }
       })
     },
-    [tags]
+    [tagsMap]
   )
 
   const toggleTag: TagContextValue['toggleTag'] = useCallback(
     (name) => {
-      const isActive = tags.get(name)
+      const isActive = tagsMap.get(name)
 
       if (isActive) {
-        tags.set(name, false)
+        tagsMap.set(name, false)
       } else {
-        tags.set(name, true)
+        tagsMap.set(name, true)
       }
 
       force()
     },
-    [tags, force]
+    [tagsMap, force]
   )
 
   const value = useMemo(
     () => ({
-      tags: fromEntries([...tags.entries()]),
+      tags,
       setTags,
       toggleTag,
     }),

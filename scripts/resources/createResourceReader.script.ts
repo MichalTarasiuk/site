@@ -3,44 +3,75 @@ import Path from 'path'
 
 import Matter from 'gray-matter'
 
+import type { Snippet } from './resources.types'
+
 type ResourceName = 'snippets'
 
-const rootPath = process.cwd()
+type Resources = {
+  readonly snippets: Snippet
+}
 
+type Reader<TType extends PlainObject> = {
+  readonly getAllResources: () => readonly TType[]
+  readonly getResource: (name: string) => TType
+}
+
+const rootPath = process.cwd()
 const MDX_PATTERN = /\.mdx?$/
 
-export const createResourceReader = <TType extends PlainObject>(
-  resourceName: ResourceName
-) => {
-  const resourcePath = Path.join(rootPath, `resources`, resourceName)
+export const createResourceReader = (() => {
+  const resourceReaders = new Map<string, unknown>()
 
-  const readDir = (path: string) => {
-    const files = Fs.readdirSync(path).filter((file) => MDX_PATTERN.test(file))
+  return <
+    TResourceName extends ResourceName,
+    TResource extends Resources[TResourceName],
+    TReader extends Reader<TResource>
+  >(
+    resourceName: TResourceName
+  ) => {
+    if (resourceReaders.has(resourceName)) {
+      return resourceReaders.get(resourceName) as TReader
+    }
 
-    return files
-  }
+    const resourcePath = Path.join(rootPath, `resources`, resourceName)
 
-  const getAllResources = () => {
-    const files = readDir(resourcePath)
-    const resources = files.map((file) => {
-      const filePath = Path.join(resourcePath, file)
+    const readDir = (path: string) => {
+      const files = Fs.readdirSync(path).filter((file) =>
+        MDX_PATTERN.test(file)
+      )
+
+      return files
+    }
+
+    const getAllResources = () => {
+      const files = readDir(resourcePath)
+      const resources = files.map((file) => {
+        const filePath = Path.join(resourcePath, file)
+        const fileContent = Fs.readFileSync(filePath, 'utf8')
+        const { content, data: meta } = Matter(fileContent)
+
+        return { content, meta }
+      })
+
+      return resources as unknown as readonly TResource[]
+    }
+
+    const getResource = (name: string) => {
+      const filePath = Path.join(resourcePath, `${name}.md`)
       const fileContent = Fs.readFileSync(filePath, 'utf8')
+
       const { content, data: meta } = Matter(fileContent)
 
-      return { content, meta }
-    })
+      return { content, meta } as unknown as TResource
+    }
 
-    return resources as unknown as readonly TType[]
+    const reader = {
+      getAllResources,
+      getResource,
+    }
+
+    resourceReaders.set(resourceName, reader)
+
+    return { getAllResources, getResource }
   }
-
-  const getResource = (name: string) => {
-    const filePath = Path.join(resourcePath, `${name}.md`)
-    const fileContent = Fs.readFileSync(filePath, 'utf8')
-
-    const { content, data: meta } = Matter(fileContent)
-
-    return { content, meta } as unknown as TType
-  }
-
-  return { getAllResources, getResource }
-}
+})()

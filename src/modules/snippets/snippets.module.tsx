@@ -2,6 +2,7 @@ import Styles from './snippets.module.scss'
 
 import type { InferGetStaticPropsType } from 'next'
 
+import { createResourceReader } from 'scripts/resources/createResourceReader.script'
 import { useMount } from 'src/common/hooks/hooks'
 import { TagProvider, useTag } from 'src/modules/snippets/contexts/contexts'
 
@@ -26,6 +27,8 @@ export const SnippetsPage = (props: Props) => {
 }
 
 export const getStaticProps = () => {
+  const snippetsReader = createResourceReader('snippets')
+
   return {
     props: {},
   }

@@ -3,7 +3,7 @@ import Styles from './snippets.module.scss'
 import type { InferGetStaticPropsType } from 'next'
 
 import { createResourceReader } from 'scripts/resources/createResourceReader.script'
-import { useMount } from 'src/common/hooks/hooks'
+import { useBeforeFirstPaint } from 'src/common/hooks/hooks'
 import { TagProvider, useTag } from 'src/modules/snippets/contexts/contexts'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
@@ -11,7 +11,7 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 const SnippetsPageImpl = ({ snippets }: Props) => {
   const { setTags } = useTag()
 
-  useMount(() => {
+  useBeforeFirstPaint(() => {
     setTags(snippets)
   })
 

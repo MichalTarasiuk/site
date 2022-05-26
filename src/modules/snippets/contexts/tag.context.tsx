@@ -11,7 +11,7 @@ type Props = {
 }
 
 type TagContextValue = {
-  readonly getTags: () => Record<string, boolean>
+  readonly tags: Record<string, boolean>
   readonly toggleTag: (name: string) => void
   readonly setTags: (snippets: readonly Snippet[]) => void
 }
@@ -26,14 +26,17 @@ const [TagProviderImpl, useTag] = createSafeContext<TagContextValue>('tag')
 
 const TagProvider = ({ children }: Props) => {
   const tagsMap = useMemo(() => new Map<string, boolean>(), [])
+  const tags: TagContextValue['tags'] = useMemo(
+    () => {
+      const formatedTags = fromEntries([...tagsMap.entries()])
+
+      return formatedTags
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- the map object is equated by reference
+    [tagsMap.size]
+  )
 
   const force = useForce()
-
-  const getTags = useCallback(() => {
-    const tags = fromEntries([...tagsMap.entries()])
-
-    return tags
-  }, [tagsMap])
 
   const setTags: TagContextValue['setTags'] = useCallback(
     (snippets) => {
@@ -45,8 +48,10 @@ const TagProvider = ({ children }: Props) => {
           tagsMap.set(tag, false)
         }
       })
+
+      force()
     },
-    [tagsMap]
+    [tagsMap, force]
   )
 
   const toggleTag: TagContextValue['toggleTag'] = useCallback(
@@ -66,11 +71,11 @@ const TagProvider = ({ children }: Props) => {
 
   const value = useMemo(
     () => ({
-      getTags,
+      tags,
       setTags,
       toggleTag,
     }),
-    [getTags, setTags, toggleTag]
+    [tags, setTags, toggleTag]
   )
 
   return <TagProviderImpl value={value}>{children}</TagProviderImpl>

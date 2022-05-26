@@ -1,0 +1,20 @@
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.tag {
+  background-color: transparent;
+  color: var(--fc-tag);
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--bg-tag);
+  }
+}
+
+.tag.active {
+  background-color: var(--bg-tag);
+}

@@ -33,7 +33,7 @@ const TagProvider = ({ children }: Props) => {
       return formatedTags
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps -- the map object is equated by reference
-    [tagsMap.size]
+    [tagsMap.size, ...tagsMap.values()]
   )
 
   const force = useForce()

@@ -1,1 +1,3 @@
-export const Snippet = () => {}
+export const Snippet = () => {
+  return null
+}

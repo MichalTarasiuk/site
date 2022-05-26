@@ -1,5 +1,5 @@
 export const fromEntries = <
-  TArray extends readonly (readonly [string, boolean])[]
+  TArray extends readonly (readonly [PropertyKey, unknown])[]
 >(
   array: TArray
 ) => Object.fromEntries(array) as Record<TArray[number][0], TArray[number][1]>

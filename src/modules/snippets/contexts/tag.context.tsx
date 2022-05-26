@@ -14,9 +14,10 @@ type TagContextValue = {
   readonly tags: Record<string, boolean>
   readonly toggleTag: (name: string) => void
   readonly setTags: (snippets: readonly Snippet[]) => void
+  readonly resetTags: Noop
 }
 
-const fileExtenstionToTag = {
+export const fileExtenstionToTag = {
   js: 'javascript',
   ts: 'typescript',
   css: 'css',
@@ -40,8 +41,8 @@ const TagProvider = ({ children }: Props) => {
 
   const setTags: TagContextValue['setTags'] = useCallback(
     (snippets) => {
-      snippets.forEach(({ meta: { fileEextension } }) => {
-        const tag = fileExtenstionToTag[fileEextension]
+      snippets.forEach(({ meta: { fileExtension } }) => {
+        const tag = fileExtenstionToTag[fileExtension]
         const has = tagsMap.has(tag)
 
         if (!has) {
@@ -53,6 +54,14 @@ const TagProvider = ({ children }: Props) => {
     },
     [tagsMap, force]
   )
+
+  const resetTags: TagContextValue['resetTags'] = useCallback(() => {
+    const tags = [...tagsMap.keys()]
+
+    tags.forEach((tag) => tagsMap.set(tag, false))
+
+    force()
+  }, [tagsMap, force])
 
   const toggleTag: TagContextValue['toggleTag'] = useCallback(
     (name) => {
@@ -73,9 +82,10 @@ const TagProvider = ({ children }: Props) => {
     () => ({
       tags,
       setTags,
+      resetTags,
       toggleTag,
     }),
-    [tags, setTags, toggleTag]
+    [tags, setTags, toggleTag, resetTags]
   )
 
   return <TagProviderImpl value={value}>{children}</TagProviderImpl>

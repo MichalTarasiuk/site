@@ -1,0 +1,24 @@
+.listed {
+  display: flex;
+  cursor: pointer;
+
+  div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:hover {
+    background-color: var(--bg-listedSnippet);
+  }
+}
+
+.tag {
+  color: var(--fc-tag);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.date {
+}

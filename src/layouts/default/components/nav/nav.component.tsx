@@ -1,6 +1,5 @@
 import Cn from 'classnames'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 
 import Styles from './nav.module.scss'
@@ -12,8 +11,7 @@ import { messages } from 'src/locales/translations'
 
 export const Nav = () => {
   const intl = useIntl()
-  const { paths } = usePaths()
-  const { pathname } = useRouter()
+  const { paths, pathname } = usePaths()
 
   return (
     <nav>

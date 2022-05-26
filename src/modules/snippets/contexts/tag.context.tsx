@@ -11,7 +11,7 @@ type Props = {
 }
 
 type TagContextValue = {
-  readonly tags: Record<string, boolean>
+  readonly getTags: () => Record<string, boolean>
   readonly toggleTag: (name: string) => void
   readonly setTags: (snippets: readonly Snippet[]) => void
 }
@@ -26,13 +26,18 @@ const [TagProviderImpl, useTag] = createSafeContext<TagContextValue>('tag')
 
 const TagProvider = ({ children }: Props) => {
   const tagsMap = useMemo(() => new Map<string, boolean>(), [])
-  const tags = useMemo(() => fromEntries([...tagsMap.entries()]), [tagsMap])
 
   const force = useForce()
 
+  const getTags = useCallback(() => {
+    const tags = fromEntries([...tagsMap.entries()])
+
+    return tags
+  }, [tagsMap])
+
   const setTags: TagContextValue['setTags'] = useCallback(
     (snippets) => {
-      snippets.forEach(({ fileEextension }) => {
+      snippets.forEach(({ meta: { fileEextension } }) => {
         const tag = fileExtenstionToTag[fileEextension]
         const has = tagsMap.has(tag)
 
@@ -61,11 +66,11 @@ const TagProvider = ({ children }: Props) => {
 
   const value = useMemo(
     () => ({
-      tags,
+      getTags,
       setTags,
       toggleTag,
     }),
-    [tags, setTags, toggleTag]
+    [getTags, setTags, toggleTag]
   )
 
   return <TagProviderImpl value={value}>{children}</TagProviderImpl>

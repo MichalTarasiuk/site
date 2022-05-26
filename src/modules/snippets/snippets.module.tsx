@@ -8,11 +8,11 @@ import { TagProvider, useTag } from 'src/modules/snippets/contexts/contexts'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
-const SnippetsPageImpl = (props: Props) => {
+const SnippetsPageImpl = ({ snippets }: Props) => {
   const { setTags } = useTag()
 
   useMount(() => {
-    setTags([])
+    setTags(snippets)
   })
 
   return <div className={Styles.view}></div>
@@ -28,9 +28,12 @@ export const SnippetsPage = (props: Props) => {
 
 export const getStaticProps = () => {
   const snippetsReader = createResourceReader('snippets')
+  const snippets = snippetsReader.getAllResources()
 
   return {
-    props: {},
+    props: {
+      snippets,
+    },
   }
 }
 

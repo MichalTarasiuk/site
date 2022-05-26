@@ -1,5 +1,8 @@
 export type Snippet = {
-  readonly title: string
-  readonly publishedAt: string
-  readonly fileEextension: 'js' | 'ts' | 'css'
+  readonly meta: {
+    readonly title: string
+    readonly publishedAt: string
+    readonly fileEextension: 'js' | 'ts' | 'css'
+  }
+  readonly content: string
 }

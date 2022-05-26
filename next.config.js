@@ -18,6 +18,11 @@ const nextConfig = withMDX({
     buildActivityPosition: 'bottom-left',
   },
   pageExtensions: [...defaultConfig.pageExtensions, 'mdx'],
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false }
+
+    return config
+  },
 })
 
 module.exports = nextConfig

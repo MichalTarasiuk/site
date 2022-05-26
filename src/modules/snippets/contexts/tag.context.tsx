@@ -3,7 +3,7 @@ import { useMemo, useCallback } from 'react'
 import type { ReactNode } from 'react'
 import type { Snippet } from 'scripts/resources/resources.types'
 
-import { useForce } from 'src/common/hooks/hooks'
+import { useForce, useSave } from 'src/common/hooks/hooks'
 import { createSafeContext, fromEntries } from 'src/common/utils/utils'
 
 type Props = {
@@ -26,7 +26,7 @@ const [TagProviderImpl, useTag] = createSafeContext<TagContextValue>('tag')
 
 const TagProvider = ({ children }: Props) => {
   const tagsMap = useMemo(() => new Map<string, boolean>(), [])
-  const tags: TagContextValue['tags'] = useMemo(
+  const tags: TagContextValue['tags'] = useSave(
     () => {
       const formatedTags = fromEntries([...tagsMap.entries()])
 

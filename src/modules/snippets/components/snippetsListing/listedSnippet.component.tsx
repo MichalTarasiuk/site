@@ -9,7 +9,7 @@ import type { Snippet } from 'scripts/resources/resources.types'
 import { usePaths } from 'src/common/hooks/hooks'
 import { reverseString, stopBatching } from 'src/common/utils/utils'
 import {
-  useTag,
+  useTags,
   fileExtenstionToTag,
 } from 'src/modules/snippets/contexts/contexts'
 
@@ -17,7 +17,7 @@ type Props = Snippet['meta']
 
 export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
   const { paths } = usePaths()
-  const { toggleTag, resetTags, tags } = useTag()
+  const { toggleTag, resetTags, tags } = useTags()
 
   const formatedDate = useMemo(
     () => reverseString(publishedAt, '-'),

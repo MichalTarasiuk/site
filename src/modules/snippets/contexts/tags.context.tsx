@@ -23,9 +23,9 @@ export const fileExtenstionToTag = {
   css: 'css',
 }
 
-const [TagProviderImpl, useTag] = createSafeContext<TagContextValue>('tag')
+const [TagsProviderImpl, useTags] = createSafeContext<TagContextValue>('tags')
 
-const TagProvider = ({ children }: Props) => {
+const TagsProvider = ({ children }: Props) => {
   const tagsMap = useMemo(() => new Map<string, boolean>(), [])
   const tags: TagContextValue['tags'] = useSave(
     () => {
@@ -88,7 +88,7 @@ const TagProvider = ({ children }: Props) => {
     [tags, setTags, toggleTag, resetTags]
   )
 
-  return <TagProviderImpl value={value}>{children}</TagProviderImpl>
+  return <TagsProviderImpl value={value}>{children}</TagsProviderImpl>
 }
 
-export { TagProvider, useTag }
+export { TagsProvider, useTags }

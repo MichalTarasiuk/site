@@ -1,1 +1,1 @@
-export * from './tag.context'
+export * from './tags.context'

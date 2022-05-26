@@ -8,12 +8,12 @@ import {
   Tags,
   SnippetsListing,
 } from 'src/modules/snippets/components/components'
-import { TagProvider, useTag } from 'src/modules/snippets/contexts/contexts'
+import { TagsProvider, useTags } from 'src/modules/snippets/contexts/contexts'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 const SnippetsPageImpl = ({ snippets }: Props) => {
-  const { setTags } = useTag()
+  const { setTags } = useTags()
 
   useBeforeFirstPaint(() => {
     setTags(snippets)
@@ -29,9 +29,9 @@ const SnippetsPageImpl = ({ snippets }: Props) => {
 
 export const SnippetsPage = (props: Props) => {
   return (
-    <TagProvider>
+    <TagsProvider>
       <SnippetsPageImpl {...props} />
-    </TagProvider>
+    </TagsProvider>
   )
 }
 

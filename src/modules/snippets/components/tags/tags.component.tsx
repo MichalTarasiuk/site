@@ -3,17 +3,15 @@ import Cn from 'classnames'
 import Styles from './tags.module.scss'
 
 import { entries } from 'src/common/utils/utils'
-import { useTag } from 'src/modules/snippets/contexts/contexts'
+import { useTags } from 'src/modules/snippets/contexts/contexts'
 
 type Props = {
   readonly name: string
   readonly isActive: boolean
 }
 
-const tagPrefix = '#'
-
 const Tag = ({ name, isActive }: Props) => {
-  const { toggleTag } = useTag()
+  const { toggleTag } = useTags()
 
   return (
     <button
@@ -21,14 +19,13 @@ const Tag = ({ name, isActive }: Props) => {
       className={Cn(Styles.tag, {
         [Styles.active]: isActive,
       })}>
-      {tagPrefix}
-      {name}
+      #{name}
     </button>
   )
 }
 
 export const Tags = () => {
-  const { tags } = useTag()
+  const { tags } = useTags()
 
   return (
     <div className={Styles.tags}>

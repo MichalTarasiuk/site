@@ -7,7 +7,7 @@ import type { Snippet } from 'scripts/resources/resources.types'
 
 import { isEmpty, filterObject } from 'src/common/utils/utils'
 import {
-  useTag,
+  useTags,
   fileExtenstionToTag,
 } from 'src/modules/snippets/contexts/contexts'
 
@@ -16,7 +16,7 @@ type Props = {
 }
 
 export const SnippetsListing = ({ snippets }: Props) => {
-  const { tags } = useTag()
+  const { tags } = useTags()
 
   const selectedTags = useMemo(
     () => filterObject(tags, (_, isActive) => isActive),

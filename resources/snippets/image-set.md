@@ -1,7 +1,7 @@
 ---
 title: 'image-set'
 publishedAt: '10-05-2022'
-fileEextension: 'css'
+fileExtension: 'css'
 ---
 
 ```css

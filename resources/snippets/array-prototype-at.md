@@ -1,7 +1,7 @@
 ---
 title: 'array-prototype-at'
 publishedAt: '10-05-2022'
-fileEextension: 'js'
+fileExtension: 'js'
 ---
 
 ```js

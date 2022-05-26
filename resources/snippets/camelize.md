@@ -1,7 +1,7 @@
 ---
 title: 'camelize'
 publishedAt: '10-05-2022'
-fileEextension: 'ts'
+fileExtension: 'ts'
 ---
 
 ```ts

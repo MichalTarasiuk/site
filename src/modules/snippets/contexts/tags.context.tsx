@@ -27,15 +27,11 @@ const [TagsProviderImpl, useTags] = createSafeContext<TagContextValue>('tags')
 
 const TagsProvider = ({ children }: Props) => {
   const tagsMap = useMemo(() => new Map<string, boolean>(), [])
-  const tags: TagContextValue['tags'] = useSafeMemo(
-    () => {
-      const formatedTags = fromEntries([...tagsMap.entries()])
+  const tags: TagContextValue['tags'] = useSafeMemo(() => {
+    const formatedTags = fromEntries([...tagsMap.entries()])
 
-      return formatedTags
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- the map object is equated by reference
-    [tagsMap.size, ...tagsMap.values()]
-  )
+    return formatedTags
+  }, [tagsMap.size, ...tagsMap.values()])
 
   const force = useForce()
 

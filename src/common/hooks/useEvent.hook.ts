@@ -1,9 +1,8 @@
 import { useCallback, useRef } from 'react'
 
-import { useMount } from './useMount.hook'
-
 import type { DependencyList } from 'react'
 
+import { useHasMounted } from 'src/common/hooks/hooks'
 import { shallowEqual } from 'src/common/utils/utils'
 
 export const useEvent = <TFn extends (...args: readonly any[]) => unknown>(
@@ -12,19 +11,15 @@ export const useEvent = <TFn extends (...args: readonly any[]) => unknown>(
 ) => {
   const savedFn = useRef(fn)
   const savedDependencyList = useRef(dependencyList)
-  const isMounted = useRef(false)
+  const hasMounted = useHasMounted()
 
   if (
-    isMounted.current &&
+    hasMounted &&
     !shallowEqual(savedDependencyList.current, dependencyList)
   ) {
     savedFn.current = fn
     savedDependencyList.current = dependencyList
   }
-
-  useMount(() => {
-    isMounted.current = true
-  })
 
   return useCallback((params: Parameters<typeof fn>) => {
     return savedFn.current(...params)

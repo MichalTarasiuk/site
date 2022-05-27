@@ -16,6 +16,7 @@ specifiers:
   next: 12.1.6
   nprogress: ^0.2.0
   prettier: ^2.6.2
+  prism-react-renderer: ^1.3.3
   react: 18.1.0
   react-dom: 18.1.0
   react-intl: ^5.25.1
@@ -30,6 +31,7 @@ dependencies:
   classnames: 2.3.1
   next: 12.1.6_achxnsjje7b5gy3iikucscdeta
   nprogress: 0.2.0
+  prism-react-renderer: 1.3.3_react@18.1.0
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
   react-intl: 5.25.1_oxzyc36t6ywqirvp35nas5bcte
@@ -2861,6 +2863,14 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
+
+  /prism-react-renderer/1.3.3_react@18.1.0:
+    resolution: {integrity: sha512-Viur/7tBTCH2HmYzwCHmt2rEFn+rdIWNIINXyg0StiISbDiIhHKhrFuEK8eMkKgvsIYSjgGqy/hNyucHp6FpoQ==}
+    peerDependencies:
+      react: '>=0.14.9'
+    dependencies:
+      react: 18.1.0
+    dev: false
 
   /prop-types/15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}

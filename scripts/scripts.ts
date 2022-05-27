@@ -1,1 +1,1 @@
-export * from './resources/resources'
+export * from './resources/createResourceReader.script'

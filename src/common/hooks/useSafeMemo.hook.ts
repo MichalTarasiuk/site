@@ -1,4 +1,4 @@
-// useSave: resolve problem of different dependencies size beetween rerenders
+// useSafeMemo: resolve problem of different dependencies size beetween rerenders
 
 import { useRef } from 'react'
 

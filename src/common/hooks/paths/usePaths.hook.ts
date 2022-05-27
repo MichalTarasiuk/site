@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 
+import { createPaths } from './usePaths.helpers'
+
 import { useRegion } from 'src/app/contexts/contexts'
 import { compact } from 'src/common/utils/utils'
 
@@ -17,20 +19,3 @@ export const usePaths = () => {
 
   return { paths, pathname }
 }
-
-type URL = { readonly hash?: string }
-
-const createPaths = (locale: string) => ({
-  snippets: {
-    url: (url?: URL) => ({
-      pathname: '/[locale]/snippets',
-      query: { locale },
-      hash: url?.hash,
-    }),
-  },
-  url: (url?: URL) => ({
-    pathname: '/[locale]',
-    query: { locale },
-    hash: url?.hash,
-  }),
-})

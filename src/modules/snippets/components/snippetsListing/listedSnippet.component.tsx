@@ -6,6 +6,7 @@ import Styles from './listedSnippet.module.scss'
 import type { MouseEvent } from 'react'
 import type { Snippet } from 'scripts/resources/resources.types'
 
+import { signs } from 'src/common/constants/constants'
 import { usePaths } from 'src/common/hooks/hooks'
 import {
   reverseString,
@@ -30,6 +31,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
     [publishedAt]
   )
   const formatedTitle = useMemo(() => uppercaseFirst(title), [title])
+  const slugName = useMemo(() => title.replace(/\s/g, signs.minus), [title])
 
   const handleTagButton = useCallback(
     (event: MouseEvent, tag: string) => {
@@ -49,7 +51,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
   )
 
   return (
-    <Link href={paths.snippets.url()} passHref>
+    <Link href={paths.snippet.slug(slugName).url()} passHref>
       {/* <a className={Styles.link}> */}
       <article className={Styles.listed}>
         <div>

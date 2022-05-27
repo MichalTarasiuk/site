@@ -19,11 +19,12 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
   const { paths } = usePaths()
   const { toggleTag, resetTags, tags } = useTags()
 
+  const tag = fileExtenstionToTag[fileExtension]
+
   const formatedDate = useMemo(
     () => reverseString(publishedAt, '-'),
     [publishedAt]
   )
-  const tag = useMemo(() => fileExtenstionToTag[fileExtension], [fileExtension])
 
   const handleTagButton = useCallback(
     (event: MouseEvent, tag: string) => {

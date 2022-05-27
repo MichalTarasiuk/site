@@ -39,15 +39,19 @@ export const createResourceReader = (() => {
       const files = Fs.readdirSync(path).filter((file) =>
         MDX_PATTERN.test(file)
       )
+
       return files
     }
 
     const getAllResources = () => {
       const files = readDir(resourcePath)
+
       const resources = files.map((file) => {
         const filePath = Path.join(resourcePath, file)
         const fileContent = Fs.readFileSync(filePath, 'utf8')
+
         const { content, data: meta } = Matter(fileContent)
+
         return { content, meta }
       })
       return resources as unknown as readonly TResource[]
@@ -56,7 +60,9 @@ export const createResourceReader = (() => {
     const getResource = (name: string) => {
       const filePath = Path.join(resourcePath, `${name}.md`)
       const fileContent = Fs.readFileSync(filePath, 'utf8')
+
       const { content, data: meta } = Matter(fileContent)
+
       return { content, meta } as unknown as TResource
     }
 

@@ -20,3 +20,8 @@ export const reverseString = (value: string, separator: string) =>
   value.split(separator).reverse().join(separator)
 
 export const blockBatching = (fn: Noop) => setTimeout(fn, 0)
+
+export const exclude = <TValue>(
+  from: readonly TValue[],
+  exclude: readonly TValue[]
+) => from.filter((value) => !exclude.includes(value))

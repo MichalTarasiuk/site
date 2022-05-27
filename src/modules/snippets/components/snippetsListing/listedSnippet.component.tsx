@@ -10,7 +10,7 @@ import { signs } from 'src/common/constants/constants'
 import { usePaths } from 'src/common/hooks/hooks'
 import {
   reverseString,
-  stopBatching,
+  blockBatching,
   uppercaseFirst,
 } from 'src/common/utils/utils'
 import {
@@ -43,7 +43,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
         resetTags()
       }
 
-      stopBatching(() => {
+      blockBatching(() => {
         toggleTag(tag)
       })
     },

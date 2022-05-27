@@ -19,4 +19,4 @@ export const isEmpty = (object: object) => Object.keys(object).length === 0
 export const reverseString = (value: string, separator: string) =>
   value.split(separator).reverse().join(separator)
 
-export const stopBatching = (fn: Noop) => setTimeout(fn, 0)
+export const blockBatching = (fn: Noop) => setTimeout(fn, 0)

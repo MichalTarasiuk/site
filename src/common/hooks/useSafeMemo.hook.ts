@@ -9,7 +9,7 @@ import { shallowEqual } from 'src/common/utils/utils'
 
 type Factory<TValue> = () => TValue
 
-export const useSave = <TValue>(
+export const useSafeMemo = <TValue>(
   factory: Factory<TValue>,
   dependencies: DependencyList
 ) => {

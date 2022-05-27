@@ -12,6 +12,7 @@ import {
   reverseString,
   blockBatching,
   uppercaseFirst,
+  filterObject,
 } from 'src/common/utils/utils'
 import {
   useTags,
@@ -27,7 +28,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
   const tag = fileExtenstionToTag[fileExtension]
 
   const formatedDate = useMemo(
-    () => reverseString(publishedAt, '-'),
+    () => reverseString(publishedAt, signs.minus),
     [publishedAt]
   )
   const formatedTitle = useMemo(() => uppercaseFirst(title), [title])
@@ -37,15 +38,21 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
     (event: MouseEvent, tag: string) => {
       event.stopPropagation()
 
-      const isActive = tags[tag]
+      const activeTags = filterObject(tags, (_, value) => value)
+      const namesOfActiveTags = Object.keys(activeTags)
+      const lengthOfActiveTags = namesOfActiveTags.length
 
-      if (!isActive) {
-        resetTags()
+      const canToggleTag = !(
+        lengthOfActiveTags === 1 && namesOfActiveTags[0] === tag
+      )
+
+      if (canToggleTag) {
+        resetTags(tag)
+
+        blockBatching(() => {
+          toggleTag(tag, true)
+        })
       }
-
-      blockBatching(() => {
-        toggleTag(tag)
-      })
     },
     [resetTags, toggleTag, tags]
   )

@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import type { Snippet } from 'scripts/resources/resources.types'
 
 import { useForce, useSafeMemo } from 'src/common/hooks/hooks'
-import { createSafeContext, fromEntries } from 'src/common/utils/utils'
+import { createSafeContext, fromEntries, exclude } from 'src/common/utils/utils'
 
 type Props = {
   readonly children: ReactNode
@@ -12,9 +12,9 @@ type Props = {
 
 type TagContextValue = {
   readonly tags: Record<string, boolean>
-  readonly toggleTag: (name: string) => void
+  readonly toggleTag: (name: string, value?: boolean) => void
   readonly setTags: (snippets: readonly Snippet[]) => void
-  readonly resetTags: Noop
+  readonly resetTags: (...excludedTags: readonly string[]) => void
 }
 
 export const fileExtenstionToTag = {
@@ -56,27 +56,28 @@ const TagsProvider = ({ children }: Props) => {
   )
 
   const toggleTag: TagContextValue['toggleTag'] = useCallback(
-    (name) => {
+    (name, value) => {
       const isActive = tagsMap.get(name)
+      const nextValue = value ?? !isActive
 
-      if (isActive) {
-        tagsMap.set(name, false)
-      } else {
-        tagsMap.set(name, true)
-      }
+      tagsMap.set(name, nextValue)
 
       force()
     },
     [tagsMap, force]
   )
 
-  const resetTags: TagContextValue['resetTags'] = useCallback(() => {
-    const tags = [...tagsMap.keys()]
+  const resetTags: TagContextValue['resetTags'] = useCallback(
+    (...excludedTags: readonly string[]) => {
+      const allTags = [...tagsMap.keys()]
+      const selectedTags = exclude(allTags, excludedTags)
 
-    tags.forEach((tag) => tagsMap.set(tag, false))
+      selectedTags.forEach((selectedTag) => tagsMap.set(selectedTag, false))
 
-    force()
-  }, [tagsMap, force])
+      force()
+    },
+    [tagsMap, force]
+  )
 
   const value = useMemo(
     () => ({

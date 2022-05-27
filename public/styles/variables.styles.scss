@@ -1,5 +1,6 @@
 :root {
   --grey: hsl(219, 11%, 65%);
+  --dark-grey: hsl(220, 9%, 46%);
 }
 
 [data-theme='light'] {
@@ -12,6 +13,8 @@
     --bg-tag: hsl(220, 14%, 96%);
     --fc-tag: hsl(0, 0%, 0%);
     --bg-listedSnippet: hsl(220, 14%, 96%);
+    --fc-listedSnippetTitle: hsl(0, 0%, 0%);
+    --fc-listedSnippetTag: hsl(0, 0%, 0%);
   }
 }
 
@@ -25,6 +28,8 @@
     --bg-tag: hsl(221, 39%, 11%);
     --fc-tag: hsl(0, 0%, 100%);
     --bg-listedSnippet: hsl(221, 39%, 11%);
+    --fc-listedSnippetTitle: hsl(0, 0%, 100%);
+    --fc-listedSnippetTag: hsl(220, 14%, 96%);
   }
 }
 
@@ -38,6 +43,8 @@
     --bg-tag: hsl(220, 14%, 96%);
     --fc-tag: hsl(0, 0%, 0%);
     --bg-listedSnippet: hsl(220, 14%, 96%);
+    --fc-listedSnippetTitle: hsl(0, 0%, 0%);
+    --fc-listedSnippetTag: hsl(0, 0%, 0%);
   }
 }
 
@@ -51,5 +58,7 @@
     --bg-tag: hsl(221, 39%, 11%);
     --fc-tag: hsl(0, 0%, 100%);
     --bg-listedSnippet: hsl(221, 39%, 11%);
+    --fc-listedSnippetTitle: hsl(0, 0%, 100%);
+    --fc-listedSnippetTag: hsl(220, 14%, 96%);
   }
 }

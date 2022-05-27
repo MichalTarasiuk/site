@@ -7,7 +7,11 @@ import type { MouseEvent } from 'react'
 import type { Snippet } from 'scripts/resources/resources.types'
 
 import { usePaths } from 'src/common/hooks/hooks'
-import { reverseString, stopBatching } from 'src/common/utils/utils'
+import {
+  reverseString,
+  stopBatching,
+  uppercaseFirst,
+} from 'src/common/utils/utils'
 import {
   useTags,
   fileExtenstionToTag,
@@ -45,19 +49,21 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
 
   return (
     <Link href={paths.snippets.url()} passHref>
+      {/* <a className={Styles.link}> */}
       <article className={Styles.listed}>
         <div>
-          <p>{formatedDate}</p>
+          <time className={Styles.time}>{formatedDate}</time>
         </div>
         <section>
-          <h2>{title}</h2>
+          <h2>{uppercaseFirst(title)}</h2>
           <button
             onClick={(event) => handleTagButton(event, tag)}
             className={Styles.tag}>
-            #{tag}
+            <span>#{tag}</span>
           </button>
         </section>
       </article>
+      {/* </a> */}
     </Link>
   )
 }

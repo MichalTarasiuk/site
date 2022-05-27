@@ -1,6 +1,21 @@
+.link {
+  color: none;
+  text-decoration: none;
+}
+
 .listed {
   display: flex;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
   cursor: pointer;
+
+  section h2 {
+    color: var(--fc-listedSnippetTitle);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
   div:first-child {
     display: flex;
@@ -14,11 +29,17 @@
 }
 
 .tag {
-  color: var(--fc-tag);
+  color: var(--fc-listedSnippetTag);
   border: none;
   background-color: transparent;
   cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-.date {
+.time {
+  color: var(--dark-grey);
+  font-size: 0.9rem;
 }

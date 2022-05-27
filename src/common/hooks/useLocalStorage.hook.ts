@@ -33,7 +33,7 @@ export const useLocalStorage = <TItem>(
 
       return defaultItem
     } catch (error) {
-      console.error(error)
+      return defaultItem
     }
   })
 

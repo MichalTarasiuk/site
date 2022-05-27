@@ -29,7 +29,7 @@ const nameToLocale: Record<string, Locale> = {
 const importMessages = (name: string) =>
   nameToLocale[name] || nameToLocale[DEFAULT_LOCALE]
 
-const DEFAULT_LOCALE = 'en-US'
+export const DEFAULT_LOCALE = 'en-US'
 
 const RegionProvider = ({ children }: Props) => {
   const router = useRouter()

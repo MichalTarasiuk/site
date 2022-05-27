@@ -1,6 +1,6 @@
 import Styles from './snippets.module.scss'
 
-import type { InferGetStaticPropsType } from 'next'
+import type { InferGetStaticPropsType, GetStaticPaths } from 'next'
 
 import { createResourceReader } from 'scripts/resources/createResourceReader.script'
 import { useBeforeFirstPaint } from 'src/common/hooks/hooks'
@@ -46,7 +46,7 @@ export const getStaticProps = () => {
   }
 }
 
-export const getStaticPaths = () => ({
+export const getStaticPaths: GetStaticPaths = () => ({
   paths: [],
   fallback: 'blocking',
 })

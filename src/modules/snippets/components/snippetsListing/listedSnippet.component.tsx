@@ -29,6 +29,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
     () => reverseString(publishedAt, '-'),
     [publishedAt]
   )
+  const formatedTitle = useMemo(() => uppercaseFirst(title), [title])
 
   const handleTagButton = useCallback(
     (event: MouseEvent, tag: string) => {
@@ -55,7 +56,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
           <time className={Styles.time}>{formatedDate}</time>
         </div>
         <section>
-          <h2>{uppercaseFirst(title)}</h2>
+          <h2>{formatedTitle}</h2>
           <button
             onClick={(event) => handleTagButton(event, tag)}
             className={Styles.tag}>

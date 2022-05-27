@@ -1,5 +1,5 @@
 ---
-title: 'parse-route-parameters'
+title: 'parse route parameters'
 publishedAt: '10-05-2022'
 fileExtension: 'ts'
 ---

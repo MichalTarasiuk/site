@@ -1,5 +1,5 @@
 ---
-title: 'tuple-to-union-type'
+title: 'tuple to union type'
 publishedAt: '10-05-2022'
 fileExtension: 'ts'
 ---

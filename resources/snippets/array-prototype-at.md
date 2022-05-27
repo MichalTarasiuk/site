@@ -1,5 +1,5 @@
 ---
-title: 'array-prototype-at'
+title: 'array prototype at'
 publishedAt: '10-05-2022'
 fileExtension: 'js'
 ---

@@ -1,5 +1,5 @@
 ---
-title: 'image-set'
+title: 'image set'
 publishedAt: '10-05-2022'
 fileExtension: 'css'
 ---

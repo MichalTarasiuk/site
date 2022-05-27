@@ -8,6 +8,5 @@ const useIsomorphicEffect = isClientEnvironment ? useLayoutEffect : useEffect
 
 export const useBeforeFirstPaint = (effect: EffectCallback) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps -- should call only once
-  console.log(useIsomorphicEffect)
   useIsomorphicEffect(effect, [])
 }

@@ -7,19 +7,19 @@ const observerInit = {
 }
 
 const gethighestElement = (elements: readonly HTMLElement[]) =>
-  elements.reduce<HTMLElement | null>((acc, htmlElement) => {
-    if (!acc) {
+  elements.reduce<HTMLElement | null>((collector, htmlElement) => {
+    if (!collector) {
       return htmlElement
     }
 
     if (
-      acc.compareDocumentPosition(htmlElement) &
+      collector.compareDocumentPosition(htmlElement) &
       Node.DOCUMENT_POSITION_FOLLOWING
     ) {
       return htmlElement
     }
 
-    return acc
+    return collector
   }, null)
 
 export const useRunningHeader = (selector: string) => {

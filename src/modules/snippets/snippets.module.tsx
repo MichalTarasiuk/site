@@ -20,7 +20,7 @@ const SnippetsPageImpl = ({ snippets }: Props) => {
   })
 
   return (
-    <div className={Styles.view}>
+    <div className={Styles.wrapper}>
       <Tags />
       <SnippetsListing snippets={snippets} />
     </div>

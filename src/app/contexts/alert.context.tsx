@@ -2,7 +2,7 @@ import { useState, useCallback, useMemo } from 'react'
 
 import type { ReactNode } from 'react'
 
-import { useError as useOnError } from 'src/app/contexts/contexts'
+import { useError as useErrorEffect } from 'src/app/contexts/contexts'
 import { useTimeout, useUpdate } from 'src/common/hooks/hooks'
 import { createSafeContext } from 'src/common/utils/utils'
 
@@ -29,7 +29,7 @@ const AlertProvider = ({ children }: Props) => {
   const [alertState, setAlertState] = useState<AlertState | null>(null)
   const timeout = useTimeout(ALERT_TIMEOUT)
 
-  useOnError((error) => {
+  useErrorEffect((error) => {
     showAlert('error', error.message)
   })
 

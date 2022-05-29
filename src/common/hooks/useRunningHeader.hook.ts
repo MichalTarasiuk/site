@@ -6,7 +6,7 @@ const observerInit = {
   threshold: 1,
 }
 
-const gethighestElement = (elements: readonly HTMLElement[]) =>
+const getHighestElement = (elements: readonly HTMLElement[]) =>
   elements.reduce<HTMLElement | null>((collector, htmlElement) => {
     if (!collector) {
       return htmlElement
@@ -33,7 +33,7 @@ export const useRunningHeader = (selector: string) => {
       currentlyVisibleHeaders.delete(entry.target as HTMLElement)
     }
 
-    const highestHeader = gethighestElement([...currentlyVisibleHeaders])
+    const highestHeader = getHighestElement([...currentlyVisibleHeaders])
 
     if (highestHeader) {
       setId(highestHeader.id)

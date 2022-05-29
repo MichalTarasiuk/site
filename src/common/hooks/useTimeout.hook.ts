@@ -1,24 +1,26 @@
-import { useEffect, useRef } from 'react'
+import { useRef, useCallback } from 'react'
 
-import { useUpdate } from 'src/common/hooks/hooks'
+export const useTimeout = (timeout: number | null = null) => {
+  const savedTimeout = useRef<NodeJS.Timeout | null>(null)
 
-export const useTimeout = (
-  fn: ArrowFunction,
-  timeout: number | null = null
-) => {
-  const savedFn = useRef(fn)
-
-  useUpdate(() => {
-    savedFn.current = fn
-  }, [fn])
-
-  useEffect(() => {
-    if (timeout) {
-      const timeoutId = setTimeout(() => savedFn.current(), timeout)
-
-      return () => {
-        clearTimeout(timeoutId)
-      }
+  const end = useCallback(() => {
+    if (savedTimeout.current) {
+      clearTimeout(savedTimeout.current)
     }
-  }, [timeout])
+  }, [])
+
+  const start = useCallback(
+    (fn: ArrowFunction) => {
+      end()
+
+      if (timeout) {
+        savedTimeout.current = setTimeout(() => {
+          fn()
+          end()
+        }, timeout)
+      }
+    },
+    [timeout, end]
+  )
+  return { start, end }
 }

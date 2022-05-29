@@ -3,7 +3,7 @@ import { useState, useCallback, useMemo } from 'react'
 import type { ReactNode } from 'react'
 
 import { useError } from 'src/app/contexts/contexts'
-import { useTimeout } from 'src/common/hooks/hooks'
+import { useTimeout, useUpdate } from 'src/common/hooks/hooks'
 import { createSafeContext } from 'src/common/utils/utils'
 
 type Props = {
@@ -27,10 +27,23 @@ const ALERT_TIMEOUT = 3000
 
 const AlertProvider = ({ children }: Props) => {
   const [alertState, setAlertState] = useState<AlertState | null>(null)
+  const timeout = useTimeout(ALERT_TIMEOUT)
+
+  useError((error) => {
+    showAlert('error', error.message)
+  })
+
+  useUpdate(() => {
+    if (alertState?.message) {
+      timeout.start(hideAlert)
+    }
+  }, [alertState?.message])
 
   const hideAlert: AlertContextValue['hideAlert'] = useCallback(() => {
     setAlertState(null)
-  }, [])
+
+    timeout.end()
+  }, [timeout])
 
   const showAlert: AlertContextValue['showAlert'] = useCallback(
     (type, message) => {
@@ -38,12 +51,6 @@ const AlertProvider = ({ children }: Props) => {
     },
     []
   )
-
-  useError((error) => {
-    showAlert('error', error.message)
-  })
-
-  useTimeout(hideAlert, ALERT_TIMEOUT)
 
   const value = useMemo(
     () => ({

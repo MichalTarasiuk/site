@@ -9,6 +9,7 @@ specifiers:
   '@types/react': 18.0.8
   '@types/react-dom': 18.0.3
   classnames: ^2.3.1
+  copy-to-clipboard: ^3.3.1
   eslint: ^8.14.0
   eslint-config-next: 12.1.6
   eslint-plugin-react-hooks: ^4.5.0
@@ -29,6 +30,7 @@ dependencies:
   '@next/mdx': 12.1.6_@mdx-js+loader@2.1.1
   '@types/nprogress': 0.2.0
   classnames: 2.3.1
+  copy-to-clipboard: 3.3.1
   next: 12.1.6_achxnsjje7b5gy3iikucscdeta
   nprogress: 0.2.0
   prism-react-renderer: 1.3.3_react@18.1.0
@@ -923,6 +925,12 @@ packages:
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
     dev: true
+
+  /copy-to-clipboard/3.3.1:
+    resolution: {integrity: sha512-i13qo6kIHTTpCm8/Wup+0b1mVWETvu2kIMzKoK8FpkLkFxlt0znUAHcMzox+T8sPlqtZXq3CulEjQHsYiGFJUw==}
+    dependencies:
+      toggle-selection: 1.0.6
+    dev: false
 
   /core-js-pure/3.22.5:
     resolution: {integrity: sha512-8xo9R00iYD7TcV7OrC98GwxiUEAabVWO3dix+uyWjnYrx9fyASLlIX+f/3p5dW5qByaP2bcZ8X/T47s55et/tA==}
@@ -3287,6 +3295,10 @@ packages:
     dependencies:
       is-number: 7.0.0
     dev: true
+
+  /toggle-selection/1.0.6:
+    resolution: {integrity: sha1-bkWxJj8gF/oKzH2J14sVuL932jI=}
+    dev: false
 
   /trough/2.1.0:
     resolution: {integrity: sha512-AqTiAOLcj85xS7vQ8QkAV41hPDIJ71XJB4RCUrzo/1GM2CQwhkJGaf9Hgr7BOugMRpgGUrqRg/DrBDl4H40+8g==}

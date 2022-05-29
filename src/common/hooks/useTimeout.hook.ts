@@ -6,6 +6,7 @@ export const useTimeout = (timeout: number | null = null) => {
   const end = useCallback(() => {
     if (savedTimeout.current) {
       clearTimeout(savedTimeout.current)
+      savedTimeout.current = null
     }
   }, [])
 

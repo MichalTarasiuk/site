@@ -1,6 +1,8 @@
 import { XMLParser } from 'fast-xml-parser'
 
-import { fetcher } from 'src/common/utils/utils'
+import type { RenameKey } from 'src/common/utils/utils'
+
+import { fetcher, renameKey } from 'src/common/utils/utils'
 
 const path = '/rss.xml'
 
@@ -29,7 +31,10 @@ type RSS = {
 }
 
 export const createFeedReader = () => {
-  const channelsMap = new Map<string, RSS['channel']>()
+  const channelsMap = new Map<
+    string,
+    RenameKey<RSS['channel'], 'item', 'items'>
+  >()
   const xmlParser = new XMLParser()
 
   const fetchChannels = async (...urls: readonly string[]) => {
@@ -40,7 +45,7 @@ export const createFeedReader = () => {
 
         const parsedXml: ParsedXml = xmlParser.parse(text)
 
-        return parsedXml.rss.channel
+        return renameKey(parsedXml.rss.channel, 'item', 'items')
       })
     )
 

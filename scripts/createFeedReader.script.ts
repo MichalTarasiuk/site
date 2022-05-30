@@ -30,40 +30,42 @@ type RSS = {
   }
 }
 
-export const createFeedReader = () => {
+export const createFeedReader = (() => {
   const channelsMap = new Map<
     string,
     RenameKey<RSS['channel'], 'item', 'items'>
   >()
   const xmlParser = new XMLParser()
 
-  const fetchChannels = async (...urls: readonly string[]) => {
-    const channels = await Promise.all(
-      urls.map(async (url) => {
-        const response = await fetcher(url + path)
-        const text = await response.text()
+  return () => {
+    const fetchChannels = async (...urls: readonly string[]) => {
+      const channels = await Promise.all(
+        urls.map(async (url) => {
+          const response = await fetcher(url + path)
+          const text = await response.text()
 
-        const parsedXml: ParsedXml = xmlParser.parse(text)
+          const parsedXml: ParsedXml = xmlParser.parse(text)
 
-        return renameKey(parsedXml.rss.channel, 'item', 'items')
+          return renameKey(parsedXml.rss.channel, 'item', 'items')
+        })
+      )
+
+      channels.forEach((channel) => {
+        const { hostname } = new URL(channel.link)
+
+        channelsMap.set(hostname, channel)
       })
-    )
 
-    channels.forEach((channel) => {
-      const { hostname } = new URL(channel.link)
+      return channels
+    }
 
-      channelsMap.set(hostname, channel)
-    })
+    const getChannel = (name: string) => {
+      return channelsMap.get(name)
+    }
 
-    return channels
+    return {
+      fetchChannels,
+      getChannel,
+    }
   }
-
-  const getChannel = (name: string) => {
-    return channelsMap.get(name)
-  }
-
-  return {
-    fetchChannels,
-    getChannel,
-  }
-}
+})()

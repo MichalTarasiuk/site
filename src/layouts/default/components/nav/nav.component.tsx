@@ -17,10 +17,20 @@ export const Nav = () => {
     <nav>
       <ul className={Styles.nav}>
         <li>
+          <Link href={paths.channels.url()}>
+            <a
+              className={Cn(Styles.link, {
+                [Styles.bold]: pathname.startsWith(routes.channels),
+              })}>
+              {intl.formatMessage(messages.channels)}
+            </a>
+          </Link>
+        </li>
+        <li>
           <Link href={paths.snippets.url()}>
             <a
               className={Cn(Styles.link, {
-                [Styles.bold]: pathname.startsWith(routes.snippets.index),
+                [Styles.bold]: pathname.startsWith(routes.snippets),
               })}>
               {intl.formatMessage(messages.snippets)}
             </a>
@@ -35,11 +45,11 @@ export const Nav = () => {
             github
           </a>
         </li>
-        <li>
+        {/* <li>
           <a className={Styles.link} href={`mailto:${author.email}`}>
             {intl.formatMessage(messages.contact)}
           </a>
-        </li>
+        </li> */}
       </ul>
     </nav>
   )

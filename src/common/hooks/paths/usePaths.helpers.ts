@@ -1,6 +1,13 @@
 type URL = { readonly hash?: string }
 
 export const createPaths = (locale: string) => ({
+  channels: {
+    url: (url?: URL) => ({
+      pathname: '/[locale]/channels',
+      query: { locale },
+      hash: url?.hash,
+    }),
+  },
   snippets: {
     url: (url?: URL) => ({
       pathname: '/[locale]/snippets',

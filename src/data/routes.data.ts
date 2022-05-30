@@ -1,6 +1,5 @@
 export const routes = {
   home: '/',
-  snippets: {
-    index: '/snippets',
-  },
+  snippets: '/snippets',
+  channels: '/channels',
 }

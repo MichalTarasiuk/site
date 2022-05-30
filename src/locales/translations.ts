@@ -6,6 +6,11 @@ export const messages = defineMessages({
     description: 'Snippets link in the navigation bar',
     defaultMessage: 'Snippets',
   },
+  channels: {
+    id: 'app.banner.navigation.channels',
+    description: 'Channels link in the navigation bar',
+    defaultMessage: 'Channels',
+  },
   contact: {
     id: 'app.banner.navigation.contact',
     description: 'Contact link in the navigation bar',

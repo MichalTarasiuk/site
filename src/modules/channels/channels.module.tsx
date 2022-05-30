@@ -1,5 +1,3 @@
-import { blogsURLS } from './channels.constants'
-
 import type { InferGetStaticPropsType, GetStaticPaths } from 'next'
 
 import { createFeedReader } from 'scripts/scripts'
@@ -14,9 +12,9 @@ export const ChannelsPage = ({ channels }: Props) => {
 }
 
 export const getStaticProps = async () => {
-  const { fetchChannels } = createFeedReader()
+  const { getAllChannels } = await createFeedReader()
 
-  const channels = await fetchChannels(...blogsURLS)
+  const channels = Object.values(getAllChannels())
   const formatedCahnnels = channels.map((channel) =>
     omit(channel, ['lastBuildDate', 'items', 'generator'])
   )

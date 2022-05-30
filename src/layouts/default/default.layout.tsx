@@ -31,6 +31,7 @@ const DefaultLayout = ({ children }: Props) => {
     () => ({
       home: intl.formatMessage(messages.homeTitle),
       snippets: intl.formatMessage(messages.snippetsTitle),
+      channels: intl.formatMessage(messages.channels),
       [NOT_FOUND_CODE]: FALLBACK_PAGE_NAME,
     }),
     [intl]

@@ -12,7 +12,7 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 type ParsedUrlQuery = { readonly slug: string }
 
-export const SnippetPage = () => {
+export const SnippetPage = ({}: Props) => {
   return null
 }
 
@@ -33,6 +33,7 @@ export const getStaticProps = ({
 
 export const getStaticPaths: GetStaticPaths = () => {
   const snippetsReader = createResourceReader('snippets')
+
   const snippets = snippetsReader.getAllResources()
   const paths = snippets
     .map(({ meta: { title } }) => title.replace(/\s/g, signs.minus))

@@ -13,6 +13,7 @@ specifiers:
   eslint: ^8.14.0
   eslint-config-next: 12.1.6
   eslint-plugin-react-hooks: ^4.5.0
+  fast-xml-parser: ^4.0.8
   gray-matter: ^4.0.3
   next: 12.1.6
   nprogress: ^0.2.0
@@ -31,6 +32,7 @@ dependencies:
   '@types/nprogress': 0.2.0
   classnames: 2.3.1
   copy-to-clipboard: 3.3.1
+  fast-xml-parser: 4.0.8
   next: 12.1.6_achxnsjje7b5gy3iikucscdeta
   nprogress: 0.2.0
   prism-react-renderer: 1.3.3_react@18.1.0
@@ -1588,6 +1590,13 @@ packages:
   /fast-levenshtein/2.0.6:
     resolution: {integrity: sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=}
     dev: true
+
+  /fast-xml-parser/4.0.8:
+    resolution: {integrity: sha512-N4XqZaRMuHMvOFwFlqeBTlvrnXU+QN8wvCl2g9fHzMx2BnLoIYRDwy6XwI8FxogHMFI9OfGQBCddgckvSLTnvg==}
+    hasBin: true
+    dependencies:
+      strnum: 1.0.5
+    dev: false
 
   /fastq/1.13.0:
     resolution: {integrity: sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==}
@@ -3243,6 +3252,10 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
     dev: true
+
+  /strnum/1.0.5:
+    resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
+    dev: false
 
   /style-to-object/0.3.0:
     resolution: {integrity: sha512-CzFnRRXhzWIdItT3OmF8SQfWyahHhjq3HwcMNCNLn+N7klOOqPjMeG/4JSu77D7ypZdGvSzvkrbyeTMizz2VrA==}

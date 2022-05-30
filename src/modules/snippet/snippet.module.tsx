@@ -4,7 +4,7 @@ import type {
   GetStaticPropsContext,
 } from 'next'
 
-import { createResourceReader } from 'scripts/resources/createResourceReader.script'
+import { createResourceReader } from 'scripts/scripts'
 import { DEFAULT_LOCALE } from 'src/app/contexts/contexts'
 import { signs, spacer } from 'src/common/constants/constants'
 

@@ -2,7 +2,7 @@ import Styles from './snippets.module.scss'
 
 import type { InferGetStaticPropsType, GetStaticPaths } from 'next'
 
-import { createResourceReader } from 'scripts/resources/createResourceReader.script'
+import { createResourceReader } from 'scripts/scripts'
 import { useBeforeFirstPaint } from 'src/common/hooks/hooks'
 import {
   Tags,

@@ -1,24 +1,17 @@
 const FALLBACK_MESSAGE = 'Something went wrong. Please try again later.'
 
-const setRequestInit = (requestInit: RequestInit) => {
-  const { body, headers, ...restRequestInit } = requestInit
-
-  return {
-    ...restRequestInit,
-    ...(body && { body: JSON.stringify(body) }),
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json',
-    },
-  }
-}
+const setRequestInit = ({ body, headers, ...requestInit }: RequestInit) => ({
+  ...requestInit,
+  ...(body && { body: JSON.stringify(body) }),
+  ...(headers && { headers: { 'Content-type': 'application/json' } }),
+})
 
 export const fetcher = async (input: RequestInfo, init?: RequestInit) => {
   try {
-    const response = await fetch(input, init && setRequestInit(init))
+    const response = await fetch(input, setRequestInit(init || {}))
 
     if (response.ok) {
-      return response.json()
+      return response
     }
 
     throw new ResponseError(response.statusText, response.status)

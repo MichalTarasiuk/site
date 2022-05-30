@@ -28,9 +28,8 @@ type RSS = {
   }
 }
 
-const topLevelDomainRegEx = /\.(com|io)/
-const getSecondLevelDomain = (hostname: string) =>
-  hostname.replace(topLevelDomainRegEx, '')
+const getSecondLevelDomain = (domain: string) =>
+  domain.replace(/\.(com|io)/, '')
 
 export const createFeedReader = () => {
   const channelsMap = new Map<string, RSS['channel']>()
@@ -50,7 +49,8 @@ export const createFeedReader = () => {
 
     channels.forEach((channel) => {
       const { hostname } = new URL(channel.link)
-      const secondLevelDomain = getSecondLevelDomain(hostname)
+      const domain = hostname.replace('www.', '')
+      const secondLevelDomain = getSecondLevelDomain(domain)
 
       channelsMap.set(secondLevelDomain, channel)
     })

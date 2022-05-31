@@ -22,10 +22,7 @@ const DefaultLayout = ({ children }: Props) => {
   const intl = useIntl()
   const { asPath } = useRouter()
 
-  const [_, pageName = DEFAULT_PAGE_NAME] = useMemo(
-    () => compact(asPath.split('/')),
-    [asPath]
-  )
+  const [_, pageName = DEFAULT_PAGE_NAME] = compact(asPath.split('/'))
 
   const pageNameToTitle: Record<string, string> = useMemo(
     () => ({

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useMemo, useCallback } from 'react'
+import { useCallback } from 'react'
 
 import Styles from './listedSnippet.module.scss'
 
@@ -27,13 +27,6 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
 
   const tag = fileExtenstionToTag[fileExtension]
 
-  const formatedDate = useMemo(
-    () => reverseString(publishedAt, signs.minus),
-    [publishedAt]
-  )
-  const formatedTitle = useMemo(() => uppercaseFirst(title), [title])
-  const slugName = useMemo(() => title.replace(/\s/g, signs.minus), [title])
-
   const handleTagButton = useCallback(
     (event: MouseEvent, tag: string) => {
       event.stopPropagation()
@@ -58,14 +51,18 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
   )
 
   return (
-    <Link href={paths.snippet.slug(slugName).url()} passHref>
+    <Link
+      href={paths.snippet.slug(title.replace(/\s/g, signs.minus)).url()}
+      passHref>
       {/* <a className={Styles.link}> */}
       <article className={Styles.listed}>
         <div>
-          <time className={Styles.time}>{formatedDate}</time>
+          <time className={Styles.time}>
+            {reverseString(publishedAt, signs.minus)}
+          </time>
         </div>
         <section>
-          <h2>{formatedTitle}</h2>
+          <h2>{uppercaseFirst(title)}</h2>
           <button
             onClick={(event) => handleTagButton(event, tag)}
             className={Styles.tag}>

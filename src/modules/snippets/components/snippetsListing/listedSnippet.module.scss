@@ -10,7 +10,7 @@
   cursor: pointer;
 
   section h2 {
-    color: var(--fc-listedSnippetTitle);
+    color: var(--fc-listedTitle);
 
     &:hover {
       text-decoration: underline;
@@ -24,7 +24,7 @@
   }
 
   &:hover {
-    background-color: var(--bg-listedSnippet);
+    background-color: var(--bg-listed);
   }
 }
 

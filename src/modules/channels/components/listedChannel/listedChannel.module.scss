@@ -5,12 +5,12 @@
   cursor: pointer;
 
   &:hover {
-    background-color: var(--bg-listedSnippet);
+    background-color: var(--bg-listed);
   }
 }
 
 .heading {
-  color: var(--fc-listedSnippetTitle);
+  color: var(--fc-listedTitle);
 }
 
 .description {

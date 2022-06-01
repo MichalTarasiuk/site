@@ -8,6 +8,15 @@ export const createPaths = (locale: string) => ({
       hash: url?.hash,
     }),
   },
+  channel: {
+    slug: (slug: string) => ({
+      url: (url?: URL) => ({
+        pathname: '/[locale]/channels/[slug]',
+        query: { locale, slug },
+        hash: url?.hash,
+      }),
+    }),
+  },
   snippets: {
     url: (url?: URL) => ({
       pathname: '/[locale]/snippets',

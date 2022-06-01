@@ -1,7 +1,5 @@
 import { XMLParser } from 'fast-xml-parser'
 
-import type { RenameKey } from 'src/common/utils/utils'
-
 import { fetcher, renameKey, fromEntries } from 'src/common/utils/utils'
 
 type ParsedXml = {
@@ -17,6 +15,12 @@ type ItemRSS = {
   readonly 'content:encoded': string
 }
 
+type FormatedChannel = AddKey<
+  RenameKey<RSS['channel'], 'item', 'items'>,
+  'slug',
+  string
+>
+
 type RSS = {
   readonly channel: {
     readonly title: string
@@ -29,13 +33,8 @@ type RSS = {
 }
 
 type FeedReader = {
-  readonly getChannel: (
-    name: string
-  ) => RenameKey<RSS['channel'], 'item', 'items'> | undefined
-  readonly getAllChannels: () => Record<
-    string,
-    RenameKey<RSS['channel'], 'item', 'items'>
-  >
+  readonly getChannel: (name: string) => FormatedChannel | undefined
+  readonly getAllChannels: () => Record<string, FormatedChannel>
 }
 
 const path = '/rss.xml'
@@ -57,10 +56,7 @@ export const createFeedReader = (() => {
   const xmlParser = new XMLParser()
 
   let feedReader: FeedReader | null = null
-  const channelsMap = new Map<
-    string,
-    RenameKey<RSS['channel'], 'item', 'items'>
-  >()
+  const channelsMap = new Map<string, FormatedChannel>()
 
   return async () => {
     if (feedReader) {
@@ -80,9 +76,10 @@ export const createFeedReader = (() => {
 
     channels.forEach((channel) => {
       const { hostname } = new URL(channel.link)
-      const secondLevelDomain = getSecondLevelDomain(hostname)
+      const slug = getSecondLevelDomain(hostname)
+      const formatedChannel = { ...channel, slug }
 
-      channelsMap.set(secondLevelDomain, channel)
+      channelsMap.set(slug, formatedChannel)
     })
 
     const getChannel = (name: string) => {

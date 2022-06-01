@@ -1,14 +1,23 @@
+import Styles from './channels.module.scss'
+
 import type { InferGetStaticPropsType, GetStaticPaths } from 'next'
 
 import { createFeedReader } from 'scripts/scripts'
 import { omit } from 'src/common/utils/utils'
+import { ListedChannel } from 'src/modules/channels/components/components'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 export const ChannelsPage = ({ channels }: Props) => {
-  console.log(channels)
-
-  return null
+  return (
+    <div className={Styles.wrapper}>
+      {channels.map((channel) => (
+        <ul className={Styles.listing} key={channel.title}>
+          <ListedChannel {...channel} />
+        </ul>
+      ))}
+    </div>
+  )
 }
 
 export const getStaticProps = async () => {

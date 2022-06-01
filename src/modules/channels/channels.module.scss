@@ -1,0 +1,13 @@
+.wrapper {
+  width: 80ch;
+  padding: 1rem;
+}
+
+.listing {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  list-style: none;
+  padding: 0;
+  padding-top: 1rem;
+}

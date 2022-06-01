@@ -41,8 +41,8 @@ const DefaultLayout = ({ children }: Props) => {
   const intl = useIntl()
   const { asPath } = useRouter()
 
-  const [_, pageName = DEFAULT_PAGE_NAME, slug] = useMemo(
-    () => compact(asPath.split('/')),
+  const [pageName = DEFAULT_PAGE_NAME, slug] = useMemo(
+    () => compact(asPath.split('/')).slice(1),
     [asPath]
   )
   const titles = useMemo(() => getTitles(intl, slug), [intl, slug])

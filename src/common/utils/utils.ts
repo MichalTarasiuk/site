@@ -1,3 +1,5 @@
+import { spacer } from 'src/common/constants/constants'
+
 export { fetcher } from './fetcher.utility'
 export { shallowEqual } from './shallowEqual.utility'
 export { createSafeContext } from './createSafeContext.utility'
@@ -28,3 +30,6 @@ export const exclude = <TValue>(
   from: readonly TValue[],
   exclude: readonly TValue[]
 ) => from.filter((value) => !exclude.includes(value))
+
+export const pad = (str: string, length: number, char = spacer) =>
+  str.padStart((str.length + length) / 2, char).padEnd(length, char)

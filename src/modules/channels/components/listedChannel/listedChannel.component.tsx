@@ -13,8 +13,6 @@ type Props = {
 export const ListedChannel = ({ title, description, slug }: Props) => {
   const { paths } = usePaths()
 
-  console.log(slug)
-
   return (
     <Link href={paths.channel.slug(slug).url()}>
       <article className={Styles.listed}>

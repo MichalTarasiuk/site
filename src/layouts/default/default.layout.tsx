@@ -6,8 +6,10 @@ import { Header } from './components/components'
 import Styles from './defaultLayout.module.scss'
 
 import type { ReactNode } from 'react'
+import type { IntlShape } from 'react-intl'
 
-import { compact } from 'src/common/utils/utils'
+import { signs, spacer } from 'src/common/constants/constants'
+import { compact, pad } from 'src/common/utils/utils'
 import { messages } from 'src/locales/translations'
 
 type Props = {
@@ -18,30 +20,39 @@ const DEFAULT_PAGE_NAME = 'home'
 const FALLBACK_PAGE_NAME = 'not-found'
 const NOT_FOUND_CODE = 404
 
+const getTitles = (intl: IntlShape, slug: string | undefined = '') => {
+  const formatedSlug = slug.replaceAll(signs.minus, spacer)
+  const spacedSlug = pad(formatedSlug, formatedSlug.length + 2)
+
+  const prefix = `${spacer}${signs.minus}`
+  const subTitle = formatedSlug ? `${prefix}${spacedSlug}` : ''
+
+  const titles: Record<string, string> = {
+    home: intl.formatMessage(messages.homeTitle),
+    snippets: intl.formatMessage(messages.snippetsTitle) + subTitle,
+    channels: intl.formatMessage(messages.channels) + subTitle,
+    [NOT_FOUND_CODE]: FALLBACK_PAGE_NAME,
+  }
+
+  return titles
+}
+
 const DefaultLayout = ({ children }: Props) => {
   const intl = useIntl()
   const { asPath } = useRouter()
 
-  const [_, pageName = DEFAULT_PAGE_NAME] = compact(asPath.split('/'))
-
-  const pageNameToTitle: Record<string, string> = useMemo(
-    () => ({
-      home: intl.formatMessage(messages.homeTitle),
-      snippets: intl.formatMessage(messages.snippetsTitle),
-      channels: intl.formatMessage(messages.channels),
-      [NOT_FOUND_CODE]: FALLBACK_PAGE_NAME,
-    }),
-    [intl]
+  const [_, pageName = DEFAULT_PAGE_NAME, slug] = useMemo(
+    () => compact(asPath.split('/')),
+    [asPath]
   )
+  const titles = useMemo(() => getTitles(intl, slug), [intl, slug])
 
   return (
     <div className={Styles.wrapper}>
       <div className={Styles.banner}>
         <Header />
         <div className={Styles.content}>
-          <h1>
-            {pageNameToTitle[pageName] || pageNameToTitle[NOT_FOUND_CODE]}
-          </h1>
+          <h1>{titles[pageName] || titles[NOT_FOUND_CODE]}</h1>
           {pageName === 'home' && (
             <p>{intl.formatMessage(messages.homeSubTitle)}</p>
           )}

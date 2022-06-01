@@ -1,13 +1,13 @@
 {
-  "app.banner.navigation.snippets": "snippets",
-  "app.banner.navigation.contact": "contact",
-  "app.banner.navigation.channels": "channels",
-  "app.home.banner.title": "hey, i'm Michał Tarasiuk",
-  "app.home.banner.subTitle": "i'm a front-end developer from Lublin",
-  "app.home.main.description.welcome": "Welcome to my digital garden!",
-  "app.home.main.description.plans": "I am a frontend from Lublin. In the future I plan to develop towards backend, mainly working with React, Next.js and TypeScript.",
-  "app.home.main.description.idea": "This space is my personal corner of the Internet. I consider it more of a digital garden than a blog. This means that sometimes I write things that are underdeveloped as I learn and develop. I think doing it publicly is more important than collecting drafts of your posts.",
-  "app.home.main.description.contact": "If you want to contact me please contact me on Discord.",
-  "app.home.main.description.end": "Thanks for stopping by!",
-  "app.snippets.banner.title": "Snippets"
+    "app.banner.navigation.snippets": "snippets",
+    "app.banner.navigation.contact": "contact",
+    "app.banner.navigation.channels": "channels",
+    "app.home.banner.title": "hey, i'm Michał Tarasiuk",
+    "app.home.banner.subTitle": "i'm a front-end developer from Lublin",
+    "app.home.main.description.welcome": "Welcome to my digital garden!",
+    "app.home.main.description.plans": "I am a frontend from Lublin. In the future I plan to develop towards backend, mainly working with React, Next.js and TypeScript.",
+    "app.home.main.description.idea": "This space is my personal corner of the Internet. I consider it more of a digital garden than a blog. This means that sometimes I write things that are underdeveloped as I learn and develop. I think doing it publicly is more important than collecting drafts of your posts.",
+    "app.home.main.description.contact": "If you want to contact me please contact me on Discord.",
+    "app.home.main.description.end": "Thanks for stopping by!",
+    "app.snippets.banner.title": "snippets"
 }

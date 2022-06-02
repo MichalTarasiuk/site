@@ -16,10 +16,10 @@ type ErrorContextValue = {
   readonly catchError: (possibleError: unknown) => void
 }
 
+const isError = (value: unknown): value is Error => value instanceof Error
+
 const [ErrorProviderImpl, useInnerError] =
   createSafeContext<ErrorContextValue>('error')
-
-const isError = (value: unknown): value is Error => value instanceof Error
 
 const ErrorProvider = ({ children }: Props) => {
   const subscribers = useMemo(() => new Set<Subscriber>(), [])

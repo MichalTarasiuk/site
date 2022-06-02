@@ -5,9 +5,8 @@ import { Nav } from '../components'
 
 import Styles from './header.module.scss'
 
+import { routes, author } from 'src/common/constants/constants'
 import { usePaths } from 'src/common/hooks/hooks'
-import { author } from 'src/data/author.data'
-import { routes } from 'src/data/routes.data'
 
 export const Header = () => {
   const { paths, pathname } = usePaths()

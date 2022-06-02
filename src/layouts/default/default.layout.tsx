@@ -27,14 +27,14 @@ const getTitles = (intl: IntlShape, slug: string | undefined = '') => {
   const prefix = `${spacer}${signs.minus}`
   const subTitle = formatedSlug ? `${prefix}${spacedSlug}` : ''
 
-  const titles: Record<string, string> = {
+  const titles = {
     home: intl.formatMessage(messages.homeTitle),
     snippets: intl.formatMessage(messages.snippetsTitle) + subTitle,
     channels: intl.formatMessage(messages.channels) + subTitle,
     [NOT_FOUND_CODE]: FALLBACK_PAGE_NAME,
   }
 
-  return titles
+  return titles as Record<string, string>
 }
 
 const DefaultLayout = ({ children }: Props) => {

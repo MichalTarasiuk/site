@@ -20,10 +20,10 @@ type AlertContextValue = {
   readonly showAlert: (type: AlertType, message: string) => void
 }
 
+const ALERT_TIMEOUT = 3000
+
 const [AlertProviderImpl, useAlert] =
   createSafeContext<AlertContextValue>('alert')
-
-const ALERT_TIMEOUT = 3000
 
 const AlertProvider = ({ children }: Props) => {
   const [alertState, setAlertState] = useState<AlertState | null>(null)

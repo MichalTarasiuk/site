@@ -18,9 +18,6 @@ type RegionContextValue = {
   readonly locale: string
 }
 
-const [RegionProviderImpl, useRegion] =
-  createSafeContext<RegionContextValue>('region')
-
 const nameToLocale: Record<string, Locale> = {
   'en-US': EnUSLocale,
   'pl-PL': PlLocale,
@@ -31,11 +28,13 @@ const importMessages = (name: string) =>
 
 export const DEFAULT_LOCALE = 'en-US'
 
+const [RegionProviderImpl, useRegion] =
+  createSafeContext<RegionContextValue>('region')
+
 const RegionProvider = ({ children }: Props) => {
-  const router = useRouter()
+  const { query } = useRouter()
 
-  const locale = router.query.locale?.toString() || DEFAULT_LOCALE
-
+  const locale = query.locale?.toString() || DEFAULT_LOCALE
   const messages = useMemo(() => importMessages(locale), [locale])
 
   const value = useMemo(() => ({ locale }), [locale])

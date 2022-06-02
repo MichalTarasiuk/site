@@ -16,9 +16,6 @@ type ThemeContextValue = {
   readonly toggleTheme: () => void
 }
 
-const [ThemeProviderImpl, useTheme] =
-  createSafeContext<ThemeContextValue>('theme')
-
 const LOCAL_STORAGE_NAME = 'theme'
 const DEFAULT_THEME = 'light'
 
@@ -28,6 +25,9 @@ const mediaQueryList = isClientEnvironment
   : undefined
 
 const inverntion = (theme: Theme) => (theme === 'light' ? 'dark' : 'light')
+
+const [ThemeProviderImpl, useTheme] =
+  createSafeContext<ThemeContextValue>('theme')
 
 const ThemeProvider = ({ children }: Props) => {
   const [theme, setTheme] = useLocalStorage<Theme>(

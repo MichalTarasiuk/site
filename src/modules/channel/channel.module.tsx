@@ -12,6 +12,8 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 type ParsedUrlQuery = { readonly slug: string }
 
 export const ChannelPage = ({ channel }: Props) => {
+  channel
+
   return null
 }
 

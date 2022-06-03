@@ -7,7 +7,8 @@ export { entries, fromEntries } from './entries.utility'
 export { filterObject } from './filterObject.utility'
 export { omit } from './omit.utility'
 export { mapObject } from './mapObject.utility'
-export * from './renameKey.utility'
+export { formatDateFull } from './date.utility'
+export { renameKey } from './renameKey.utility'
 
 export const isFunction = (value: unknown): value is Function =>
   typeof value === 'function'

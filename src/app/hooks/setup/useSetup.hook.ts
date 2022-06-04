@@ -4,7 +4,7 @@ import { pageview as gtagPreview } from './gtag'
 
 import {
   isClientEnvironment,
-  isProduction,
+  isProductionEnvironment,
 } from 'src/common/constants/constants'
 import { useMount } from 'src/common/hooks/hooks'
 
@@ -12,7 +12,7 @@ export const useSetup = () => {
   const router = useRouter()
 
   useMount(() => {
-    if (isClientEnvironment && isProduction) {
+    if (isClientEnvironment && isProductionEnvironment) {
       const routeChangeHandler = (url: string) => {
         gtagPreview(url)
       }

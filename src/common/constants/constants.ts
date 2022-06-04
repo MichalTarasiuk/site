@@ -2,7 +2,10 @@ export {
   isClientEnvironment,
   isServerEnvironment,
 } from './executionEnvironment.constant'
-export { isDevelopment, isProduction } from './nodeEnv.constant'
+export {
+  isDevelopmentEnvironment,
+  isProductionEnvironment,
+} from './nodeEnvironment.constant'
 export { author } from './author.constant'
 export { routes } from './routes.constant'
 

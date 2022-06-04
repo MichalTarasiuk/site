@@ -37,7 +37,7 @@ const AlertProvider = ({ children }: Props) => {
     if (alertState?.message) {
       timeout.start(hideAlert)
     }
-  }, [alertState?.message])
+  }, [alertState])
 
   const hideAlert: AlertContextValue['hideAlert'] = useCallback(() => {
     setAlertState(null)

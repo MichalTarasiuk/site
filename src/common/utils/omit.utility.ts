@@ -1,3 +1,5 @@
+import type { PlainObject } from 'src/common/typings/typings'
+
 import { filterObject } from 'src/common/utils/utils'
 
 export const omit = <TObject extends PlainObject, TKeys extends keyof TObject>(

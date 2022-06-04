@@ -1,3 +1,5 @@
+import type { Noop } from 'src/common/typings/typings'
+
 import { spacer } from 'src/common/constants/constants'
 
 export { fetcher } from './fetcher.utility'

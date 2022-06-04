@@ -1,5 +1,7 @@
 import { useRef, useCallback } from 'react'
 
+import type { ArrowFunction } from 'src/common/typings/typings'
+
 export const useTimeout = (timeout: number | null = null) => {
   const savedTimeout = useRef<NodeJS.Timeout | null>(null)
 

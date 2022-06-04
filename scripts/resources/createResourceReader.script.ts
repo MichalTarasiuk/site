@@ -4,6 +4,7 @@ import Path from 'path'
 import Matter from 'gray-matter'
 
 import type { Snippet } from './resources.types'
+import type { PlainObject } from 'src/common/typings/typings'
 
 type ResourceName = 'snippets'
 

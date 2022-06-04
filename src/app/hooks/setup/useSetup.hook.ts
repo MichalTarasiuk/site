@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 
 import { pageview as gtagPreview } from './gtag'
+import { pageview as gtmPreview } from './gtm'
 
 import {
   isClientEnvironment,
@@ -15,6 +16,7 @@ export const useSetup = () => {
     if (isClientEnvironment && isProductionEnvironment) {
       const routeChangeHandler = (url: string) => {
         gtagPreview(url)
+        gtmPreview(url)
       }
 
       router.events.on('routeChangeComplete', routeChangeHandler)

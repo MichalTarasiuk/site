@@ -1,3 +1,5 @@
+import type { PlainObject, RenameKey } from 'src/common/typings/typings'
+
 import { mapObject } from 'src/common/utils/utils'
 
 export const renameKey = <

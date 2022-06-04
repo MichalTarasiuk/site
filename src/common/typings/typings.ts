@@ -1,17 +1,17 @@
-type Noop = () => void
+export type Noop = () => void
 
-type PlainObject = Record<PropertyKey, unknown>
+export type PlainObject = Record<PropertyKey, unknown>
 
-type LookUp<
+export type LookUp<
   TElement extends { readonly type: string },
-  TType extends U['type']
+  TType extends TElement['type']
 > = TElement extends {
   readonly type: TType
 }
   ? TElement
   : never
 
-type RenameKey<
+export type RenameKey<
   TObject extends PlainObject,
   TFrom extends keyof TObject,
   TTo extends PropertyKey
@@ -19,10 +19,10 @@ type RenameKey<
   readonly [Key in keyof TObject as Key extends TFrom ? TTo : Key]: TObject[Key]
 }
 
-type AddKey<
+export type AddKey<
   TObject extends PlainObject,
   TKey extends PropertyKey,
   TValue extends unknown
 > = TObject & Record<TKey, TValue>
 
-type ArrowFunction = (...args: readonly unknown[]) => unknown
+export type ArrowFunction = (...args: readonly unknown[]) => unknown

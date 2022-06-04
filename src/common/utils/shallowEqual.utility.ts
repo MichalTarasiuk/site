@@ -1,3 +1,5 @@
+import type { PlainObject } from 'src/common/typings/typings'
+
 export const shallowEqual = <TA extends PlainObject | readonly unknown[]>(
   a: TA,
   b: TA

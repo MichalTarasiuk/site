@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
 import type { ReactNode } from 'react'
+import type { Noop } from 'src/common/typings/typings'
 
 import { useMount } from 'src/common/hooks/hooks'
 import { createSafeContext } from 'src/common/utils/utils'

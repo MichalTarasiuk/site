@@ -6,10 +6,8 @@ import Styles from './snippetsListing.module.scss'
 import type { Snippet } from 'scripts/resources/resources.types'
 
 import { isEmpty, filterObject } from 'src/common/utils/utils'
-import {
-  useTags,
-  fileExtenstionToTag,
-} from 'src/modules/snippets/contexts/contexts'
+import { useTags } from 'src/modules/snippets/contexts/contexts'
+import { getTagByFileExtension } from 'src/modules/snippets/contexts/tags/tags.helpers'
 
 type Props = {
   readonly snippets: readonly Snippet[]
@@ -28,7 +26,7 @@ export const SnippetsListing = ({ snippets }: Props) => {
     <ul className={Styles.listing}>
       {snippets
         .filter(({ meta: { fileExtension } }) => {
-          const tag = fileExtenstionToTag[fileExtension]
+          const tag = getTagByFileExtension(fileExtension)
           const matches = noTagsSelected || selectedTags[tag]
 
           return matches

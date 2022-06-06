@@ -14,10 +14,8 @@ import {
   uppercaseFirst,
   filterObject,
 } from 'src/common/utils/utils'
-import {
-  useTags,
-  fileExtenstionToTag,
-} from 'src/modules/snippets/contexts/contexts'
+import { useTags } from 'src/modules/snippets/contexts/contexts'
+import { getTagByFileExtension } from 'src/modules/snippets/contexts/tags/tags.helpers'
 
 type Props = Snippet['meta']
 
@@ -25,7 +23,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
   const { paths } = usePaths()
   const { toggleTag, resetTags, tags } = useTags()
 
-  const tag = fileExtenstionToTag[fileExtension]
+  const tag = getTagByFileExtension(fileExtension)
 
   const handleTagButton = useCallback(
     (event: MouseEvent, tag: string) => {

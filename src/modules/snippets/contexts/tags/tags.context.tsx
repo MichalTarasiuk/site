@@ -1,10 +1,17 @@
 import { useMemo, useCallback } from 'react'
 
+import { getTagByFileExtension } from './tags.helpers'
+
 import type { ReactNode } from 'react'
 import type { Snippet } from 'scripts/resources/resources.types'
 
-import { useForce, useSafeMemo } from 'src/common/hooks/hooks'
-import { createSafeContext, fromEntries, exclude } from 'src/common/utils/utils'
+import { useForce, useUpdate } from 'src/common/hooks/hooks'
+import {
+  createSafeContext,
+  fromEntries,
+  exclude,
+  filterObject,
+} from 'src/common/utils/utils'
 
 type Props = {
   readonly children: ReactNode
@@ -15,30 +22,22 @@ type TagContextValue = {
   readonly toggleTag: (name: string, value?: boolean) => void
   readonly setTags: (snippets: readonly Snippet[]) => void
   readonly resetTags: (...excludedTags: readonly string[]) => void
+  readonly toggleAllTags: (...activeTags: readonly string[]) => void
 }
 
-export const fileExtenstionToTag = {
-  js: 'javascript',
-  ts: 'typescript',
-  css: 'css',
-}
-
-const [TagsProviderImpl, useTags] = createSafeContext<TagContextValue>('tags')
+const [TagsProviderImpl, useTagsImpl] =
+  createSafeContext<TagContextValue>('tags')
 
 const TagsProvider = ({ children }: Props) => {
   const tagsMap = useMemo(() => new Map<string, boolean>(), [])
-  const tags: TagContextValue['tags'] = useSafeMemo(() => {
-    const formatedTags = fromEntries([...tagsMap.entries()])
-
-    return formatedTags
-  }, [tagsMap.size, ...tagsMap.values()])
+  const tags: TagContextValue['tags'] = fromEntries([...tagsMap.entries()])
 
   const force = useForce()
 
   const setTags: TagContextValue['setTags'] = useCallback(
     (snippets) => {
       snippets.forEach(({ meta: { fileExtension } }) => {
-        const tag = fileExtenstionToTag[fileExtension]
+        const tag = getTagByFileExtension(fileExtension)
         const has = tagsMap.has(tag)
 
         if (!has) {
@@ -63,6 +62,19 @@ const TagsProvider = ({ children }: Props) => {
     [tagsMap, force]
   )
 
+  const toggleAllTags: TagContextValue['toggleAllTags'] = useCallback(
+    (...activeTags: readonly string[]) => {
+      tagsMap.forEach((_, name) => {
+        const isActive = activeTags.includes(name)
+
+        tagsMap.set(name, isActive)
+      })
+
+      force()
+    },
+    [tagsMap, force]
+  )
+
   const resetTags: TagContextValue['resetTags'] = useCallback(
     (...excludedTags: readonly string[]) => {
       const allTags = [...tagsMap.keys()]
@@ -81,11 +93,27 @@ const TagsProvider = ({ children }: Props) => {
       setTags,
       resetTags,
       toggleTag,
+      toggleAllTags,
     }),
-    [tags, setTags, toggleTag, resetTags]
+    [tags, setTags, toggleTag, resetTags, toggleAllTags]
   )
 
   return <TagsProviderImpl value={value}>{children}</TagsProviderImpl>
+}
+
+const useTags = (fn?: (tags: TagContextValue['tags']) => void) => {
+  const tagsImpl = useTagsImpl()
+
+  const activeTags = filterObject(tagsImpl.tags, (_, value) => value)
+  const lengthActiveTags = Object.keys(activeTags).length
+
+  useUpdate(() => {
+    if (fn) {
+      fn(activeTags)
+    }
+  }, [lengthActiveTags])
+
+  return tagsImpl
 }
 
 export { TagsProvider, useTags }

@@ -19,7 +19,7 @@ type ErrorContextValue = {
 
 const isError = (value: unknown): value is Error => value instanceof Error
 
-const [ErrorProviderImpl, useInnerError] =
+const [ErrorProviderImpl, useErrorImpp] =
   createSafeContext<ErrorContextValue>('error')
 
 const ErrorProvider = ({ children }: Props) => {
@@ -57,7 +57,7 @@ const ErrorProvider = ({ children }: Props) => {
 }
 
 const useError = (subscriber?: Subscriber) => {
-  const context = useInnerError()
+  const context = useErrorImpp()
 
   const { subscribe, ...restContext } = context
 

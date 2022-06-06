@@ -21,7 +21,7 @@ type Props = Snippet['meta']
 
 export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
   const { paths } = usePaths()
-  const { toggleTag, resetTags, tags } = useTags()
+  const { toggleTag, toggleAllTags: resetTags, tags } = useTags()
 
   const tag = getTagByFileExtension(fileExtension)
 

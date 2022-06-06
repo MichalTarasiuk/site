@@ -9,7 +9,6 @@ import { useForce, useUpdate } from 'src/common/hooks/hooks'
 import {
   createSafeContext,
   fromEntries,
-  exclude,
   filterObject,
 } from 'src/common/utils/utils'
 
@@ -21,7 +20,6 @@ type TagContextValue = {
   readonly tags: Record<string, boolean>
   readonly toggleTag: (name: string, value?: boolean) => void
   readonly setTags: (snippets: readonly Snippet[]) => void
-  readonly resetTags: (...excludedTags: readonly string[]) => void
   readonly toggleAllTags: (...activeTags: readonly string[]) => void
 }
 
@@ -63,24 +61,12 @@ const TagsProvider = ({ children }: Props) => {
   )
 
   const toggleAllTags: TagContextValue['toggleAllTags'] = useCallback(
-    (...activeTags: readonly string[]) => {
+    (...tagsToActive: readonly string[]) => {
       tagsMap.forEach((_, name) => {
-        const isActive = activeTags.includes(name)
+        const isActive = tagsToActive.includes(name)
 
         tagsMap.set(name, isActive)
       })
-
-      force()
-    },
-    [tagsMap, force]
-  )
-
-  const resetTags: TagContextValue['resetTags'] = useCallback(
-    (...excludedTags: readonly string[]) => {
-      const allTags = [...tagsMap.keys()]
-      const selectedTags = exclude(allTags, excludedTags)
-
-      selectedTags.forEach((selectedTag) => tagsMap.set(selectedTag, false))
 
       force()
     },
@@ -91,11 +77,10 @@ const TagsProvider = ({ children }: Props) => {
     () => ({
       tags,
       setTags,
-      resetTags,
       toggleTag,
       toggleAllTags,
     }),
-    [tags, setTags, toggleTag, resetTags, toggleAllTags]
+    [tags, setTags, toggleTag, toggleAllTags]
   )
 
   return <TagsProviderImpl value={value}>{children}</TagsProviderImpl>

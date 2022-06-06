@@ -11,6 +11,7 @@ export { routes } from './routes.constant'
 
 export const signs = {
   minus: '-',
+  comma: ', ',
 }
 
 export const spacer = ' '

@@ -3,13 +3,19 @@ import { useEffect, useRef, useLayoutEffect } from 'react'
 
 import type { DependencyList, EffectCallback } from 'react'
 
-import { isClientEnvironment } from 'src/common/constants/constants'
+import {
+  isClientEnvironment,
+  isDevelopmentEnvironment,
+} from 'src/common/constants/constants'
+
+const useEffectCallsOnMount = isDevelopmentEnvironment ? 2 : 1
 
 export const useUpdate = (
   effectCallback: EffectCallback,
   dependencyList: DependencyList
 ) => {
   const isMounted = useRef(false)
+  const effectCalls = useRef(0)
   const savedEffectCallback = useRef(effectCallback)
 
   if (isMounted && savedEffectCallback.current !== effectCallback) {
@@ -17,12 +23,16 @@ export const useUpdate = (
   }
 
   useEffect(() => {
-    if (isMounted.current) {
+    effectCalls.current++
+
+    if (!isMounted.current && effectCalls.current === useEffectCallsOnMount) {
       isMounted.current = true
       return
     }
 
-    return savedEffectCallback.current()
+    if (isMounted.current) {
+      return savedEffectCallback.current()
+    }
   }, dependencyList)
 }
 

@@ -10,6 +10,7 @@ import {
   createSafeContext,
   fromEntries,
   filterObject,
+  objectKeys,
 } from 'src/common/utils/utils'
 
 type Props = {
@@ -90,7 +91,7 @@ const useTags = (fn?: (tags: TagContextValue['tags']) => void) => {
   const tagsImpl = useTagsImpl()
 
   const activeTags = filterObject(tagsImpl.tags, (_, value) => value)
-  const lengthActiveTags = Object.keys(activeTags).length
+  const lengthActiveTags = objectKeys(activeTags).length
 
   useUpdate(() => {
     if (fn) {

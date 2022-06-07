@@ -4,7 +4,7 @@ import Styles from './tags.module.scss'
 
 import { signs } from 'src/common/constants/constants'
 import { useTab } from 'src/common/hooks/hooks'
-import { entries } from 'src/common/utils/utils'
+import { entries, objectKeys } from 'src/common/utils/utils'
 import { useTags } from 'src/modules/snippets/contexts/contexts'
 
 const TAB_NAME = 'snippets_tags'
@@ -16,7 +16,7 @@ export const Tags = () => {
     toggleAllTags(...splitedTags)
   })
   const { tags, toggleAllTags } = useTags((activeTags) => {
-    const formatedTags = Object.keys(activeTags).join(signs.comma)
+    const formatedTags = objectKeys(activeTags).join(signs.comma)
 
     tab.postMessage(formatedTags)
   })

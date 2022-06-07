@@ -13,6 +13,7 @@ import {
   blockBatching,
   uppercaseFirst,
   filterObject,
+  objectKeys,
 } from 'src/common/utils/utils'
 import { useTags } from 'src/modules/snippets/contexts/contexts'
 import { getTagByFileExtension } from 'src/modules/snippets/contexts/tags/tags.helpers'
@@ -30,7 +31,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
       event.stopPropagation()
 
       const activeTags = filterObject(tags, (_, value) => value)
-      const namesOfActiveTags = Object.keys(activeTags)
+      const namesOfActiveTags = objectKeys(activeTags)
       const lengthOfActiveTags = namesOfActiveTags.length
 
       const canToggleTag = !(

@@ -22,7 +22,8 @@ export const compact = <TValue>(arr: readonly TValue[]) => arr.filter(Boolean)
 export const uppercaseFirst = (value: string) =>
   value.slice(0, 1).toUpperCase() + value.slice(1)
 
-export const isEmpty = (object: object) => Object.keys(object).length === 0
+export const isEmpty = (object: Record<PropertyKey, unknown>) =>
+  objectKeys(object).length === 0
 
 export const reverseString = (value: string, separator: string) =>
   value.split(separator).reverse().join(separator)

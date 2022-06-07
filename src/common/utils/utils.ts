@@ -36,3 +36,7 @@ export const exclude = <TValue>(
 
 export const pad = (str: string, length: number, char = spacer) =>
   str.padStart((str.length + length) / 2, char).padEnd(length, char)
+
+export const objectKeys = <TObject extends Record<PropertyKey, unknown>>(
+  object: TObject
+) => Object.keys(object) as readonly (keyof TObject)[]

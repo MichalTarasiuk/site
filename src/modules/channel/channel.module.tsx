@@ -6,6 +6,7 @@ import type {
 
 import { createFeedReader } from 'scripts/scripts'
 import { DEFAULT_LOCALE } from 'src/app/contexts/contexts'
+import { objectKeys } from 'src/common/utils/utils'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -37,7 +38,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const { getAllChannels } = await createFeedReader()
 
   const channels = getAllChannels()
-  const paths = Object.keys(channels).map((slug) => ({
+  const paths = objectKeys(channels).map((slug) => ({
     params: { slug, locale: DEFAULT_LOCALE },
   }))
 

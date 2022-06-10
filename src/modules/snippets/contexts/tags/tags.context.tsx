@@ -5,7 +5,7 @@ import { getTagByFileExtension } from './tags.helpers'
 import type { ReactNode } from 'react'
 import type { Snippet } from 'scripts/resources/resources.types'
 
-import { useForce, useUpdate } from 'src/common/hooks/hooks'
+import { useForce, useUpdate, useSafeMemo } from 'src/common/hooks/hooks'
 import {
   createSafeContext,
   fromEntries,
@@ -29,7 +29,10 @@ const [TagsProviderImpl, useTagsImpl] =
 
 const TagsProvider = ({ children }: Props) => {
   const tagsMap = useMemo(() => new Map<string, boolean>(), [])
-  const tags: TagContextValue['tags'] = fromEntries([...tagsMap.entries()])
+  const tags: TagContextValue['tags'] = useSafeMemo(
+    () => fromEntries([...tagsMap.entries()]),
+    [...tagsMap.values()]
+  )
 
   const force = useForce()
 
@@ -90,7 +93,10 @@ const TagsProvider = ({ children }: Props) => {
 const useTags = (fn?: (tags: TagContextValue['tags']) => void) => {
   const tagsImpl = useTagsImpl()
 
-  const activeTags = filterObject(tagsImpl.tags, (_, value) => value)
+  const activeTags = useMemo(
+    () => filterObject(tagsImpl.tags, (_, value) => value),
+    [tagsImpl.tags]
+  )
   const lengthActiveTags = objectKeys(activeTags).length
 
   useUpdate(() => {

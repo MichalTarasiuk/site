@@ -1,4 +1,4 @@
-// useSave: resolve problem of different dependencies size between hooks rerenders
+// useSafeMemo: resolve problem of different dependencies size between hooks rerenders
 
 import { useRef } from 'react'
 

@@ -1,3 +1,5 @@
+// https://github.com/reactjs/rfcs/blob/useevent/text/0000-useevent.md
+
 import { useCallback, useRef } from 'react'
 
 import type { DependencyList } from 'react'

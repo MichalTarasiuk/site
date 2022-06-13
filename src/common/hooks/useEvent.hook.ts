@@ -2,21 +2,16 @@ import { useCallback, useRef } from 'react'
 
 import type { DependencyList } from 'react'
 
-import { useHasMounted } from 'src/common/hooks/hooks'
-import { shallowEqual } from 'src/common/utils/utils'
+import { areHookInputsEqual } from 'src/common/hooks/hooks.helpers'
 
 export const useEvent = <TFn extends (...args: readonly any[]) => unknown>(
   fn: TFn,
   dependencyList: DependencyList
 ) => {
   const savedFn = useRef(fn)
-  const savedDependencyList = useRef(dependencyList)
-  const hasMounted = useHasMounted()
+  const savedDependencyList = useRef<DependencyList | null>(null)
 
-  if (
-    hasMounted &&
-    !shallowEqual(savedDependencyList.current, dependencyList)
-  ) {
+  if (!areHookInputsEqual(dependencyList, savedDependencyList.current)) {
     savedFn.current = fn
     savedDependencyList.current = dependencyList
   }

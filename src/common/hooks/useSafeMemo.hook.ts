@@ -4,20 +4,24 @@ import { useRef } from 'react'
 
 import type { DependencyList } from 'react'
 
-import { useHasMounted } from 'src/common/hooks/hooks'
-import { shallowEqual } from 'src/common/utils/utils'
+import { areHookInputsEqual } from 'src/common/hooks/hooks.helpers'
+
+const customAreHookInputsEqual = (
+  nextDeps: ReadonlyArray<unknown>,
+  prevDeps: ReadonlyArray<unknown> | null
+) =>
+  areHookInputsEqual(nextDeps, prevDeps) &&
+  nextDeps.length === (prevDeps || []).length
 
 export const useSafeMemo = <TData>(
-  factory: () => TData,
+  nextCreate: () => TData,
   dependencies: DependencyList
 ) => {
   const savedData = useRef<TData | null>(null)
-  const savedDependencies = useRef(dependencies)
+  const savedDependencies = useRef<DependencyList | null>(null)
 
-  const hasMounted = useHasMounted()
-
-  if (!hasMounted || !shallowEqual(dependencies, savedDependencies.current)) {
-    savedData.current = factory()
+  if (!customAreHookInputsEqual(dependencies, savedDependencies.current)) {
+    savedData.current = nextCreate()
     savedDependencies.current = dependencies
   }
 

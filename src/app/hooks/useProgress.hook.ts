@@ -2,15 +2,23 @@ import { useRouter } from 'next/router'
 import NProgress, { start, done } from 'nprogress'
 import { useRef } from 'react'
 
-import { useMount, useHasMounted } from 'src/common/hooks/hooks'
-import { shallowEqual } from 'src/common/utils/utils'
+import { useMount } from 'src/common/hooks/hooks'
+import { areHookInputsEqual } from 'src/common/hooks/hooks.helpers'
 
-export const useProgress = (options: Partial<NProgress.NProgressOptions>) => {
+export const useProgress = <
+  TOptions extends Partial<NProgress.NProgressOptions>
+>(
+  options: TOptions
+) => {
   const router = useRouter()
-  const savedOptions = useRef(options)
-  const hasMounted = useHasMounted()
+  const savedOptions = useRef<TOptions | null>(null)
 
-  if (!hasMounted || !shallowEqual(savedOptions.current, options)) {
+  if (
+    !areHookInputsEqual(
+      Object.values(options),
+      savedOptions.current && Object.values(savedOptions.current)
+    )
+  ) {
     NProgress.configure(options)
 
     savedOptions.current = options

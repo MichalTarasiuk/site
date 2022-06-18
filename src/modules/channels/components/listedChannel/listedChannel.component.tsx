@@ -15,10 +15,12 @@ export const ListedChannel = ({ title, description, slug }: Props) => {
 
   return (
     <Link href={paths.channel.slug(slug).url()}>
-      <article className={Styles.listed}>
-        <h2 className={Styles.heading}>{title}</h2>
-        <p className={Styles.description}>{description}</p>
-      </article>
+      <a className={Styles.link}>
+        <article className={Styles.listed}>
+          <h2 className={Styles.heading}>{title}</h2>
+          <p className={Styles.description}>{description}</p>
+        </article>
+      </a>
     </Link>
   )
 }

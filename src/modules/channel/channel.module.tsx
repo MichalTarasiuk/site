@@ -1,3 +1,5 @@
+import Styles from './channel.module.scss'
+
 import type {
   InferGetStaticPropsType,
   GetStaticPaths,
@@ -7,15 +9,18 @@ import type {
 import { createFeedReader } from 'scripts/scripts'
 import { DEFAULT_LOCALE } from 'src/app/contexts/contexts'
 import { objectKeys } from 'src/common/utils/utils'
+import { ArticlesListing } from 'src/modules/channel/components/components'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 type ParsedUrlQuery = { readonly slug: string }
 
 export const ChannelPage = ({ channel }: Props) => {
-  channel
-
-  return null
+  return (
+    <div className={Styles.wrapper}>
+      <ArticlesListing articles={channel.items} />
+    </div>
+  )
 }
 
 export const getStaticProps = async ({

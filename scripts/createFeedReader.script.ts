@@ -17,7 +17,7 @@ type ItemRSS = {
   readonly 'content:encoded': string
 }
 
-type FormatedChannel = AddKey<
+export type FormatedChannel = AddKey<
   RenameKey<RSS['channel'], 'item', 'items'>,
   'slug',
   string

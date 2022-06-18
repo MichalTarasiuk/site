@@ -53,23 +53,23 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
     <Link
       href={paths.snippet.slug(title.replace(/\s/g, signs.minus)).url()}
       passHref>
-      {/* <a className={Styles.link}> */}
-      <article className={Styles.listed}>
-        <div>
-          <time className={Styles.time}>
-            {reverseString(publishedAt, signs.minus)}
-          </time>
-        </div>
-        <section>
-          <h2>{uppercaseFirst(title)}</h2>
-          <button
-            onClick={(event) => handleTagButton(event, tag)}
-            className={Styles.tag}>
-            <span>#{tag}</span>
-          </button>
-        </section>
-      </article>
-      {/* </a> */}
+      <a className={Styles.link}>
+        <article className={Styles.listed}>
+          <div>
+            <time className={Styles.time}>
+              {reverseString(publishedAt, signs.minus)}
+            </time>
+          </div>
+          <section>
+            <h2>{uppercaseFirst(title)}</h2>
+            <button
+              onClick={(event) => handleTagButton(event, tag)}
+              className={Styles.tag}>
+              <span>#{tag}</span>
+            </button>
+          </section>
+        </article>
+      </a>
     </Link>
   )
 }

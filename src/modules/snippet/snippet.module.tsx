@@ -12,7 +12,9 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 type ParsedUrlQuery = { readonly slug: string }
 
-export const SnippetPage = ({}: Props) => {
+export const SnippetPage = ({ snippet }: Props) => {
+  console.log(snippet)
+
   return null
 }
 

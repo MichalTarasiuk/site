@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
 import type { ReactNode } from 'react'
-import type { Noop } from 'src/common/typings/typings'
 
 import { useMount } from 'src/common/hooks/hooks'
 import { createSafeContext } from 'src/common/logic/logic'
@@ -10,10 +9,10 @@ type Props = {
   readonly children: ReactNode
 }
 
-type Subscriber = (error: Error) => void
+type Listener = (error: Error) => void
 
 type ErrorContextValue = {
-  readonly subscribe: (subscriber: Subscriber) => Noop
+  readonly subscribe: (listener: Listener) => Noop
   readonly catchError: (possibleError: unknown) => void
 }
 
@@ -23,7 +22,7 @@ const [ErrorProviderImpl, useErrorImpp] =
   createSafeContext<ErrorContextValue>('error')
 
 const ErrorProvider = ({ children }: Props) => {
-  const subscribers = useMemo(() => new Set<Subscriber>(), [])
+  const subscribers = useMemo(() => new Set<Listener>(), [])
 
   const catchError: ErrorContextValue['catchError'] = useCallback(
     (possibleError) => {
@@ -56,14 +55,14 @@ const ErrorProvider = ({ children }: Props) => {
   return <ErrorProviderImpl value={value}>{children}</ErrorProviderImpl>
 }
 
-const useError = (subscriber?: Subscriber) => {
+const useError = (listener?: Listener) => {
   const context = useErrorImpp()
 
   const { subscribe, ...restContext } = context
 
   useMount(() => {
-    if (subscriber) {
-      const unsubscribe = subscribe(subscriber)
+    if (listener) {
+      const unsubscribe = subscribe(listener)
 
       return () => {
         unsubscribe()

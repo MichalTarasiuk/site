@@ -1,7 +1,5 @@
 import { XMLParser } from 'fast-xml-parser'
 
-import type { RenameKey, AddKey } from 'src/common/typings/typings'
-
 import { fetcher, renameKey, fromEntries } from 'src/common/utils/utils'
 
 type ParsedXml = {

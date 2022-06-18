@@ -21,7 +21,7 @@ export const messages = defineMessages({
     description: 'Home page title',
     defaultMessage: 'Home',
   },
-  homeSubTitle: {
+  homeSubtitle: {
     id: 'app.home.banner.subTitle',
     description: 'Home page sub title',
     defaultMessage: 'Welcome to the home page',

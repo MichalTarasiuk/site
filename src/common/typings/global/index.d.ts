@@ -14,3 +14,21 @@ type InferServerPropsType<TFn extends (...args: any) => any> = Awaited<
   : never
 
 type Noop = () => void
+
+type PlainFunction = (...args: readonly unknown[]) => unknown
+
+type PlainObject = Record<PropertyKey, unknown>
+
+type RenameKey<
+  TObject extends PlainObject,
+  TFrom extends keyof TObject,
+  TTo extends PropertyKey
+> = {
+  readonly [Key in keyof TObject as Key extends TFrom ? TTo : Key]: TObject[Key]
+}
+
+type AddKey<
+  TObject extends PlainObject,
+  TKey extends PropertyKey,
+  TValue extends unknown
+> = TObject & Record<TKey, TValue>

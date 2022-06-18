@@ -1,7 +1,6 @@
 import { useState, useCallback, useMemo } from 'react'
 
 import type { ReactNode } from 'react'
-import type { Noop } from 'src/common/typings/typings'
 
 import { useError as useErrorEffect } from 'src/app/contexts/contexts'
 import { useTimeout, useUpdate } from 'src/common/hooks/hooks'

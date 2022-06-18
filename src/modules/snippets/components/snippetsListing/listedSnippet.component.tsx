@@ -50,9 +50,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
   )
 
   return (
-    <Link
-      href={paths.snippet.slug(title.replace(/\s/g, signs.minus)).url()}
-      passHref>
+    <Link href={paths.snippet.slug(title.replace(/\s/g, signs.minus)).url()}>
       <a className={Styles.link}>
         <article className={Styles.listed}>
           <div>

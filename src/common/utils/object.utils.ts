@@ -1,7 +1,5 @@
 // templates for fix typings of objects
 
-import type { PlainObject, RenameKey } from 'src/common/typings/typings'
-
 export const renameKey = <
   TObject extends PlainObject,
   TFrom extends keyof TObject,

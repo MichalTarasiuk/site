@@ -3,15 +3,17 @@ import type { GetStaticPaths, GetStaticPropsContext } from 'next'
 import { createResourceReader } from 'scripts/scripts'
 import { DEFAULT_LOCALE } from 'src/app/contexts/contexts'
 import { signs, spacer } from 'src/common/constants/constants'
+import { DefaultLayout } from 'src/layouts/layouts'
 
 type Props = InferServerPropsType<typeof getStaticProps>
 
 type ParsedUrlQuery = { readonly snippetSlug: string }
 
 export const SnippetPage = ({ snippet }: Props) => {
-  console.log(snippet)
-
-  return null
+  return (
+    // eslint-disable-next-line react/no-children-prop -- in progress
+    <DefaultLayout title={snippet.meta.title} children={null}></DefaultLayout>
+  )
 }
 
 export const getStaticProps = ({

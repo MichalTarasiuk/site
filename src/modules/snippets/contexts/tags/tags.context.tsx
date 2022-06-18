@@ -6,12 +6,8 @@ import type { ReactNode } from 'react'
 import type { Snippet } from 'scripts/resources/resources.types'
 
 import { useForce, useUpdate, useSafeMemo } from 'src/common/hooks/hooks'
-import {
-  createSafeContext,
-  fromEntries,
-  filterObject,
-  objectKeys,
-} from 'src/common/utils/utils'
+import { createSafeContext } from 'src/common/logic/logic'
+import { fromEntries, filterObject, objectKeys } from 'src/common/utils/utils'
 
 type Props = {
   readonly children: ReactNode

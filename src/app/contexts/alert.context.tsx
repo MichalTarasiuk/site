@@ -5,7 +5,7 @@ import type { Noop } from 'src/common/typings/typings'
 
 import { useError as useErrorEffect } from 'src/app/contexts/contexts'
 import { useTimeout, useUpdate } from 'src/common/hooks/hooks'
-import { createSafeContext } from 'src/common/utils/utils'
+import { createSafeContext } from 'src/common/logic/logic'
 
 type Props = {
   readonly children: ReactNode

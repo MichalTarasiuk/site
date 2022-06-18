@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import type { Noop } from 'src/common/typings/typings'
 
 import { useMount } from 'src/common/hooks/hooks'
-import { createSafeContext } from 'src/common/utils/utils'
+import { createSafeContext } from 'src/common/logic/logic'
 
 type Props = {
   readonly children: ReactNode

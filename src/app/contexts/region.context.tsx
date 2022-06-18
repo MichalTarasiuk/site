@@ -4,7 +4,7 @@ import { IntlProvider } from 'react-intl'
 
 import type { ReactNode } from 'react'
 
-import { createSafeContext } from 'src/common/utils/utils'
+import { createSafeContext } from 'src/common/logic/logic'
 import * as EnUSLocale from 'src/locales/en-US.locale.json'
 import * as PlLocale from 'src/locales/pl-PL.locale.json'
 

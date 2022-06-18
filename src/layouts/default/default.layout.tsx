@@ -3,38 +3,20 @@ import { useMemo } from 'react'
 import { useIntl } from 'react-intl'
 
 import { Header } from './components/components'
+import {
+  DEFAULT_PAGE_NAME,
+  NOT_FOUND_CODE,
+  getTitles,
+} from './defaultLayout.helpers'
 import Styles from './defaultLayout.module.scss'
 
 import type { ReactNode } from 'react'
-import type { IntlShape } from 'react-intl'
 
-import { signs, spacer } from 'src/common/constants/constants'
-import { compact, pad } from 'src/common/utils/utils'
+import { compact } from 'src/common/utils/utils'
 import { messages } from 'src/locales/translations'
 
 type Props = {
   readonly children: ReactNode
-}
-
-const DEFAULT_PAGE_NAME = 'home'
-const FALLBACK_PAGE_NAME = 'not-found'
-const NOT_FOUND_CODE = 404
-
-const getTitles = (intl: IntlShape, slug: string | undefined = '') => {
-  const formatedSlug = slug.replaceAll(signs.minus, spacer)
-  const spacedSlug = pad(formatedSlug, formatedSlug.length + 2)
-
-  const prefix = `${spacer}${signs.minus}`
-  const subTitle = formatedSlug ? `${prefix}${spacedSlug}` : ''
-
-  const titles = {
-    home: intl.formatMessage(messages.homeTitle),
-    snippets: intl.formatMessage(messages.snippetsTitle) + subTitle,
-    channels: intl.formatMessage(messages.channels) + subTitle,
-    [NOT_FOUND_CODE]: FALLBACK_PAGE_NAME,
-  }
-
-  return titles as Record<string, string>
 }
 
 const DefaultLayout = ({ children }: Props) => {

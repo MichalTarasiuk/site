@@ -1,3 +1,5 @@
+// templates for fix typings of objects
+
 import type { PlainObject, RenameKey } from 'src/common/typings/typings'
 
 export const renameKey = <
@@ -49,6 +51,13 @@ export const mapObject = <
   object: TObject,
   fn: (key: keyof TObject, value: TObject[keyof TObject]) => TResult
 ) => fromEntries(entries(object).map(([key, value]) => fn(key, value)))
+
+export const objectKeys = <TObject extends Record<PropertyKey, unknown>>(
+  object: TObject
+) => Object.keys(object) as readonly (keyof TObject)[]
+
+export const isEmpty = (object: Record<PropertyKey, unknown>) =>
+  objectKeys(object).length === 0
 
 /**
  * inlined Object.is polyfill to avoid requiring consumers ship their own

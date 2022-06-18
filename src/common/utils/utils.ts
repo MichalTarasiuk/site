@@ -3,14 +3,16 @@ import type { Noop } from 'src/common/typings/typings'
 import { spacer } from 'src/common/constants/constants'
 
 export { fetcher } from './fetcher.utility'
-export { objectIs } from './objectIs.utility'
 export { createSafeContext } from './createSafeContext.utility'
-export { entries, fromEntries } from './entries.utility'
-export { filterObject } from './filterObject.utility'
-export { omit } from './omit.utility'
-export { mapObject } from './mapObject.utility'
-export { formatDateFull } from './date.utility'
-export { renameKey } from './renameKey.utility'
+export {
+  renameKey,
+  fromEntries,
+  entries,
+  filterObject,
+  omit,
+  mapObject,
+  objectIs,
+} from './safeObject.utils'
 
 export const isFunction = (value: unknown): value is Function =>
   typeof value === 'function'

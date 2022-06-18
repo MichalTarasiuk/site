@@ -4,6 +4,7 @@ import type { InferGetStaticPropsType, GetStaticPaths } from 'next'
 
 import { createResourceReader } from 'scripts/scripts'
 import { useBeforeFirstPaint } from 'src/common/hooks/hooks'
+import { pick } from 'src/common/utils/utils'
 import {
   Tags,
   SnippetsListing,
@@ -37,7 +38,9 @@ export const SnippetsPage = (props: Props) => {
 
 export const getStaticProps = () => {
   const snippetsReader = createResourceReader('snippets')
-  const snippets = snippetsReader.getAllResources()
+  const snippets = snippetsReader
+    .getAllResources()
+    .map((snippet) => pick(snippet, ['meta']))
 
   return {
     props: {

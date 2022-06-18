@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { createPaths } from './usePaths.helpers'
 
 import { useRegion } from 'src/app/contexts/contexts'
+import { signs } from 'src/common/constants/constants'
 import { compact } from 'src/common/utils/utils'
 
 export const usePaths = () => {
@@ -13,8 +14,11 @@ export const usePaths = () => {
   const paths = useMemo(() => createPaths(locale), [locale])
 
   const pathname = useMemo(
-    () => `/${compact(router.pathname.split('/')).slice(1).join('/')}`,
-    [router.pathname]
+    () =>
+      `/${compact(router.asPath.split(signs.slash))
+        .slice(1)
+        .join(signs.slash)}`,
+    [router.asPath]
   )
 
   return { paths, pathname }

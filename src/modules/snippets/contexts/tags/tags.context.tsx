@@ -16,7 +16,7 @@ type Props = {
 type TagContextValue = {
   readonly tags: Record<string, boolean>
   readonly toggleTag: (name: string, value?: boolean) => void
-  readonly setTags: (snippets: readonly Snippet[]) => void
+  readonly setTags: (snippets: readonly Pick<Snippet, 'meta'>[]) => void
   readonly toggleAllTags: (...activeTags: readonly string[]) => void
 }
 
@@ -93,7 +93,10 @@ const useTags = (fn?: (tags: TagContextValue['tags']) => void) => {
     () => filterObject(tagsImpl.tags, (_, value) => value),
     [tagsImpl.tags]
   )
-  const lengthActiveTags = objectKeys(activeTags).length
+  const lengthActiveTags = useMemo(
+    () => objectKeys(activeTags).length,
+    [activeTags]
+  )
 
   useUpdate(() => {
     if (fn) {

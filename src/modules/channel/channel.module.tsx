@@ -1,19 +1,15 @@
 import Styles from './channel.module.scss'
 
-import type {
-  InferGetStaticPropsType,
-  GetStaticPaths,
-  GetStaticPropsContext,
-} from 'next'
+import type { GetStaticPaths, GetStaticPropsContext } from 'next'
 
 import { createFeedReader } from 'scripts/scripts'
 import { DEFAULT_LOCALE } from 'src/app/contexts/contexts'
 import { objectKeys } from 'src/common/utils/utils'
 import { ArticlesListing } from 'src/modules/channel/components/components'
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>
+type Props = InferServerPropsType<typeof getStaticProps>
 
-type ParsedUrlQuery = { readonly slug: string }
+type ParsedUrlQuery = { readonly channelSlug: string }
 
 export const ChannelPage = ({ channel }: Props) => {
   return (
@@ -26,16 +22,22 @@ export const ChannelPage = ({ channel }: Props) => {
 export const getStaticProps = async ({
   params,
 }: GetStaticPropsContext<ParsedUrlQuery>) => {
-  const { getChannel } = await createFeedReader()
+  if (params) {
+    const { getChannel } = await createFeedReader()
 
-  const channelName = params!.slug
-  const channel = getChannel(channelName)
+    const channelName = params.channelSlug
+    const channel = getChannel(channelName)
+
+    return {
+      props: {
+        channel: channel!,
+      },
+      notFound: channel === undefined,
+    }
+  }
 
   return {
-    props: {
-      channel: channel!,
-    },
-    notFound: channel === undefined,
+    notFound: true,
   }
 }
 
@@ -44,7 +46,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const channels = getAllChannels()
   const paths = objectKeys(channels).map((slug) => ({
-    params: { slug, locale: DEFAULT_LOCALE },
+    params: { channelSlug: slug, locale: DEFAULT_LOCALE },
   }))
 
   return {

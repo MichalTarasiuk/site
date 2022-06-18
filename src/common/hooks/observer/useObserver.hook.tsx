@@ -15,9 +15,10 @@ export const useObserver = (
   observerInit: ObserverInit,
   observerCallback: ObserverCallback
 ) => {
-  type Subscriber = ReturnType<typeof observe>
-
-  const subscribers = useMemo<Map<Element, Subscriber>>(() => new Map(), [])
+  const subscribers = useMemo<Map<Element, ReturnType<typeof observe>>>(
+    () => new Map(),
+    []
+  )
 
   const cleanup = useCallback(() => {
     subscribers.forEach((subscriber) => subscriber.unobserve())

@@ -54,6 +54,14 @@ export const useHasMounted = () => {
   return hasMounted.current
 }
 
+export const useBeforeFirstMount = (fn: Noop) => {
+  const hasMounted = useHasMounted()
+
+  if (!hasMounted) {
+    fn()
+  }
+}
+
 const useIsomorphicEffect = isClientEnvironment ? useLayoutEffect : useEffect
 
 export const useBeforeFirstPaint = (effect: EffectCallback) => {

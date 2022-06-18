@@ -8,11 +8,12 @@ export const DEFAULT_PAGE_NAME = 'home'
 export const FALLBACK_PAGE_NAME = 'not-found'
 export const NOT_FOUND_CODE = 404
 
+const prefix = `${spacer}${signs.minus}`
+
 export const getTitles = (intl: IntlShape, slug: string | undefined = '') => {
   const formatedSlug = slug.replaceAll(signs.minus, spacer)
   const spacedSlug = pad(formatedSlug, formatedSlug.length + 2)
 
-  const prefix = `${spacer}${signs.minus}`
   const subTitle = formatedSlug ? `${prefix}${spacedSlug}` : ''
 
   const titles = {

@@ -10,7 +10,7 @@ import { useTags } from 'src/modules/snippets/contexts/contexts'
 import { getTagByFileExtension } from 'src/modules/snippets/contexts/tags/tags.helpers'
 
 type Props = {
-  readonly snippets: readonly Snippet[]
+  readonly snippets: readonly Pick<Snippet, 'meta'>[]
 }
 
 export const SnippetsListing = ({ snippets }: Props) => {

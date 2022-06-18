@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router'
 import NProgress, { start, done } from 'nprogress'
-import { useRef } from 'react'
 
-import { useMount } from 'src/common/hooks/hooks'
-import { areHookInputsEqual } from 'src/common/hooks/hooks.helpers'
+import { useMount, useBeforeFirstMount } from 'src/common/hooks/hooks'
 
 export const useProgress = <
   TOptions extends Partial<NProgress.NProgressOptions>
@@ -11,18 +9,10 @@ export const useProgress = <
   options: TOptions
 ) => {
   const router = useRouter()
-  const savedOptions = useRef<TOptions | null>(null)
 
-  if (
-    !areHookInputsEqual(
-      Object.values(options),
-      savedOptions.current && Object.values(savedOptions.current)
-    )
-  ) {
+  useBeforeFirstMount(() => {
     NProgress.configure(options)
-
-    savedOptions.current = options
-  }
+  })
 
   useMount(() => {
     router.events.on('routeChangeStart', start)

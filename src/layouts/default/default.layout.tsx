@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useIntl } from 'react-intl'
 
@@ -12,6 +11,8 @@ import Styles from './defaultLayout.module.scss'
 
 import type { ReactNode } from 'react'
 
+import { signs } from 'src/common/constants/constants'
+import { usePaths } from 'src/common/hooks/hooks'
 import { compact } from 'src/common/utils/utils'
 import { messages } from 'src/locales/translations'
 
@@ -21,11 +22,11 @@ type Props = {
 
 const DefaultLayout = ({ children }: Props) => {
   const intl = useIntl()
-  const { asPath } = useRouter()
+  const { pathname } = usePaths()
 
   const [pageName = DEFAULT_PAGE_NAME, slug] = useMemo(
-    () => compact(asPath.split('/')).slice(1),
-    [asPath]
+    () => compact(pathname.split(signs.slash)),
+    [pathname]
   )
   const titles = useMemo(() => getTitles(intl, slug), [intl, slug])
 

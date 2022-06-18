@@ -44,6 +44,15 @@ export const omit = <TObject extends PlainObject, TKeys extends keyof TObject>(
     (key) => !keys.includes(key as TKeys)
   ) as unknown as Omit<TObject, TKeys>
 
+export const pick = <TObject extends PlainObject, TKeys extends keyof TObject>(
+  object: TObject,
+  keys: readonly TKeys[]
+) =>
+  filterObject(object, (key) => keys.includes(key as TKeys)) as unknown as Pick<
+    TObject,
+    TKeys
+  >
+
 export const mapObject = <
   TObject extends PlainObject,
   TResult extends readonly [keyof TObject, TObject[keyof TObject]]

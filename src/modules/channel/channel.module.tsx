@@ -18,7 +18,7 @@ type ParsedUrlQuery = { readonly slug: string }
 export const ChannelPage = ({ channel }: Props) => {
   return (
     <div className={Styles.wrapper}>
-      <ArticlesListing articles={channel.items} />
+      <ArticlesListing channelSlug={channel.slug} articles={channel.items} />
     </div>
   )
 }

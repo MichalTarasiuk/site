@@ -1,2 +1,1 @@
-import { HomePage } from 'src/modules/home/home.module'
-export default HomePage
+export { HomePage as default } from 'src/modules/home/home.module'

@@ -33,6 +33,15 @@ export const createPaths = (locale: string) => ({
       }),
     }),
   },
+  article: (channelSlug: string) => ({
+    slug: (articleSlug: string) => ({
+      url: (url?: URL) => ({
+        pathname: '/[locale]/channels/[channelSlug]/[articleSlug]',
+        query: { locale, channelSlug, articleSlug },
+        hash: url?.hash,
+      }),
+    }),
+  }),
   url: (url?: URL) => ({
     pathname: '/[locale]',
     query: { locale },

@@ -8,16 +8,32 @@ export const getSecondLevelDomain = (hostname: string) => {
   return secondLevelDomain
 }
 
+const isURL = (url: string) => {
+  try {
+    new URL(url)
+
+    return true
+  } catch {
+    return false
+  }
+}
+
 export const getFeedUrl = async (url: string) => {
+  const selector = 'link[rel=alternate]'
+
   const response = await fetcher(url)
   const html = await response.text()
 
-  const $ = Cheerio.load(html)
-  const feedPath = $('link[type="application/rss+xml"]').attr('href')
+  const loadedCheerio = Cheerio.load(html)
+  const href = loadedCheerio(selector).attr('href')
 
-  if (feedPath) {
-    return url + feedPath
+  if (!href) {
+    throw new Error(`Feed not found for ${url}`)
   }
 
-  throw new Error(`Feed not found for ${url}`)
+  if (isURL(href)) {
+    return href
+  }
+
+  return url + href
 }

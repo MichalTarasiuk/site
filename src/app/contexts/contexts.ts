@@ -1,4 +1,4 @@
-export * from './theme.context'
-export * from './error.context'
-export * from './alert.context'
-export * from './region.context'
+export { useTheme, ThemeProvider } from './theme.context'
+export { useError, ErrorProvider } from './error.context'
+export { useAlert, AlertProvider } from './alert.context'
+export { useRegion, RegionProvider, DEFAULT_LOCALE } from './region.context'

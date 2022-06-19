@@ -1,6 +1,6 @@
 import { XMLParser } from 'fast-xml-parser'
 
-import { getSecondLevelDomain } from './feedReader.helpers'
+import { getSecondLevelDomain, getFeedUrl } from './feedReader.helpers'
 
 import type { ParsedXml, FormatedChannel } from './feedReader.types'
 
@@ -10,8 +10,6 @@ type FeedReader = {
   readonly getChannel: (name: string) => FormatedChannel
   readonly getAllChannels: () => Record<string, FormatedChannel>
 }
-
-const path = '/rss.xml'
 
 const URLS = ['https://overreacted.io']
 
@@ -28,7 +26,8 @@ export const createFeedReader = (() => {
 
     const channels = await Promise.all(
       URLS.map(async (url) => {
-        const response = await fetcher(url + path)
+        const feedURL = await getFeedUrl(url)
+        const response = await fetcher(feedURL)
         const text = await response.text()
 
         const parsedXml: ParsedXml = xmlParser.parse(text)

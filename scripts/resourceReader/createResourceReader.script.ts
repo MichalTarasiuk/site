@@ -3,13 +3,7 @@ import Path from 'path'
 
 import Matter from 'gray-matter'
 
-import type { Snippet } from './resources.types'
-
-type ResourceName = 'snippets'
-
-type Resources = {
-  readonly snippets: Snippet
-}
+import type { ResourceName, Resources } from './resources.types'
 
 type Reader<TType extends PlainObject> = {
   readonly getAllResources: () => readonly TType[]

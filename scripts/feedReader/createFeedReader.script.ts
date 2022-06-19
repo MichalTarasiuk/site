@@ -1,36 +1,10 @@
 import { XMLParser } from 'fast-xml-parser'
 
+import { getSecondLevelDomain } from './feedReader.helpers'
+
+import type { ParsedXml, FormatedChannel } from './feedReader.types'
+
 import { fetcher, renameKey, fromEntries } from 'src/common/utils/utils'
-
-type ParsedXml = {
-  readonly rss: RSS
-}
-
-type ItemRSS = {
-  readonly title: string
-  readonly description: string
-  readonly link: string
-  readonly guid: string
-  readonly pubDate: string
-  readonly 'content:encoded': string
-}
-
-export type FormatedChannel = AddKey<
-  RenameKey<RSS['channel'], 'item', 'items'>,
-  'slug',
-  string
->
-
-type RSS = {
-  readonly channel: {
-    readonly title: string
-    readonly description: string
-    readonly link: string
-    readonly generator: string
-    readonly lastBuildDate: string
-    readonly item: readonly ItemRSS[]
-  }
-}
 
 type FeedReader = {
   readonly getChannel: (name: string) => FormatedChannel
@@ -39,18 +13,7 @@ type FeedReader = {
 
 const path = '/rss.xml'
 
-const URLS = [
-  'https://overreacted.io',
-  'https://www.zhenghao.io',
-  'https://www.joshwcomeau.com',
-  'https://kentcdodds.com',
-]
-
-const getSecondLevelDomain = (hostname: string) => {
-  const secondLevelDomain = hostname.replace(/^www\./, '').split('.')[0]
-
-  return secondLevelDomain
-}
+const URLS = ['https://overreacted.io']
 
 export const createFeedReader = (() => {
   const xmlParser = new XMLParser()

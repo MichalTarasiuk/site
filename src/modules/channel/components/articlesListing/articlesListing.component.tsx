@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 
 import Styles from './articlesListing.module.scss'
 
-import type { FormatedChannel } from 'scripts/createFeedReader.script'
+import type { FormatedChannel } from 'scripts/feedReader/feedReader.types'
 
 import { signs, spacer } from 'src/common/constants/constants'
 import { usePaths } from 'src/common/hooks/hooks'

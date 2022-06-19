@@ -1,2 +1,2 @@
-export * from './resources/createResourceReader.script'
-export { createFeedReader } from './createFeedReader.script'
+export { createResourceReader } from './resourceReader/createResourceReader.script'
+export { createFeedReader } from './feedReader/createFeedReader.script'

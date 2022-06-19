@@ -6,3 +6,9 @@ export type Snippet = {
   }
   readonly content: string
 }
+
+export type ResourceName = 'snippets'
+
+export type Resources = {
+  readonly snippets: Snippet
+}

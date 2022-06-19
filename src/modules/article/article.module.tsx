@@ -15,8 +15,6 @@ type ParsedUrlQuery = {
 }
 
 export const ArticlePage = ({ article }: Props) => {
-  console.log(article)
-
   return (
     <DefaultLayout
       title={article.title}

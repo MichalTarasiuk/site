@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { ListedSnippet } from './listedSnippet.component'
 import Styles from './snippetsListing.module.scss'
 
-import type { Snippet } from 'scripts/resources/resources.types'
+import type { Snippet } from 'scripts/resourceReader/resources.types'
 
 import { isEmpty, filterObject } from 'src/common/utils/utils'
 import { useTags } from 'src/modules/snippets/contexts/contexts'

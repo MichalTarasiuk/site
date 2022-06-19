@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import NProgress, { start, done } from 'nprogress'
 
-import { useMount, useBeforeFirstMount } from 'src/common/hooks/hooks'
+import { useMount, useBeforeFirstMount, useEvent } from 'src/common/hooks/hooks'
 
 export const useProgress = <
   TOptions extends Partial<NProgress.NProgressOptions>
@@ -14,15 +14,27 @@ export const useProgress = <
     NProgress.configure(options)
   })
 
+  const withProgressBar = useEvent(
+    (nextPathname: string) => nextPathname !== router.asPath,
+    [router.asPath]
+  )
+
   useMount(() => {
-    router.events.on('routeChangeStart', start)
-    router.events.on('routeChangeComplete', done)
-    router.events.on('routeChangeError', done)
+    const onStart = (nextPathname: string) => {
+      if (withProgressBar(nextPathname)) {
+        start()
+      }
+    }
+    const onDone = () => done()
+
+    router.events.on('routeChangeStart', onStart)
+    router.events.on('routeChangeComplete', onDone)
+    router.events.on('routeChangeError', onDone)
 
     return () => {
-      router.events.on('routeChangeStart', start)
-      router.events.on('routeChangeComplete', done)
-      router.events.on('routeChangeError', done)
+      router.events.on('routeChangeStart', onStart)
+      router.events.on('routeChangeComplete', onDone)
+      router.events.on('routeChangeError', onDone)
     }
   })
 }

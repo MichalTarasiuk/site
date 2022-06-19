@@ -18,7 +18,7 @@ export const useEvent = <TFn extends (...args: readonly any[]) => unknown>(
     savedDependencyList.current = dependencyList
   }
 
-  return useCallback((params: Parameters<typeof fn>) => {
+  return useCallback((...params: Parameters<typeof fn>) => {
     return savedFn.current(...params)
   }, []) as unknown as TFn
 }

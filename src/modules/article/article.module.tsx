@@ -41,7 +41,7 @@ export const getStaticProps = async ({
 
       return {
         props: {
-          article: article,
+          article,
         },
       }
     }

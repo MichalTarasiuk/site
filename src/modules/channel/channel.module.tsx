@@ -25,22 +25,27 @@ export const ChannelPage = ({ channel }: Props) => {
 export const getStaticProps = async ({
   params,
 }: GetStaticPropsContext<ParsedUrlQuery>) => {
-  if (params) {
-    const { getChannel } = await createFeedReader()
+  try {
+    if (params) {
+      const { getChannel } = await createFeedReader()
 
-    const channelName = params.channelSlug
-    const channel = getChannel(channelName)
+      const channelName = params.channelSlug
+      const channel = getChannel(channelName)
+
+      return {
+        props: {
+          channel: channel,
+        },
+      }
+    }
+
+    throw Error('invalid params')
+  } catch (error) {
+    console.log(error)
 
     return {
-      props: {
-        channel: channel!,
-      },
-      notFound: channel === undefined,
+      notFound: true,
     }
-  }
-
-  return {
-    notFound: true,
   }
 }
 

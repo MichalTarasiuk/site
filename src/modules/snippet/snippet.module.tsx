@@ -12,7 +12,7 @@ type ParsedUrlQuery = { readonly snippetSlug: string }
 export const SnippetPage = ({ snippet }: Props) => {
   return (
     // eslint-disable-next-line react/no-children-prop -- in progress
-    <DefaultLayout title={snippet.meta.title} children={null}></DefaultLayout>
+    <DefaultLayout title={snippet.meta.title} children={null} />
   )
 }
 

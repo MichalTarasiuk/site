@@ -32,3 +32,5 @@ type AddKey<
   TKey extends PropertyKey,
   TValue extends unknown
 > = TObject & Record<TKey, TValue>
+
+type InferObjectValues<TObject extends PlainObject> = TObject[keyof TObject]

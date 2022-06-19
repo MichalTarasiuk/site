@@ -33,7 +33,7 @@ type RSS = {
 }
 
 type FeedReader = {
-  readonly getChannel: (name: string) => FormatedChannel | undefined
+  readonly getChannel: (name: string) => FormatedChannel
   readonly getAllChannels: () => Record<string, FormatedChannel>
 }
 
@@ -83,7 +83,13 @@ export const createFeedReader = (() => {
     })
 
     const getChannel = (name: string) => {
-      return channelsMap.get(name)
+      const channel = channelsMap.get(name)
+
+      if (channel) {
+        return channel
+      }
+
+      throw new Error(`Channel ${name} not found`)
     }
 
     const getAllChannels = () => {

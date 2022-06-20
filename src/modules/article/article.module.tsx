@@ -1,4 +1,8 @@
-import { getArticleSlug } from './article.helpers'
+import {
+  getArticleSlug,
+  removeAttributes,
+  replaceKeyWithFn,
+} from './article.helpers'
 
 import type { GetStaticPaths, GetStaticPropsContext } from 'next'
 
@@ -15,6 +19,8 @@ type ParsedUrlQuery = {
 }
 
 export const ArticlePage = ({ article }: Props) => {
+  console.log(article.content)
+
   return (
     <DefaultLayout
       title={article.title}
@@ -39,9 +45,16 @@ export const getStaticProps = async ({
         'article not found'
       )
 
+      const attributesToRemove = ['class', 'id', 'style']
+      const formatedArticle = replaceKeyWithFn(
+        article,
+        { from: 'content:encoded', to: 'content' },
+        (value) => removeAttributes(value, ...attributesToRemove)
+      )
+
       return {
         props: {
-          article,
+          article: formatedArticle,
         },
       }
     }

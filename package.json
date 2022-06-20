@@ -18,6 +18,7 @@
     "@types/nprogress": "^0.2.0",
     "classnames": "^2.3.1",
     "copy-to-clipboard": "^3.3.1",
+    "domhandler": "^5.0.3",
     "fast-xml-parser": "^4.0.8",
     "light-date": "^1.2.0",
     "next": "12.1.6",

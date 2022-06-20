@@ -12,6 +12,7 @@ specifiers:
   cheerio: 1.0.0-rc.11
   classnames: ^2.3.1
   copy-to-clipboard: ^3.3.1
+  domhandler: ^5.0.3
   eslint: ^8.14.0
   eslint-config-next: 12.1.6
   eslint-plugin-react-hooks: ^4.5.0
@@ -35,6 +36,7 @@ dependencies:
   '@types/nprogress': 0.2.0
   classnames: 2.3.1
   copy-to-clipboard: 3.3.1
+  domhandler: 5.0.3
   fast-xml-parser: 4.0.8
   light-date: 1.2.0
   next: 12.1.6_4cbhpxftn776lqv6vk34lzjmlm
@@ -1128,14 +1130,12 @@ packages:
 
   /domelementtype/2.3.0:
     resolution: {integrity: sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==}
-    dev: true
 
   /domhandler/5.0.3:
     resolution: {integrity: sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==}
     engines: {node: '>= 4'}
     dependencies:
       domelementtype: 2.3.0
-    dev: true
 
   /domutils/3.0.1:
     resolution: {integrity: sha512-z08c1l761iKhDFtfXO04C7kTdPBLi41zwOZl00WS8b5eiaebNpY00HKbztwBq+e3vyqWNwWF3mP9YLUeqIrF+Q==}

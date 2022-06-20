@@ -5,6 +5,7 @@
 
 [data-theme='light'] {
   :root {
+    --fc-404: hsl(0, 0%, 0%);
     --bg-banner: hsl(220, 14%, 96%);
     --fc-banner: hsl(0, 0%, 0%);
     --bg-content: hsl(0, 0%, 100%);
@@ -20,6 +21,7 @@
 
 [data-theme='dark'] {
   :root {
+    --fc-404: hsl(0, 0%, 100%);
     --bg-banner: hsl(221, 39%, 11%);
     --fc-banner: hsl(0, 0%, 100%);
     --bg-content: hsl(215, 28%, 17%);
@@ -35,6 +37,7 @@
 
 @media (prefers-color-scheme: light) {
   :root {
+    --fc-404: hsl(0, 0%, 0%);
     --bg-banner: hsl(220, 14%, 96%);
     --fc-banner: hsl(0, 0%, 0%);
     --bg-content: hsl(0, 0%, 100%);
@@ -50,6 +53,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --fc-404: hsl(0, 0%, 100%);
     --bg-banner: hsl(221, 39%, 11%);
     --fc-banner: hsl(0, 0%, 100%);
     --bg-content: hsl(215, 28%, 17%);

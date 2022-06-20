@@ -10,6 +10,7 @@ import { createFeedReader } from 'scripts/scripts'
 import { DEFAULT_LOCALE } from 'src/app/contexts/contexts'
 import { entries, ensuredFind } from 'src/common/utils/utils'
 import { DefaultLayout } from 'src/layouts/layouts'
+import { HtmlParser } from 'src/modules/article/components/components'
 
 type Props = InferServerPropsType<typeof getStaticProps>
 
@@ -18,16 +19,13 @@ type ParsedUrlQuery = {
   readonly articleSlug: string
 }
 
-export const ArticlePage = ({ article }: Props) => {
-  console.log(article.content)
-
+export const ArticlePage = ({
+  article: { title, description, content },
+}: Props) => {
   return (
-    <DefaultLayout
-      title={article.title}
-      subtitle={article.description}
-      // eslint-disable-next-line react/no-children-prop -- in progress
-      children={null}
-    />
+    <DefaultLayout title={title} subtitle={description}>
+      <HtmlParser html={content} />
+    </DefaultLayout>
   )
 }
 

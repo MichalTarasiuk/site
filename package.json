@@ -20,6 +20,7 @@
     "copy-to-clipboard": "^3.3.1",
     "domhandler": "^5.0.3",
     "fast-xml-parser": "^4.0.8",
+    "html-react-parser": "^2.0.0",
     "light-date": "^1.2.0",
     "next": "12.1.6",
     "nprogress": "^0.2.0",

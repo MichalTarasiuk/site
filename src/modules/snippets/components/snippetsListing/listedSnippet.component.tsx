@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 import Styles from './listedSnippet.module.scss'
 
 import type { MouseEvent } from 'react'
-import type { Snippet } from 'scripts/resources/resources.types'
+import type { Snippet } from 'scripts/resourceReader/resources.types'
 
 import { signs } from 'src/common/constants/constants'
 import { usePaths } from 'src/common/hooks/hooks'
@@ -28,7 +28,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
 
   const handleTagButton = useCallback(
     (event: MouseEvent, tag: string) => {
-      event.stopPropagation()
+      event.preventDefault()
 
       const activeTags = filterObject(tags, (_, value) => value)
       const namesOfActiveTags = objectKeys(activeTags)

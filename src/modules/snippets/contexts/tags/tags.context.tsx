@@ -3,7 +3,7 @@ import { useMemo, useCallback } from 'react'
 import { getTagByFileExtension } from './tags.helpers'
 
 import type { ReactNode } from 'react'
-import type { Snippet } from 'scripts/resources/resources.types'
+import type { Snippet } from 'scripts/resourceReader/resources.types'
 
 import { useForce, useUpdate, useSafeMemo } from 'src/common/hooks/hooks'
 import { createSafeContext } from 'src/common/logic/logic'

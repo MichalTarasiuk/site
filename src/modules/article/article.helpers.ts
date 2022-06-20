@@ -1,8 +1,9 @@
 import * as Cheerio from 'cheerio'
 import { isTag } from 'domhandler'
+import { parse } from 'node-html-parser'
 
 import { signs, spacer } from 'src/common/constants/constants'
-import { filterObject, mapObject } from 'src/common/utils/utils'
+import { filterObject } from 'src/common/utils/utils'
 
 export const getArticleSlug = (title: string) =>
   title.toLowerCase().replaceAll(spacer, signs.minus)
@@ -25,29 +26,20 @@ export const removeAttributes = (
     return anyNode
   })
 
-  return loadedCheerio.html()
+  const body = extractBody(loadedCheerio.html())
+
+  return body
 }
 
-// space for replaceKeyWithFn
+const extractBody = (htmlAsString: string) => {
+  const selector = 'body'
 
-type FromTo<
-  TObject extends PlainObject,
-  TFrom extends keyof TObject,
-  TTo extends PropertyKey
-> = {
-  readonly from: TFrom
-  readonly to: TTo
+  const root = parse(htmlAsString)
+  const body = root.querySelector(selector)
+
+  if (!body) {
+    throw new Error(`can not find ${selector} in html`)
+  }
+
+  return body.innerHTML
 }
-
-export const replaceKeyWithFn = <
-  TObject extends PlainObject,
-  TFrom extends keyof TObject,
-  TTo extends PropertyKey
->(
-  object: TObject,
-  { from, to }: FromTo<TObject, TFrom, TTo>,
-  fn: (value: TObject[TFrom]) => TObject[TFrom]
-) =>
-  mapObject(object, (key, value) =>
-    key === from ? [to, fn(value as TObject[TFrom])] : [key, value]
-  ) as unknown as RenameKey<TObject, TFrom, TTo>

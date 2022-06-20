@@ -1,14 +1,10 @@
-import {
-  getArticleSlug,
-  removeAttributes,
-  replaceKeyWithFn,
-} from './article.helpers'
+import { getArticleSlug, removeAttributes } from './article.helpers'
 
 import type { GetStaticPaths, GetStaticPropsContext } from 'next'
 
 import { createFeedReader } from 'scripts/scripts'
 import { DEFAULT_LOCALE } from 'src/app/contexts/contexts'
-import { entries, ensuredFind } from 'src/common/utils/utils'
+import { entries, ensuredFind, replaceKeyWithFn } from 'src/common/utils/utils'
 import { DefaultLayout } from 'src/layouts/layouts'
 import { HtmlParser } from 'src/modules/article/components/components'
 

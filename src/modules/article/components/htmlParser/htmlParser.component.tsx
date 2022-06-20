@@ -16,5 +16,5 @@ export const HtmlParser = ({ html }: Props) => {
     setParsedHtml(nextParsedHtml)
   })
 
-  return <>{parsedHtml}</>
+  return <div>{parsedHtml}</div>
 }

@@ -4,6 +4,7 @@ export { compact, exclude, ensuredFind } from './array.utils'
 export { isFunction } from './type.utils'
 export { formatDateFull } from './date.utils'
 export { blockBatching } from './react.utils'
+export { replaceKeyWithFn } from './replaceKeyWithFn.utility'
 export {
   renameKey,
   fromEntries,

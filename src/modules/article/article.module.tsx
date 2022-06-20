@@ -39,11 +39,10 @@ export const getStaticProps = async ({
         'article not found'
       )
 
-      const attributesToRemove = ['class', 'id', 'style']
       const formatedArticle = replaceKeyWithFn(
         article,
         { from: 'content:encoded', to: 'content' },
-        (value) => removeAttributes(value, ...attributesToRemove)
+        (value) => removeAttributes(value, ['class', 'id', 'style'])
       )
 
       return {

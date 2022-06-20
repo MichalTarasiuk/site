@@ -10,7 +10,7 @@ export const getArticleSlug = (title: string) =>
 
 export const removeAttributes = (
   html: string,
-  ...attributes: readonly (string | number)[]
+  attributes: readonly (string | number)[]
 ) => {
   const selector = '*'
   const loadedCheerio = Cheerio.load(html)

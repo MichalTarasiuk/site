@@ -3,11 +3,8 @@ import { useState, useRef } from 'react'
 
 import Styles from './htmlParser.module.scss'
 
-import {
-  useBeforeFirstPaint,
-  useRunningHeader,
-  useEnsuredChildNodes,
-} from 'src/common/hooks/hooks'
+import { useBeforeFirstPaint, useRunningHeader } from 'src/common/hooks/hooks'
+import { useEnsuredChildNodes } from 'src/modules/article/hooks/hooks'
 
 type Props = {
   readonly html: string

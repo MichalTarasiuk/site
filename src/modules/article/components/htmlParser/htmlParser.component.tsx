@@ -1,7 +1,13 @@
 import Parse from 'html-react-parser'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
-import { useBeforeFirstPaint } from 'src/common/hooks/hooks'
+import Styles from './htmlParser.module.scss'
+
+import {
+  useBeforeFirstPaint,
+  useRunningHeader,
+  useDOM,
+} from 'src/common/hooks/hooks'
 
 type Props = {
   readonly html: string
@@ -9,6 +15,9 @@ type Props = {
 
 export const HtmlParser = ({ html }: Props) => {
   const [parsedHtml, setParsedHtml] = useState<ReturnType<typeof Parse>>('')
+  const wrapperRef = useRef<HTMLDivElement>(null)
+
+  const { setRunningHeader } = useRunningHeader('[id]')
 
   useBeforeFirstPaint(() => {
     const nextParsedHtml = Parse(html)
@@ -16,5 +25,13 @@ export const HtmlParser = ({ html }: Props) => {
     setParsedHtml(nextParsedHtml)
   })
 
-  return <div>{parsedHtml}</div>
+  useDOM(wrapperRef.current, (node) => {
+    setRunningHeader(node)
+  })
+
+  return (
+    <div ref={wrapperRef} className={Styles.wrapper}>
+      {parsedHtml}
+    </div>
+  )
 }

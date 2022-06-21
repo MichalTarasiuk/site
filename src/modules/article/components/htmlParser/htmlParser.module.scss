@@ -1,0 +1,17 @@
+.wrapper {
+  width: 80ch;
+  padding: 1rem 0.5rem 4rem 0.5rem;
+  color: var(--fc-htmlParser);
+
+  p {
+    margin: 10px;
+  }
+
+  a {
+    color: var(--fc-htmlParser);
+  }
+
+  code {
+    font-weight: bold;
+  }
+}

@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useRef } from 'react'
 
 import { useObserver } from 'src/common/hooks/hooks'
 
@@ -23,7 +23,8 @@ const getHighestElement = (elements: readonly HTMLElement[]) =>
   }, null)
 
 export const useRunningHeader = (selector: string) => {
-  const [id, setId] = useState('')
+  const [text, setText] = useState<string | null>(null)
+  const observers = useRef<readonly HTMLElement[]>([])
   const currentlyVisibleHeaders = useMemo(() => new Set<HTMLElement>(), [])
 
   const { observeElement, cleanup } = useObserver(observerInit, (entry) => {
@@ -36,25 +37,26 @@ export const useRunningHeader = (selector: string) => {
     const highestHeader = getHighestElement([...currentlyVisibleHeaders])
 
     if (highestHeader) {
-      setId(highestHeader.id)
+      setText(highestHeader.innerText)
     }
   })
 
   const setRunningHeader = useCallback(
     (htmlElement: HTMLElement | null) => {
       if (!htmlElement) {
-        setId('')
+        setText('')
         cleanup()
 
         return
       }
 
-      htmlElement
-        .querySelectorAll<HTMLElement>(selector)
-        .forEach(observeElement)
+      const nodeList = htmlElement.querySelectorAll<HTMLElement>(selector)
+
+      nodeList.forEach(observeElement)
+      observers.current = [...nodeList]
     },
     [cleanup, observeElement, selector]
   )
 
-  return { id, setRunningHeader }
+  return { text, observers, setRunningHeader }
 }

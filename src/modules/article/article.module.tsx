@@ -42,7 +42,7 @@ export const getStaticProps = async ({
       const formatedArticle = replaceKeyWithFn(
         article,
         { from: 'content:encoded', to: 'content' },
-        (html) => removeAttributes(html, ['class', 'id', 'style'])
+        (html) => removeAttributes(html, ['class', 'style'])
       )
 
       return {

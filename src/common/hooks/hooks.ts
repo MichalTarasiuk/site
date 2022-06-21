@@ -7,7 +7,7 @@ export { useForce } from './useForce.hook'
 export { useTab } from './useTab.hook'
 export { useSafeMemo } from './useSafeMemo.hook'
 export { useRunningHeader } from './useRunningHeader.hook'
-export { useDOM } from './useDOM.hook'
+export { useEnsuredChildNodes } from './useEnsuredChildNodes.hook'
 export {
   useBeforeFirstPaint,
   useUpdate,

@@ -6,7 +6,7 @@ import Styles from './htmlParser.module.scss'
 import {
   useBeforeFirstPaint,
   useRunningHeader,
-  useDOM,
+  useEnsuredChildNodes,
 } from 'src/common/hooks/hooks'
 
 type Props = {
@@ -25,7 +25,7 @@ export const HtmlParser = ({ html }: Props) => {
     setParsedHtml(nextParsedHtml)
   })
 
-  useDOM(wrapperRef.current, (node) => {
+  useEnsuredChildNodes(wrapperRef.current, (node) => {
     setRunningHeader(node)
   })
 

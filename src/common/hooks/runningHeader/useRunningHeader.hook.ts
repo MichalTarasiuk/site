@@ -1,26 +1,8 @@
 import { useState, useCallback, useMemo, useRef } from 'react'
 
+import { observerInit, getHighestElement } from './useRunningHeader.helpers'
+
 import { useObserver } from 'src/common/hooks/hooks'
-
-const observerInit = {
-  threshold: 1,
-}
-
-const getHighestElement = (elements: readonly HTMLElement[]) =>
-  elements.reduce<HTMLElement | null>((collector, htmlElement) => {
-    if (!collector) {
-      return htmlElement
-    }
-
-    if (
-      collector.compareDocumentPosition(htmlElement) &
-      Node.DOCUMENT_POSITION_FOLLOWING
-    ) {
-      return htmlElement
-    }
-
-    return collector
-  }, null)
 
 export const useRunningHeader = (selector: string) => {
   const [highestHeader, setHighestHeader] = useState<HTMLElement | null>(null)

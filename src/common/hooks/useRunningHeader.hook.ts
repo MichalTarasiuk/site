@@ -23,8 +23,8 @@ const getHighestElement = (elements: readonly HTMLElement[]) =>
   }, null)
 
 export const useRunningHeader = (selector: string) => {
-  const [text, setText] = useState<string | null>(null)
-  const observers = useRef<readonly HTMLElement[]>([])
+  const [highestHeader, setHighestHeader] = useState<HTMLElement | null>(null)
+  const subscribers = useRef<readonly HTMLElement[]>([])
   const currentlyVisibleHeaders = useMemo(() => new Set<HTMLElement>(), [])
 
   const { observeElement, cleanup } = useObserver(observerInit, (entry) => {
@@ -37,14 +37,14 @@ export const useRunningHeader = (selector: string) => {
     const highestHeader = getHighestElement([...currentlyVisibleHeaders])
 
     if (highestHeader) {
-      setText(highestHeader.innerText)
+      setHighestHeader(highestHeader)
     }
   })
 
   const setRunningHeader = useCallback(
     (htmlElement: HTMLElement | null) => {
       if (!htmlElement) {
-        setText('')
+        setHighestHeader(null)
         cleanup()
 
         return
@@ -53,10 +53,10 @@ export const useRunningHeader = (selector: string) => {
       const nodeList = htmlElement.querySelectorAll<HTMLElement>(selector)
 
       nodeList.forEach(observeElement)
-      observers.current = [...nodeList]
+      subscribers.current = [...nodeList]
     },
     [cleanup, observeElement, selector]
   )
 
-  return { text, observers, setRunningHeader }
+  return { highestHeader, subscribers, setRunningHeader }
 }

@@ -1,6 +1,16 @@
 .wrapper {
-  width: 80ch;
+  display: flex;
+  justify-content: flex-end;
   padding: 1rem 0.5rem 4rem 0.5rem;
+  width: 100vw;
+}
+
+.side {
+  min-width: calc((100vw - 80ch) / 2);
+}
+
+.parsedHtml {
+  max-width: 80ch;
   color: var(--fc-htmlParser);
 
   p {

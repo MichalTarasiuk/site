@@ -30,9 +30,10 @@ export const HtmlParser = ({ html }: Props) => {
 
   const contents = useMemo(
     () =>
-      subscribers.current
-        .map((subscriber) => subscriber.innerText)
-        .map((text) => text.trim()),
+      subscribers.current.map(({ innerText, id }) => ({
+        text: innerText.trim(),
+        id,
+      })),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- compare by primitive value is safty
     [subscribers.current.length]
   )
@@ -44,7 +45,7 @@ export const HtmlParser = ({ html }: Props) => {
       </div>
       <div className={Styles.side}>
         <TableOfContents
-          activeContent={highestHeader?.innerText ?? null}
+          highestContentText={highestHeader?.innerText.trim() ?? null}
           contents={contents}
         />
       </div>

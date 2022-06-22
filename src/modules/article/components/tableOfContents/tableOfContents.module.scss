@@ -1,8 +1,23 @@
 .wrapper {
   position: sticky;
   top: 10%;
+
+  ul li::marker {
+    color: var(--fc-tableOfContents);
+    font-size: 1.2rem;
+  }
 }
 
-.activeContent {
+.heading {
+  color: var(--fc-tableOfContents);
+}
+
+.link {
+  color: var(--fc-tableOfContents);
+  text-decoration: none;
+}
+
+.activeLink {
+  text-decoration: underline;
   font-weight: bold;
 }

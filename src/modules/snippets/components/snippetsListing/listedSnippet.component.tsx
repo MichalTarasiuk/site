@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useCallback } from 'react'
 
 import Styles from './listedSnippet.module.scss'
 
@@ -26,28 +25,25 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
 
   const tag = getTagByFileExtension(fileExtension)
 
-  const handleTagButton = useCallback(
-    (event: MouseEvent, tag: string) => {
-      event.preventDefault()
+  const handleTagButton = (event: MouseEvent, tag: string) => {
+    event.preventDefault()
 
-      const activeTags = filterObject(tags, (_, value) => value)
-      const namesOfActiveTags = objectKeys(activeTags)
-      const lengthOfActiveTags = namesOfActiveTags.length
+    const activeTags = filterObject(tags, (_, value) => value)
+    const namesOfActiveTags = objectKeys(activeTags)
+    const lengthOfActiveTags = namesOfActiveTags.length
 
-      const canToggleTag = !(
-        lengthOfActiveTags === 1 && namesOfActiveTags[0] === tag
-      )
+    const canToggleTag = !(
+      lengthOfActiveTags === 1 && namesOfActiveTags[0] === tag
+    )
 
-      if (canToggleTag) {
-        resetTags(tag)
+    if (canToggleTag) {
+      resetTags(tag)
 
-        blockBatching(() => {
-          toggleTag(tag, true)
-        })
-      }
-    },
-    [resetTags, toggleTag, tags]
-  )
+      blockBatching(() => {
+        toggleTag(tag, true)
+      })
+    }
+  }
 
   return (
     <Link href={paths.snippet.slug(title.replace(/\s/g, signs.minus)).url()}>

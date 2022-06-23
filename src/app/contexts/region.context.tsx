@@ -34,7 +34,10 @@ const [RegionProviderImpl, useRegion] =
 const RegionProvider = ({ children }: Props) => {
   const { query } = useRouter()
 
-  const locale = query.locale?.toString() || DEFAULT_LOCALE
+  const locale = useMemo(
+    () => query.locale?.toString() || DEFAULT_LOCALE,
+    [query.locale]
+  )
   const messages = useMemo(() => importMessages(locale), [locale])
 
   const value = useMemo(() => ({ locale }), [locale])

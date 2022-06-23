@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react'
 
-import { uppercaseFirst } from 'src/common/utils/utils'
+import { upperCaseFirstLetter } from 'src/common/utils/utils'
 
 export const createSafeContext = <TValue extends PlainObject>(name: string) => {
-  const formatedName = uppercaseFirst(name)
+  const formatedName = upperCaseFirstLetter(name)
   const safeContext = createContext<TValue | undefined>(undefined)
 
   const useSafeContext = () => {

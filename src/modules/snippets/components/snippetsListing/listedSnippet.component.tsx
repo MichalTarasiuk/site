@@ -10,7 +10,7 @@ import { usePaths } from 'src/common/hooks/hooks'
 import {
   reverseString,
   blockBatching,
-  uppercaseFirst,
+  upperCaseFirstLetter,
   filterObject,
   objectKeys,
 } from 'src/common/utils/utils'
@@ -55,7 +55,7 @@ export const ListedSnippet = ({ title, publishedAt, fileExtension }: Props) => {
             </time>
           </div>
           <section>
-            <h2>{uppercaseFirst(title)}</h2>
+            <h2>{upperCaseFirstLetter(title)}</h2>
             <button
               onClick={(event) => handleTagButton(event, tag)}
               className={Styles.tag}>

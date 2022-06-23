@@ -1,5 +1,5 @@
 ---
-title: 'remote Add'
+title: 'remote add'
 publishedAt: '23-06-2022'
 fileExtension: 'js'
 ---

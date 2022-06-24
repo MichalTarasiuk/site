@@ -11,4 +11,8 @@ type RemoveOne<TArray extends readonly unknown[]> = TArray extends readonly [
 ]
   ? Rest
   : readonly []
+
+
+type type IsTuple<TArray extends ReadonlyArray<unknown>> =
+  number extends TArray['length'] ? false : true
 ```

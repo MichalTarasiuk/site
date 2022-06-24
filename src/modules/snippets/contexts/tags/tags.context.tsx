@@ -1,6 +1,6 @@
-import { useMemo, useCallback } from 'react'
+import { useMemo, useCallback, useRef } from 'react'
 
-import { getTagByFileExtension } from './tags.helpers'
+import { getTagByFileExtension, countRepeatability } from './tags.helpers'
 
 import type { ReactNode } from 'react'
 import type { Snippet } from 'scripts/resourceReader/resources.types'
@@ -15,6 +15,7 @@ type Props = {
 
 type TagContextValue = {
   readonly tags: Record<string, boolean>
+  readonly tagsRepeatability: Record<string, number>
   readonly toggleTag: (name: string, value?: boolean) => void
   readonly setTags: (snippets: readonly Pick<Snippet, 'meta'>[]) => void
   readonly toggleAllTags: (...activeTags: readonly string[]) => void
@@ -25,15 +26,22 @@ const [TagsProviderImpl, useTagsImpl] =
 
 const TagsProvider = ({ children }: Props) => {
   const tagsMap = useMemo(() => new Map<string, boolean>(), [])
-  const tags: TagContextValue['tags'] = useSafeMemo(
+  const tags = useSafeMemo(
     () => fromEntries([...tagsMap.entries()]),
     [...tagsMap.values()]
   )
+  const tagsRepeatability = useRef<Record<string, number>>({})
 
   const force = useForce()
 
   const setTags: TagContextValue['setTags'] = useCallback(
     (snippets) => {
+      const namesOfTags = snippets.map(({ meta: { fileExtension } }) =>
+        getTagByFileExtension(fileExtension)
+      )
+
+      tagsRepeatability.current = countRepeatability(namesOfTags)
+
       snippets.forEach(({ meta: { fileExtension } }) => {
         const tag = getTagByFileExtension(fileExtension)
         const has = tagsMap.has(tag)
@@ -79,6 +87,7 @@ const TagsProvider = ({ children }: Props) => {
       setTags,
       toggleTag,
       toggleAllTags,
+      tagsRepeatability: tagsRepeatability.current,
     }),
     [tags, setTags, toggleTag, toggleAllTags]
   )

@@ -15,7 +15,7 @@ export const Tags = () => {
 
     toggleAllTags(...splitedTags)
   })
-  const { tags, toggleAllTags } = useTags((activeTags) => {
+  const { tags, toggleAllTags, tagsRepeatability } = useTags((activeTags) => {
     const formatedTags = objectKeys(activeTags).join(signs.comma)
 
     tab.postMessage(formatedTags)
@@ -24,7 +24,12 @@ export const Tags = () => {
   return (
     <div className={Styles.tags}>
       {entries(tags).map(([name, isActive]) => (
-        <Tag key={name} name={name} isActive={isActive} />
+        <Tag
+          key={name}
+          name={name}
+          isActive={isActive}
+          repeatability={tagsRepeatability[name]}
+        />
       ))}
     </div>
   )
@@ -33,9 +38,10 @@ export const Tags = () => {
 type TagProps = {
   readonly name: string
   readonly isActive: boolean
+  readonly repeatability: number
 }
 
-const Tag = ({ name, isActive }: TagProps) => {
+const Tag = ({ name, isActive, repeatability }: TagProps) => {
   const { toggleTag } = useTags()
 
   return (
@@ -44,7 +50,7 @@ const Tag = ({ name, isActive }: TagProps) => {
       className={Cn(Styles.tag, {
         [Styles.active]: isActive,
       })}>
-      #{name}
+      {`#${name} (${repeatability})`}
     </button>
   )
 }

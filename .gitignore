@@ -37,3 +37,4 @@ yarn-error.log*
 # other
 todo.md
 .vscode
+ts-challenges.ts

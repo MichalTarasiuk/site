@@ -22,8 +22,4 @@ type Join<
 type Res = Join<['a', 'p', 'p', 'l', 'e'], '-'> // expected to be 'a-p-p-l-e'
 type Res1 = Join<['Hello', 'World'], ' '> // expected to be 'Hello World'
 type Res2 = Join<['o'], 'u'> // expected to be 'o'
-
-type Res = Join<['a', 'p', 'p', 'l', 'e'], '-'> // expected to be 'a-p-p-l-e'
-type Res1 = Join<['Hello', 'World'], ' '> // expected to be 'Hello World'
-type Res2 = Join<['o'], 'u'> // expected to be 'o'
 ```

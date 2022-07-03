@@ -12,6 +12,12 @@ type NotEqual<X, Y> = true extends Equal<X, Y> ? false : true
 
 type IsSubtypeOf<S, P> = S extends P ? true : false;
 
+type NonUnion<TUnion, T2Union extends TUnion = TUnion> = (
+  TUnion extends TUnion ? (T2Union extends TUnion ? false : true) : never
+) extends false
+  ? TUnion
+  : never;
+
 type RemoveOne<TArray extends readonly unknown[]> = TArray extends readonly [
   unknown,
   ...infer Rest

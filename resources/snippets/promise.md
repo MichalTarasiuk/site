@@ -35,4 +35,20 @@ const setRace = async <TResolved>(
 
   return resolved as unknown as Promise<TResolved>;
 };
+
+type ResolvedResult<TResolved> = [value: TResolved, error: undefined];
+type RejectedResult<TError> = [value: undefined, error: TError];
+type Result<TResolved, TError> =
+  | ResolvedResult<TResolved>
+  | RejectedResult<TError>;
+
+const settled = async <TResolved, TError>(
+  promise: Promise<TResolved>
+): Promise<Result<TResolved, TError>> => {
+  try {
+    return [await promise, undefined];
+  } catch (error: unknown) {
+    return [undefined, error as TError];
+  }
+};
 ```

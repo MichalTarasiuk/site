@@ -10,6 +10,8 @@ type Equal<X, Y> =
   (<T>() => T extends Y ? 1 : 2) ? true : false
 type NotEqual<X, Y> = true extends Equal<X, Y> ? false : true
 
+type IsSubtypeOf<S, P> = S extends P ? true : false;
+
 type RemoveOne<TArray extends readonly unknown[]> = TArray extends readonly [
   unknown,
   ...infer Rest

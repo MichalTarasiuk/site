@@ -8,7 +8,7 @@ export { useForce } from './useForce.hook'
 export { useTab } from './useTab.hook'
 export { useSafeMemo } from './useSafeMemo.hook'
 export {
-  useBeforeFirstPaint,
+  usePostponePainting,
   useUpdate,
   useHasMounted,
   useMount,

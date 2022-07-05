@@ -3,7 +3,7 @@ import { useState, useRef, useMemo } from 'react'
 
 import Styles from './htmlParser.module.scss'
 
-import { useBeforeFirstPaint, useRunningHeader } from 'src/common/hooks/hooks'
+import { usePostponePainting, useRunningHeader } from 'src/common/hooks/hooks'
 import { TableOfContents } from 'src/modules/article/components/components'
 import { useEnsuredChildNodes } from 'src/modules/article/hooks/hooks'
 
@@ -18,7 +18,7 @@ export const HtmlParser = ({ html }: Props) => {
   const { highestHeader, subscribers, setRunningHeader } =
     useRunningHeader('[id]')
 
-  useBeforeFirstPaint(() => {
+  usePostponePainting(() => {
     const nextParsedHtml = Parse(html)
 
     setParsedHtml(nextParsedHtml)

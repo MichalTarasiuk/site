@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import Styles from './notFound.module.scss'
 
-import { usePaths, useBeforeFirstPaint } from 'src/common/hooks/hooks'
+import { usePaths, usePostponePainting } from 'src/common/hooks/hooks'
 import { DefaultLayout } from 'src/layouts/layouts'
 
 const NOT_FOUND_CODE = 404
@@ -12,7 +12,7 @@ export const NotFoundPage = () => {
   const [title, setTitle] = useState(FALLBACK_TITLE)
   const { pathname } = usePaths()
 
-  useBeforeFirstPaint(() => {
+  usePostponePainting(() => {
     setTitle(pathname)
   })
 

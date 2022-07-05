@@ -62,9 +62,12 @@ export const useBeforeFirstMount = (fn: Noop) => {
   }
 }
 
-const useIsomorphicEffect = isClientEnvironment ? useLayoutEffect : useEffect
+export const usePostponePainting = (fn: Noop) => {
+  const canCall = useRef(true);
 
-export const useBeforeFirstPaint = (effect: EffectCallback) => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- should call only once
-  useIsomorphicEffect(effect, [])
-}
+  if (canCall.current) {
+    canCall.current = false;
+
+    fn();
+  }
+};

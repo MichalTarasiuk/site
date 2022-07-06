@@ -4,7 +4,9 @@ import { isClientEnvironment } from 'src/common/constants/constants'
 import { useMount } from 'src/common/hooks/hooks'
 
 const createSafeBroadcastChannel = (name: string) => {
-  if (isClientEnvironment) {
+  const isSafeCall = isClientEnvironment && window.BroadcastChannel
+
+  if (isSafeCall) {
     return new BroadcastChannel(name)
   }
 

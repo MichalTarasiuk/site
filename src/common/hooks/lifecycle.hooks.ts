@@ -1,12 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps -- template for useEffect */
-import { useEffect, useRef, useLayoutEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import type { DependencyList, EffectCallback } from 'react'
 
-import {
-  isClientEnvironment,
-  isDevelopmentEnvironment,
-} from 'src/common/constants/constants'
+import { isDevelopmentEnvironment } from 'src/common/constants/constants'
 
 const useEffectCallsOnMount = isDevelopmentEnvironment ? 2 : 1
 
@@ -63,11 +60,11 @@ export const useBeforeFirstMount = (fn: Noop) => {
 }
 
 export const usePostponePainting = (fn: Noop) => {
-  const canCall = useRef(true);
+  const canCall = useRef(true)
 
   if (canCall.current) {
-    canCall.current = false;
+    canCall.current = false
 
-    fn();
+    fn()
   }
-};
+}

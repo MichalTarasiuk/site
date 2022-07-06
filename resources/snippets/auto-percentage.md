@@ -1,6 +1,6 @@
 ---
 title: 'auto percentage'
-publishedAt: '4-07-2022'
+publishedAt: '04-07-2022'
 fileExtension: 'ts'
 ---
 

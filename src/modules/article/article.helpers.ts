@@ -3,10 +3,10 @@ import { isTag } from 'domhandler'
 import { parse } from 'node-html-parser'
 
 import { signs, spacer } from 'src/common/constants/constants'
-import { filterObject } from 'src/common/utils/utils'
+import { filterObject, replaceAll } from 'src/common/utils/utils'
 
 export const getArticleSlug = (title: string) =>
-  title.toLowerCase().replaceAll(spacer, signs.minus)
+  replaceAll(title.toLowerCase(), spacer, signs.minus)
 
 export const removeAttributes = (
   html: string,

@@ -66,8 +66,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const feedReader = await createFeedReader()
   const channels = feedReader.getAllChannels()
 
-  const paths = entries(channels)
-    .map(([channelSlug, { items: articles }]) =>
+  const paths = entries(channels).flatMap(
+    ([channelSlug, { items: articles }]) =>
       articles.map(({ title }) => ({
         params: {
           locale: DEFAULT_LOCALE,
@@ -75,8 +75,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
           articleSlug: getArticleSlug(title),
         },
       }))
-    )
-    .flat()
+  )
 
   return {
     paths,

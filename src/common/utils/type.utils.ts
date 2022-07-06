@@ -15,3 +15,6 @@ const getType = (value: unknown) => {
 
 export const isFunction = (value: unknown): value is PlainFunction =>
   getType(value) === 'function'
+
+export const isRegExp = (value: unknown): value is RegExp =>
+  getType(value) === 'regexp'

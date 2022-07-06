@@ -7,6 +7,7 @@ import type { FormatedChannel } from 'scripts/feedReader/feedReader.types'
 
 import { signs, spacer } from 'src/common/constants/constants'
 import { usePaths } from 'src/common/hooks/hooks'
+import { replaceAll } from 'src/common/utils/utils'
 
 type ArticlesListingProps = {
   readonly channelSlug: string
@@ -40,7 +41,7 @@ const ListedArticle = ({
   const { paths } = usePaths()
 
   const articleSlug = useMemo(
-    () => title.toLowerCase().replaceAll(spacer, signs.minus),
+    () => replaceAll(title.toLowerCase(), spacer, signs.minus),
     [title]
   )
 

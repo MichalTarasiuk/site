@@ -15,7 +15,10 @@ type InferServerPropsType<TFn extends (...args: any) => any> = Awaited<
 
 type Noop = () => void
 
-type PlainFunction = (...args: readonly unknown[]) => unknown
+type PlainFunction<
+  TReturnType = unknown,
+  TParams extends ReadonlyArray<any> = readonly any[]
+> = (...params: TParams) => TReturnType
 
 type PlainObject = Record<PropertyKey, unknown>
 

@@ -63,6 +63,11 @@ export const objectKeys = <TObject extends Record<PropertyKey, unknown>>(
   object: TObject
 ) => Object.keys(object) as readonly (keyof TObject)[]
 
+export const hasKey = <TObject extends PlainObject>(
+  object: TObject,
+  key: PropertyKey
+): key is keyof TObject => key in object
+
 export const isEmpty = (object: Record<PropertyKey, unknown>) =>
   objectKeys(object).length === 0
 

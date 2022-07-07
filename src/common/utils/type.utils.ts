@@ -18,3 +18,9 @@ export const isFunction = (value: unknown): value is PlainFunction =>
 
 export const isRegExp = (value: unknown): value is RegExp =>
   getType(value) === 'regexp'
+
+export const isArray = (value: unknown): value is ReadonlyArray<unknown> =>
+  Array.isArray(value)
+
+export const isPlainObject = (value: unknown): value is PlainObject =>
+  getType(value) === 'object'

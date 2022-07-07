@@ -21,8 +21,10 @@ const SnippetsPageImpl = ({ snippets }: Props) => {
   const intl = useIntl()
   const { setTags } = useTags()
 
-  usePostponePainting(() => {
+  usePostponePainting((postpone) => {
     setTags(snippets)
+
+    postpone()
   })
 
   return (

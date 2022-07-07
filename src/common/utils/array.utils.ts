@@ -1,3 +1,5 @@
+import { isArray } from 'src/common/utils/utils'
+
 export const exclude = <TValue>(
   from: readonly TValue[],
   exclude: readonly TValue[]
@@ -18,3 +20,10 @@ export const ensuredFind = <TArray extends ReadonlyArray<unknown>>(
 
   throw new Error(errorMessage)
 }
+
+type CastArray<TValue> = TValue extends ReadonlyArray<unknown>
+  ? TValue
+  : readonly TValue[]
+
+export const castArray = <TValue>(value: TValue) =>
+  (isArray(value) ? value : [value]) as CastArray<TValue>

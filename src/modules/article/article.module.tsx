@@ -6,7 +6,7 @@ import { createFeedReader } from 'scripts/scripts'
 import { DEFAULT_LOCALE } from 'src/app/contexts/contexts'
 import { entries, ensuredFind, replaceKeyWithFn } from 'src/common/utils/utils'
 import { DefaultLayout } from 'src/layouts/layouts'
-import { HtmlParser } from 'src/modules/article/components/components'
+import { ArticleImpl } from 'src/modules/article/components/components'
 
 type Props = InferServerPropsType<typeof getStaticProps>
 
@@ -20,7 +20,7 @@ export const ArticlePage = ({
 }: Props) => {
   return (
     <DefaultLayout title={title} subtitle={description}>
-      <HtmlParser html={content} />
+      <ArticleImpl content={content} />
     </DefaultLayout>
   )
 }

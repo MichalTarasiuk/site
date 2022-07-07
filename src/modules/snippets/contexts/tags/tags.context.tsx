@@ -50,10 +50,8 @@ const TagsProvider = ({ children }: Props) => {
           tagsMap.set(tag, false)
         }
       })
-
-      force()
     },
-    [tagsMap, force]
+    [tagsMap]
   )
 
   const toggleTag: TagContextValue['toggleTag'] = useCallback(

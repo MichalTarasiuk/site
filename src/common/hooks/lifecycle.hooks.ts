@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import type { DependencyList, EffectCallback } from 'react'
 
 import { isDevelopmentEnvironment } from 'src/common/constants/constants'
+import { useForce } from 'src/common/hooks/hooks'
 
 const useEffectCallsOnMount = isDevelopmentEnvironment ? 2 : 1
 
@@ -59,12 +60,14 @@ export const useBeforeFirstMount = (fn: Noop) => {
   }
 }
 
-export const usePostponePainting = (fn: Noop) => {
+export const usePostponePainting = (fn: (postponse: Noop) => void) => {
   const canCall = useRef(true)
+  const force = useForce()
+  console.log(canCall)
 
   if (canCall.current) {
     canCall.current = false
 
-    fn()
+    fn(force)
   }
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 
 import Styles from './notFound.module.scss'
 
@@ -9,15 +9,17 @@ const NOT_FOUND_CODE = 404
 const FALLBACK_TITLE = '/path/not/found'
 
 export const NotFoundPage = () => {
-  const [title, setTitle] = useState(FALLBACK_TITLE)
+  const title = useRef(FALLBACK_TITLE)
   const { pathname } = usePaths()
 
-  usePostponePainting(() => {
-    setTitle(pathname)
+  usePostponePainting((postponse) => {
+    title.current = pathname
+
+    postponse()
   })
 
   return (
-    <DefaultLayout title={title}>
+    <DefaultLayout title={title.current}>
       <h1 className={Styles.heading}>{NOT_FOUND_CODE}</h1>
     </DefaultLayout>
   )

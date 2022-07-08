@@ -4,11 +4,7 @@ import { useMemo, useRef } from 'react'
 import { getSections } from './articleImpl.helpers'
 import Styles from './articleImpl.module.scss'
 
-import {
-  useMount,
-  usePreviousPersistent,
-  useRunningHeader,
-} from 'src/common/hooks/hooks'
+import { useMount, useRunningHeader, useUpdate } from 'src/common/hooks/hooks'
 import { TableOfContents } from 'src/modules/article/components/components'
 import { useAutoPercentage } from 'src/modules/article/hooks/hooks'
 
@@ -21,19 +17,16 @@ export const ArticleImpl = ({ content }: Props) => {
 
   const jsx = useMemo(() => Parse(content), [content])
   const sections = useMemo(() => getSections(jsx), [jsx])
-  const steps = useMemo(
-    () => sections.map((section) => section.text),
-    [sections]
-  )
+  const steps = useMemo(() => sections.map((section) => section.id), [sections])
 
   const autoPercentage = useAutoPercentage(steps)
   const { id, setRunningHeader } = useRunningHeader('[id]')
 
-  usePreviousPersistent(id, (nextId) => {
-    if (nextId) {
-      autoPercentage.updateProgress(nextId)
+  useUpdate(() => {
+    if (id) {
+      autoPercentage.updateProgress(id)
     }
-  })
+  }, [id])
 
   useMount(() => {
     setRunningHeader(contentRef.current)

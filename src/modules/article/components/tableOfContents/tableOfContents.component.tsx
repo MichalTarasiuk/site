@@ -9,11 +9,11 @@ type Content = {
 }
 
 type Props = {
-  readonly highestContentText: string | null
+  readonly id: string | null
   readonly contents: readonly Content[]
 }
 
-export const TableOfContents = ({ highestContentText, contents }: Props) => {
+export const TableOfContents = ({ id, contents }: Props) => {
   const shouldDisplay = contents.length !== 0
 
   if (shouldDisplay) {
@@ -22,14 +22,14 @@ export const TableOfContents = ({ highestContentText, contents }: Props) => {
         <h2 className={Styles.heading}>Table of contents</h2>
         <nav>
           <ul>
-            {contents.map(({ text, id }) => (
-              <li key={id}>
-                <Link href={`#${id}`}>
+            {contents.map((content) => (
+              <li key={content.id}>
+                <Link href={`#${content.id}`}>
                   <a
                     className={Cn(Styles.link, {
-                      [Styles.activeLink]: highestContentText === text,
+                      [Styles.activeLink]: id === content.id,
                     })}>
-                    {text}
+                    {content.text}
                   </a>
                 </Link>
               </li>

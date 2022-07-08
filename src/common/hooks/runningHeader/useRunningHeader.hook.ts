@@ -5,7 +5,7 @@ import { observerInit, getHighestElement } from './useRunningHeader.helpers'
 import { useObserver } from 'src/common/hooks/hooks'
 
 export const useRunningHeader = (selector: string) => {
-  const [highestHeader, setHighestHeader] = useState<HTMLElement | null>(null)
+  const [id, setHighestHeader] = useState<string | null>(null)
   const subscribers = useRef<readonly HTMLElement[]>([])
   const currentlyVisibleHeaders = useMemo(() => new Set<HTMLElement>(), [])
 
@@ -19,7 +19,7 @@ export const useRunningHeader = (selector: string) => {
     const highestHeader = getHighestElement([...currentlyVisibleHeaders])
 
     if (highestHeader) {
-      setHighestHeader(highestHeader)
+      setHighestHeader(highestHeader.id)
     }
   })
 
@@ -40,5 +40,5 @@ export const useRunningHeader = (selector: string) => {
     [cleanup, observeElement, selector]
   )
 
-  return { highestHeader, subscribers, setRunningHeader }
+  return { id, subscribers, setRunningHeader }
 }

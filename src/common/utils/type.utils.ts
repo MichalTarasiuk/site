@@ -24,3 +24,6 @@ export const isArray = (value: unknown): value is ReadonlyArray<unknown> =>
 
 export const isPlainObject = (value: unknown): value is PlainObject =>
   getType(value) === 'object'
+
+export const isString = (value: unknown): value is string =>
+  typeof value === 'string'

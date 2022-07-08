@@ -21,9 +21,9 @@ export const ensuredFind = <TArray extends ReadonlyArray<unknown>>(
   throw new Error(errorMessage)
 }
 
-type CastArray<TValue> = TValue extends ReadonlyArray<unknown>
-  ? TValue
-  : readonly TValue[]
+type CastArray<TValue> = readonly (TValue extends ReadonlyArray<unknown>
+  ? TValue[number]
+  : TValue)[]
 
-export const castArray = <TValue>(value: TValue) =>
-  (isArray(value) ? value : [value]) as CastArray<TValue>
+export const castArray = <TArray>(value: TArray) =>
+  (isArray(value) ? value : [value]) as CastArray<TArray>

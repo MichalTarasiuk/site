@@ -71,6 +71,9 @@ export const hasKey = <TObject extends PlainObject>(
 export const isEmpty = (object: Record<PropertyKey, unknown>) =>
   objectKeys(object).length === 0
 
+export const objectLength = <TObject extends PlainObject>(object: TObject) =>
+  objectKeys(object).length
+
 /**
  * inlined Object.is polyfill to avoid requiring consumers ship their own
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is

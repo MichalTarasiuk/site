@@ -1,24 +1,21 @@
 import { useMemo, useCallback, useRef } from 'react'
 
-import { getTagByFileExtension, countRepeatability } from './tags.helpers'
+import {
+  getTagByFileExtension,
+  countRepeatability,
+  getActiveTags,
+  getTagsNames,
+} from './tags.helpers'
 
+import type { TagContextValue } from './tags.types'
 import type { ReactNode } from 'react'
-import type { Snippet } from 'scripts/resourceReader/resources.types'
 
 import { useForce, useUpdate, useSafeMemo } from 'src/common/hooks/hooks'
 import { createSafeContext } from 'src/common/logic/logic'
-import { fromEntries, filterObject, objectKeys } from 'src/common/utils/utils'
+import { fromEntries, objectLength } from 'src/common/utils/utils'
 
 type Props = {
   readonly children: ReactNode
-}
-
-type TagContextValue = {
-  readonly tags: Record<string, boolean>
-  readonly tagsRepeatability: Record<string, number>
-  readonly toggleTag: (name: string, value?: boolean) => void
-  readonly setTags: (snippets: readonly Pick<Snippet, 'meta'>[]) => void
-  readonly toggleAllTags: (...activeTags: readonly string[]) => void
 }
 
 const [TagsProviderImpl, useTagsImpl] =
@@ -30,17 +27,15 @@ const TagsProvider = ({ children }: Props) => {
     () => fromEntries([...tagsMap.entries()]),
     [...tagsMap.values()]
   )
-  const tagsRepeatability = useRef<Record<string, number>>({})
+  const tagsRepeatability = useRef<ReturnType<typeof countRepeatability>>({})
 
   const force = useForce()
 
   const setTags: TagContextValue['setTags'] = useCallback(
-    (snippets) => {
-      const namesOfTags = snippets.map(({ meta: { fileExtension } }) =>
-        getTagByFileExtension(fileExtension)
-      )
+    (snippets, fn) => {
+      const names = getTagsNames(snippets)
 
-      tagsRepeatability.current = countRepeatability(namesOfTags)
+      tagsRepeatability.current = countRepeatability(names)
 
       snippets.forEach(({ meta: { fileExtension } }) => {
         const tag = getTagByFileExtension(fileExtension)
@@ -50,6 +45,8 @@ const TagsProvider = ({ children }: Props) => {
           tagsMap.set(tag, false)
         }
       })
+
+      fn()
     },
     [tagsMap]
   )
@@ -97,13 +94,10 @@ const useTags = (fn?: (tags: TagContextValue['tags']) => void) => {
   const tagsImpl = useTagsImpl()
 
   const activeTags = useMemo(
-    () => filterObject(tagsImpl.tags, (_, value) => value),
+    () => getActiveTags(tagsImpl.tags),
     [tagsImpl.tags]
   )
-  const lengthActiveTags = useMemo(
-    () => objectKeys(activeTags).length,
-    [activeTags]
-  )
+  const lengthActiveTags = useMemo(() => objectLength(activeTags), [activeTags])
 
   useUpdate(() => {
     if (fn) {

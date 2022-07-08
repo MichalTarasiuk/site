@@ -1,1 +1,4 @@
-export { NotFoundPage as default } from 'src/modules/notFound/notFound.module'
+export {
+  NotFoundPage as default,
+  getServerSideProps,
+} from 'src/modules/notFound/notFound.module'

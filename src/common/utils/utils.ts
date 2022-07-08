@@ -22,6 +22,7 @@ export {
   isEmpty,
   pick,
   hasKey,
+  objectLength,
 } from './object.utils'
 
 export const noop = () => {}

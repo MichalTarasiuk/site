@@ -5,7 +5,7 @@ import Styles from './snippets.module.scss'
 import type { InferGetStaticPropsType, GetStaticPaths } from 'next'
 
 import { createResourceReader } from 'scripts/scripts'
-import { usePostponePainting } from 'src/common/hooks/hooks'
+import { usePostponePainting } from 'src/common/hooks/lifecycle.hooks'
 import { pick } from 'src/common/utils/utils'
 import { DefaultLayout } from 'src/layouts/layouts'
 import { messages } from 'src/locales/translations'
@@ -21,10 +21,8 @@ const SnippetsPageImpl = ({ snippets }: Props) => {
   const intl = useIntl()
   const { setTags } = useTags()
 
-  usePostponePainting((postpone) => {
-    setTags(snippets)
-
-    postpone()
+  usePostponePainting((postponse) => {
+    setTags(snippets, postponse)
   })
 
   return (

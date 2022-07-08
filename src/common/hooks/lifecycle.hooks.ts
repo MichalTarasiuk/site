@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import type { DependencyList, EffectCallback } from 'react'
 
 import { isDevelopmentEnvironment } from 'src/common/constants/constants'
-import { useForce } from 'src/common/hooks/hooks'
+import { useForce, useEvent } from 'src/common/hooks/hooks'
 
 const useEffectCallsOnMount = isDevelopmentEnvironment ? 2 : 1
 
@@ -12,34 +12,38 @@ export const useUpdate = (
   effectCallback: EffectCallback,
   dependencyList: DependencyList
 ) => {
-  const isMounted = useRef(false)
-  const effectCalls = useRef(0)
-  const savedEffectCallback = useRef(effectCallback)
-
-  if (isMounted && savedEffectCallback.current !== effectCallback) {
-    savedEffectCallback.current = effectCallback
-  }
+  const hasMounted = useHasMounted()
+  const stableEffectCallback = useEvent(effectCallback, [effectCallback])
 
   useEffect(() => {
-    effectCalls.current++
-
-    if (!isMounted.current && effectCalls.current === useEffectCallsOnMount) {
-      isMounted.current = true
-      return
-    }
-
-    if (isMounted.current) {
-      return savedEffectCallback.current()
+    if (hasMounted) {
+      return stableEffectCallback()
     }
   }, dependencyList)
 }
 
 export const useUnMount = (cleanUpEffect: ReturnType<EffectCallback>) => {
-  useMount(() => cleanUpEffect)
+  const effectCalls = useRef(0)
+
+  useEffect(() => {
+    effectCalls.current++
+
+    if (effectCalls.current === useEffectCallsOnMount) {
+      return cleanUpEffect
+    }
+  }, [])
 }
 
 export const useMount = (effectCallback: EffectCallback) => {
-  useEffect(effectCallback, [])
+  const effectCalls = useRef(0)
+
+  useEffect(() => {
+    effectCalls.current++
+
+    if (effectCalls.current === useEffectCallsOnMount) {
+      return effectCallback()
+    }
+  }, [])
 }
 
 export const useHasMounted = () => {
@@ -63,7 +67,6 @@ export const useBeforeFirstMount = (fn: Noop) => {
 export const usePostponePainting = (fn: (postponse: Noop) => void) => {
   const canCall = useRef(true)
   const force = useForce()
-  console.log(canCall)
 
   if (canCall.current) {
     canCall.current = false

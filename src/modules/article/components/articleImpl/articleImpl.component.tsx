@@ -6,6 +6,7 @@ import Styles from './articleImpl.module.scss'
 
 import { useRunningHeader } from 'src/common/hooks/hooks'
 import { TableOfContents } from 'src/modules/article/components/components'
+import { useAutoPercentage } from 'src/modules/article/hooks/hooks'
 
 type Props = {
   readonly content: string
@@ -15,6 +16,7 @@ export const ArticleImpl = ({ content }: Props) => {
   const jsx = useMemo(() => Parse(content), [content])
   const sections = useMemo(() => getSections(jsx), [jsx])
 
+  const autoPercentage = useAutoPercentage(['a', 'b', 'c'])
   const { highestHeader, subscribers, setRunningHeader } =
     useRunningHeader('[id]')
 

@@ -10,19 +10,7 @@ export { isFunction, isRegExp, isArray, isPlainObject } from './type.utils'
 export { formatDateFull } from './date.utils'
 export { blockBatching } from './react.utils'
 export { replaceKeyWithFn } from './replaceKeyWithFn.utility'
-export {
-  renameKey,
-  fromEntries,
-  entries,
-  filterObject,
-  omit,
-  mapObject,
-  objectIs,
-  objectKeys,
-  isEmpty,
-  pick,
-  hasKey,
-  objectLength,
-} from './object.utils'
+export * from './object.utils'
+export { sum } from './reducers.utils'
 
 export const noop = () => {}

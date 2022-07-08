@@ -13,5 +13,4 @@ export {
   useHasMounted,
   useMount,
   useUnMount,
-  useBeforeFirstMount,
 } from './lifecycle.hooks'

@@ -3,6 +3,7 @@ import {
   ErrorProvider,
   AlertProvider,
   RegionProvider,
+  ProgressProvider,
 } from './contexts/contexts'
 
 import type { ReactNode } from 'react'
@@ -13,12 +14,14 @@ type Props = {
 
 export const AppProvider = ({ children }: Props) => {
   return (
-    <RegionProvider>
-      <ErrorProvider>
-        <AlertProvider>
-          <ThemeProvider>{children}</ThemeProvider>
-        </AlertProvider>
-      </ErrorProvider>
-    </RegionProvider>
+    <ProgressProvider>
+      <RegionProvider>
+        <ErrorProvider>
+          <AlertProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </AlertProvider>
+        </ErrorProvider>
+      </RegionProvider>
+    </ProgressProvider>
   )
 }

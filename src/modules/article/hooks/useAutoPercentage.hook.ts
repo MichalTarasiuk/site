@@ -1,5 +1,6 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 
+import { useProgress } from 'src/app/contexts/contexts'
 import { sum } from 'src/common/utils/utils'
 
 const createAutoPercentage = () => {
@@ -19,7 +20,7 @@ const createAutoPercentage = () => {
 const MAX_PROGRESS = 100
 
 export const useAutoPercentage = (names: readonly string[]) => {
-  const [progress, setProgress] = useState(0)
+  const { setPercentage } = useProgress()
 
   const autoPercentage = useMemo(() => createAutoPercentage(), [])
   const steps = useMemo(
@@ -32,16 +33,18 @@ export const useAutoPercentage = (names: readonly string[]) => {
     (name: string) => {
       const currentIndexStep = steps.findIndex((step) => step.name === name)
       const completedSteps = steps.slice(0, currentIndexStep + 1)
-      const nextProgress = completedSteps
+
+      const progress = completedSteps
         .map((step) => Number(step.progress))
         .reduce(sum)
+      const percentage = Math.min(MAX_PROGRESS, progress) / 100
 
-      setProgress(Math.min(MAX_PROGRESS, nextProgress))
+      setPercentage(percentage)
     },
-    [steps]
+    [steps, setPercentage]
   )
 
   console.log()
 
-  return { progress, updateProgress }
+  return { updateProgress }
 }

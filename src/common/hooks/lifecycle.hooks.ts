@@ -56,14 +56,6 @@ export const useHasMounted = () => {
   return hasMounted.current
 }
 
-export const useBeforeFirstMount = (fn: Noop) => {
-  const hasMounted = useHasMounted()
-
-  if (!hasMounted) {
-    fn()
-  }
-}
-
 export const usePostponePainting = (fn: (postponse: Noop) => void) => {
   const canCall = useRef(true)
   const force = useForce()

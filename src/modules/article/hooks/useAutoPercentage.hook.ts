@@ -20,7 +20,7 @@ const createAutoPercentage = () => {
 const MAX_PROGRESS = 100
 
 export const useAutoPercentage = (names: readonly string[]) => {
-  const { setPercentage } = useProgress()
+  const { setProgress, resetProgress } = useProgress()
 
   const autoPercentage = useMemo(() => createAutoPercentage(), [])
   const steps = useMemo(
@@ -30,7 +30,7 @@ export const useAutoPercentage = (names: readonly string[]) => {
   )
 
   const updateProgress = useCallback(
-    (name: string) => {
+    (name: string | null) => {
       const currentIndexStep = steps.findIndex((step) => step.name === name)
       const completedSteps = steps.slice(0, currentIndexStep + 1)
 
@@ -39,12 +39,10 @@ export const useAutoPercentage = (names: readonly string[]) => {
         .reduce(sum)
       const percentage = Math.min(MAX_PROGRESS, progress) / 100
 
-      setPercentage(percentage)
+      setProgress(percentage)
     },
-    [steps, setPercentage]
+    [steps, setProgress]
   )
 
-  console.log()
-
-  return { updateProgress }
+  return { updateProgress, resetProgress }
 }

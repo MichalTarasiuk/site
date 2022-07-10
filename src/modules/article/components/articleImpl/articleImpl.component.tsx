@@ -4,7 +4,11 @@ import { useMemo, useRef } from 'react'
 import { getSections } from './articleImpl.helpers'
 import Styles from './articleImpl.module.scss'
 
-import { useMount, useRunningHeader, useUpdate } from 'src/common/hooks/hooks'
+import {
+  useMount,
+  useRunningHeader,
+  useIsScrolled,
+} from 'src/common/hooks/hooks'
 import { TableOfContents } from 'src/modules/article/components/components'
 import { useAutoPercentage } from 'src/modules/article/hooks/hooks'
 
@@ -22,14 +26,17 @@ export const ArticleImpl = ({ content }: Props) => {
   const autoPercentage = useAutoPercentage(steps)
   const { id, setRunningHeader } = useRunningHeader('[id]')
 
-  useUpdate(() => {
-    if (id) {
-      autoPercentage.updateProgress(id)
-    }
-  }, [id])
-
   useMount(() => {
     setRunningHeader(contentRef.current)
+  })
+
+  useIsScrolled((isScrolled) => {
+    if (!isScrolled) {
+      autoPercentage.resetProgress()
+      return
+    }
+
+    autoPercentage.updateProgress(id)
   })
 
   return (

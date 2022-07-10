@@ -7,6 +7,7 @@ export { usePaths } from './paths/usePaths.hook'
 export { useForce } from './useForce.hook'
 export { useTab } from './useTab.hook'
 export { useSafeMemo } from './useSafeMemo.hook'
+export { useIsScrolled } from './listener.hooks'
 export {
   usePostponePainting,
   useUpdate,

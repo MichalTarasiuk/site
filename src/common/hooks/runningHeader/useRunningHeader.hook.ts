@@ -1,12 +1,11 @@
-import { useState, useCallback, useMemo, useRef } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 
 import { observerInit, getHighestElement } from './useRunningHeader.helpers'
 
 import { useObserver } from 'src/common/hooks/hooks'
 
 export const useRunningHeader = (selector: string) => {
-  const [id, setHighestHeader] = useState<string | null>(null)
-  const subscribers = useRef<readonly HTMLElement[]>([])
+  const [id, setId] = useState<string | null>(null)
   const currentlyVisibleHeaders = useMemo(() => new Set<HTMLElement>(), [])
 
   const { observeElement, cleanup } = useObserver(observerInit, (entry) => {
@@ -19,14 +18,14 @@ export const useRunningHeader = (selector: string) => {
     const highestHeader = getHighestElement([...currentlyVisibleHeaders])
 
     if (highestHeader) {
-      setHighestHeader(highestHeader.id)
+      setId(highestHeader.id)
     }
   })
 
   const setRunningHeader = useCallback(
     (htmlElement: HTMLElement | null) => {
       if (!htmlElement) {
-        setHighestHeader(null)
+        setId(null)
         cleanup()
 
         return
@@ -35,10 +34,9 @@ export const useRunningHeader = (selector: string) => {
       const nodeList = htmlElement.querySelectorAll<HTMLElement>(selector)
 
       nodeList.forEach(observeElement)
-      subscribers.current = [...nodeList]
     },
     [cleanup, observeElement, selector]
   )
 
-  return { id, subscribers, setRunningHeader }
+  return { id, setRunningHeader }
 }

@@ -12,12 +12,14 @@ type Props = {
 }
 
 type ProgressContextValue = {
-  readonly setPercentage: (percentage: number) => void
+  readonly setProgress: (percentage: number) => void
+  readonly resetProgress: Noop
 }
 
 const PROGRESS_BAR_SPEED = 550
 const config = {
   speed: PROGRESS_BAR_SPEED,
+  minimum: 0,
 }
 
 const [ProgressProviderImpl, useProgress] =
@@ -32,12 +34,16 @@ const ProgressProvider = ({ children }: Props) => {
     [router.asPath]
   )
 
-  const setPercentage = useCallback(
+  const setProgress = useCallback(
     (percentage: number) => {
       progressManager.set(percentage)
     },
     [progressManager]
   )
+
+  const resetProgress = useCallback(() => {
+    progressManager.set(0)
+  }, [progressManager])
 
   useMount(() => {
     const onStart = (nextPathname: string) => {
@@ -60,9 +66,10 @@ const ProgressProvider = ({ children }: Props) => {
 
   const value = useMemo(
     () => ({
-      setPercentage,
+      setProgress,
+      resetProgress,
     }),
-    [setPercentage]
+    [setProgress, resetProgress]
   )
 
   return <ProgressProviderImpl value={value}>{children}</ProgressProviderImpl>

@@ -28,4 +28,6 @@ type RemoveOne<TArray extends readonly unknown[]> = TArray extends readonly [
 
 type type IsTuple<TArray extends ReadonlyArray<unknown>> =
   number extends TArray['length'] ? false : true
+
+type Nominal<TObject, TKey extends string> = TObject & { readonly __tag: TKey };
 ```

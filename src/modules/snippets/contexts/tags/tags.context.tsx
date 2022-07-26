@@ -18,8 +18,7 @@ type Props = {
   readonly children: ReactNode
 }
 
-const [TagsProviderImpl, useTagsImpl] =
-  createSafeContext<TagContextValue>('tags')
+const [TagsProviderImpl, useTags] = createSafeContext<TagContextValue>('tags')
 
 const TagsProvider = ({ children }: Props) => {
   const tagsMap = useMemo(() => new Map<string, boolean>(), [])
@@ -90,13 +89,10 @@ const TagsProvider = ({ children }: Props) => {
   return <TagsProviderImpl value={value}>{children}</TagsProviderImpl>
 }
 
-const useTags = (fn?: (tags: TagContextValue['tags']) => void) => {
-  const tagsImpl = useTagsImpl()
+const useTagsSelected = (fn?: (tags: TagContextValue['tags']) => void) => {
+  const tags = useTags((contextValue) => contextValue.tags)
 
-  const activeTags = useMemo(
-    () => getActiveTags(tagsImpl.tags),
-    [tagsImpl.tags]
-  )
+  const activeTags = useMemo(() => getActiveTags(tags), [tags])
   const lengthActiveTags = useMemo(() => objectLength(activeTags), [activeTags])
 
   useUpdate(() => {
@@ -104,8 +100,6 @@ const useTags = (fn?: (tags: TagContextValue['tags']) => void) => {
       fn(activeTags)
     }
   }, [lengthActiveTags])
-
-  return tagsImpl
 }
 
-export { TagsProvider, useTags }
+export { TagsProvider, useTagsSelected, useTags }

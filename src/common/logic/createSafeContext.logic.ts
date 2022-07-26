@@ -1,26 +1,47 @@
-import { createContext, useContext } from 'react'
+import {
+  createContext as createContextImpl,
+  useContextSelector,
+} from 'use-context-selector'
+
+import type { Context } from 'react'
 
 import { upperCaseFirstLetter } from 'src/common/utils/utils'
 
-export const createSafeContext = <
-  TValue extends PlainObject | undefined = undefined
->(
-  name: string
-) => {
-  const formatedName = upperCaseFirstLetter(name)
-  const safeContext = createContext<TValue | undefined>(undefined)
+type Selector<TContextValue, TSelected> = (
+  contextValue: TContextValue
+) => TSelected
 
-  const useSafeContext = () => {
-    const context = useContext(safeContext)
+const defaultContextValue = Symbol()
 
-    if (context === undefined) {
-      throw new Error(
-        `use${formatedName} must be used within a ${formatedName}Provider`
-      )
+const getErrorMessage = (name: string) =>
+  `use${name} must be used within a ${name}Provider`
+
+const createContext = <TContextValue>() =>
+  createContextImpl(defaultContextValue) as unknown as Context<TContextValue>
+
+const isInvalidHookCall = (contextValue: unknown) =>
+  contextValue === defaultContextValue
+
+export const createSafeContext = <TContextValue>(name: string) => {
+  const safeContext = createContext<TContextValue>()
+  const uppercasedName = upperCaseFirstLetter(name)
+
+  const useSafeContext = <TSelected = TContextValue>(
+    selector?: Selector<TContextValue, TSelected>
+  ) => {
+    const identity = (value: TContextValue) => value as unknown as TSelected
+    const selected = useContextSelector(safeContext, selector ?? identity)
+
+    if (isInvalidHookCall(selected)) {
+      const errorMessage = getErrorMessage(name)
+
+      throw Error(errorMessage)
     }
 
-    return context
+    return selected
   }
+
+  safeContext.displayName = `${uppercasedName}Context`
 
   return [safeContext.Provider, useSafeContext] as const
 }

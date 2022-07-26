@@ -14,7 +14,7 @@ type Props = {
 }
 
 export const SnippetsListing = ({ snippets }: Props) => {
-  const { tags } = useTags()
+  const tags = useTags((contextValue) => contextValue.tags)
 
   const selectedTags = useMemo(
     () => filterObject(tags, (_, isActive) => isActive),

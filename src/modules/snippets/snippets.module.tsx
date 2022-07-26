@@ -19,7 +19,7 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 const SnippetsPageImpl = ({ snippets }: Props) => {
   const intl = useIntl()
-  const { setTags } = useTags()
+  const setTags = useTags((contextValue) => contextValue.setTags)
 
   usePostponePainting((postponse) => {
     setTags(snippets, postponse)
